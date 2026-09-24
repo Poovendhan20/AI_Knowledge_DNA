@@ -1,0 +1,1233 @@
+[
+  {
+    "id": "737bbc09b65c42c895f4bccc9f1e537b",
+    "name": "Unit_1.pdf",
+    "stored_name": "737bbc09b65c42c895f4bccc9f1e537b.pdf",
+    "type": "pdf",
+    "page_count": 46,
+    "pages": [
+      {
+        "page": 1,
+        "text": "UNIT – 1 \nCloud Computing Fundamentals and Architecture \n \nIntroduction to Cloud Computing \nCloud computing allows users to access a wide range of services stored in the cloud or on the \nInternet. Cloud Computing services include computer resources, data storage, apps, servers, \ndevelopment tools, and networking protocols. They are most commonly used by IT companies \nand for business purposes. \n \nEvolution of Computing \nThe phrase \"Cloud Computing\" describe s internet-related services, and it evolved from \ndistributed computing to the modern technology known as cloud computing. Cloud services \ninclude those provided by Amazon, Google, and Microsoft.  \n \n \nMainframe->Grid->Cloud \n1. Mainframe Computing (1950-1970) \nMainframes which first came into existence in 1951 are highly powerful and reliable computing \nmachines. These are responsible for handling large data such as massive input -output \noperations. Even today these are used for bulk processing tasks such as online transactions etc. \nThese systems have almost no downtime with high fault tolerance. After distributed computing, \nthese increased the processing capabilities of the system. But these were very expensive. To \nreduce this cost, cluster computing came as an alternative to mainframe technology."
+      },
+      {
+        "page": 2,
+        "text": "2. Distributed Systems (1970-1980) \nDistributed System is a composition of multiple independent systems but all of them are \ndepicted as a single entity to the users. The purpose of distributed systems is to share resources \nand also use them effectively and efficiently. Distributed systems possess characteristics such \nas scalability, concurrency, continuous availability, heterogeneity, and independence in \nfailures. They do not require all systems to be present at the same geographical location. These \nsystems can communicate over networks while being geographically distributed. Distributed \ncomputing later evolved into models such as cluster computing and grid computing to improve \nscalability, performance, and resource sharing. \n \n3. Cluster Computing (1980-1990) \nIn 1980s, cluster computing came as an alternative to mainframe computing. Each machine in \nthe cluster was connected to each other by a network with high bandwidth. These were way \ncheaper than those mainframe systems. These were equally capable of high computations. Also, \nnew nodes could easily be added to the cluster if it was required. Thus, the problem of the cost \nwas solved to some extent but the problem related to geographical restrictions still pertained. \nTo solve this, the concept of grid computing was introduced. \n \n4. Grid Computing (1990-2000) \nIn 1990s, the concept of grid computing was introduced. It means that different systems were \nplaced at entirely different geographical locations and these all were connected via the internet. \nThese systems belonged to different organizations and thus the grid consisted of heterogeneous \nnodes. Although it solved some problems but new problems emerged as the distance between \nthe nodes increased. The main problem which was encountered was the low availability of high \nbandwidth connectivity and with it other network associated issues. Thus. cloud computing is \noften referred to as \"Successor of grid computing\". \n \n5. Utility Computing (Late 1990-2000) \nUtility Computing is a computing model that defines service provisioning techniques for \nservices such as compute services along with other major services such as storage, \ninfrastructure, etc which are provisioned on a pay-per-use basis. \n \n6. Virtualization (1980-Present) \nVirtualization was introduced nearly 40 years back. It refers to the process of creating a virtual \nlayer over the hardware which allows the user to run multiple instances simultaneously on the \nhardware. It is a key technology used in cloud computing. It is the base on which major cloud \ncomputing services such as Amazon EC2, VMware vCloud, etc work on. Hardware \nvirtualization is still one of the most common types of virtualization."
+      },
+      {
+        "page": 3,
+        "text": "7. Web 2.0 \nWeb 2.0 is the interface through which the cloud computing servic es interact with the clients. \nIt is because of Web 2.0 that we have interactive and dynamic web pages. It also increases \nflexibility among web pages. Popular examples of web 2.0 include Google Maps, Facebook, \nTwitter, etc. Needless to say, social media is possible because of this technology only. It gained \nmajor popularity in 2004. \n \n8. Service Orientation \nService-oriented architecture (SOA) is a method of software development that uses software \ncomponents called services to create business applications. Eac h service provides a business \ncapability, and services can also communicate with each other across platforms and languages. \nDevelopers use SOA to reuse services in different systems or combine several independent \nservices to perform complex tasks. \n \n9. Cloud Computing \nCloud Computing means storing and accessing the data and programs on remote servers that \nare hosted on the internet instead of the computer’s hard drive or local server. Cloud computing \nis also referred to as Internet-based computing, it is a technology where the resource is provided \nas a service through the Internet to the user. The data that is stored can be files, images, \ndocuments, or any other storable document. \n \nNeed for elasticity and scalability \nCloud Elasticity \nCloud elasticity refers to the ability of a cloud environment to dynamically and automatically \nexpand or compress infrastructural resources based on sudden fluctuations in demand. \nKey Characteristics: \nDynamic Adjustment: Automatically provisions extra compute, storage, or network resources \n(CPU, Memory, Bandwidth) when client access expands, and reduces them when traffic drops. \nCost Efficiency: Maximizes resource utilization and minimizes infrastructure costs. It is most \ncommonly associated with public cloud pay -per-use models whe re you only pay for the \nduration resources are consumed. \nHorizontal Scaling: Typically relies on scale-out arrangements (adding or removing instances \ndynamically) rather than upgrading existing hardware. \nBest For: Unpredictable workloads or scenarios where resource requirements fluctuate up and \ndown suddenly for specific time intervals. It is not practical for environments requiring a \npersistent infrastructure for a constant heavy workload."
+      },
+      {
+        "page": 4,
+        "text": "Mission-Critical Performance: Ensures that applications maintain performance requirements \nduring sudden spikes, preventing potential business losses due to downtime or latency. \nExample: Consider an online shopping site. During the Christmas festive season, the \ntransaction workload suddenly spikes. For this specific period , resources need to scale up to \nhandle the traffic. Once the holiday season ends, the deployed resources are automatically \nwithdrawn. Cloud elasticity perfectly addresses this temporary, dynamic need. \n \nCloud Scalability \nCloud scalability is used to handle steady, growing workloads where consistent performance \nis required over time. It fulfills the static needs of an organization as it expands. \nKey Characteristics: \nPersistent Deployment: Designed for handling steady, long-term growth rather than sudden, \ntemporary spikes. \nCapacity Planning:  Focuses on upgrading or adding resources to work efficiently with \ngrowing software or applications. \nPay-Per-Use: Like elasticity, scalability is often billed on a pay-per-use basis, but the baseline \nof usage consistently increases over time rather than fluctuating up and down. \nBest For: Workloads that remain high and increase statically over time. \nExample: Imagine you own a company that started with a small database. As your business \ngrows over the years, the size of your database consistently increases. To handle this heavier, \npermanent workload, you request your cloud vendor to scale up your database capacity. \n \nTypes of Scalability: \n1. Vertical Scalability (Scale-up)  \nIn this type of scalability, we increase the power of existing resources in the working \nenvironment in an upward direction."
+      },
+      {
+        "page": 5,
+        "text": "2. Horizontal Scalability: In this kind of scaling, the resources are added in a horizontal row. \n \n \n \n3. Diagonal Scalability  \nIt is a mixture of both Horizontal and Vertical scalability where the resources are added both \nvertically and horizontally."
+      },
+      {
+        "page": 6,
+        "text": "Difference between Cloud Elasticity and Scalability \n \nCharacteristics and Benefits of Cloud \nCharacteristics of Cloud Computing \nCloud computing delivers IT resources like servers, storage, and applications over the internet, \noffering flexibility, scalability, and cost efficiency. Its core characteristics defin e why it has \nbecome a preferred choice for businesses and individuals. \nOn-demand self -services: The Cloud computing services does not require any human \nadministrators, user themselves are able to provision, monitor and manage computing resources \nas needed."
+      },
+      {
+        "page": 7,
+        "text": "Broad network access:  The Computing services are generally provided over standard \nnetworks and heterogeneous devices. \nRapid elasticity: The Computing services should have IT resources that are able to scale out \nand in quickly and on a need basis. Whenever  the user require services it is provided to him \nand it is scale out as soon as its requirement gets over. \nResource pooling:  The IT resource (e.g., networks, servers, storage, applications, and \nservices) present are shared across multiple applications and occupant in an uncommitted \nmanner. Multiple clients are provided service from a same physical resource. \nMeasured service: The resource utilization is tracked for each application and occupant, it \nwill provide both the user and the resource provider with an  account of what has been used. \nThis is done for various reasons like monitoring billing and effective use of resource. \nMulti-tenancy: Cloud computing providers can support multiple tenants (users or \norganizations) on a single set of shared resources. \nVirtualization: Cloud computing providers use virtualization technology to abstract \nunderlying hardware resources and present them as logical resources to users. \nResilient computing: Cloud computing services are typically designed with redundancy and \nfault tolerance in mind, which ensures high availability and reliability. \nFlexible pricing models: Cloud providers offer a variety of pricing models, including pay-per-\nuse, subscription-based, and spot pricing, allowing users to choose the option that best suit s \ntheir needs. \nSecurity: Cloud providers invest heavily in security measures to protect their users' data and \nensure the privacy of sensitive information. \nAutomation: Cloud computing services are often highly automated, allowing users to deploy \nand manage resources with minimal manual intervention. \nSustainability: Cloud providers are increasingly focused on sustainable practices, such as \nenergy-efficient data centers and the use of renewable energy sources, to reduce their \nenvironmental impact."
+      },
+      {
+        "page": 8,
+        "text": "Benefits of Cloud Computing \n1. On-Demand Scalability \nMaintaining traditional IT infrastructure during economic downturns, rapid expansions, or \nsupply chain disruptions is incredibly difficult. The cloud provides the ability to scale \nhorizontally or vertically at your own speed. Whether you need to aggressively provision \nresources for a new launch or downscale during a quiet season, you only pay for what you use. \n \n2. Enhanced Security \nSmall businesses are heavily targeted by cyberattacks, yet many lack the resources to maintain \nan in-house cybersecurity team. Migrating to the cloud provides immediate access to industry-\nstandard data encryption, enterprise firewalls, and 24/7 automated network monitoring that \nwould otherwise be cost-prohibitive. \n \n3. Access to Modern Technology \nThe cloud is much more than storage; it is an innovation engine. Businesses can leverage cloud \nenvironments to access cutting -edge technologies without buying physical servers. This \nincludes tapping into robust computational power for Artificial Intelligence, Machine Learning \nmodels, Big Data Analytics, and containerization. \n \n4. Cost-Effectiveness \nBased on the 'pay -as-you-go' utility model, the cloud eliminates the CapEx (Capital \nExpenditure) of buying servers, hard drives, and networking gear. Instead, it shifts IT spending \nto a manageable OpEx (Operational Expenditure) model, removing the need to house, cool, \nand maintain physical data centers. \n \n5. Enterprise Mobility \nThe cloud untethers the workforce from the physical office. Employees can securely compute \nheavy tasks, access critical workflows, and manage data from anywhere in the world, fostering \na better work-life balance and enabling remote work models. \n \n6. Seamless Collaboration \nCloud services eradicate version-control nightmares. By keeping data in a centralized, cloud -\nhosted environment, multiple departments, clients, and partners can collaborate simultaneously \non the same document or application. This creates a \"single source of truth,\" reducing errors \nand duplication."
+      },
+      {
+        "page": 9,
+        "text": "7. Advanced Predictive Analytics \nCloud computing democratizes big data. Businesses can rent massive processing capacities on-\ndemand to run complex predictive analytics. By analyzing historical data, companies can \npredict market trends, automate low -value processes, an d optimize their business strategies \nbased on deep customer insights. \n \nCloud Service Models: IaaS, PaaS, SaaS \nCloud computing provides on -demand IT resources that can easily scale to meet business \ndemands. Rather than maintaining complex physical hardware and software on -premises, \norganizations can rent these services over the internet. \n \nThe cloud ecosystem is divided into three primary service models: IaaS, PaaS, and SaaS. Each \nmodel offers a different level of control, flexibility, and management, caterin g to different \nbusiness needs from raw infrastructure to ready-to-use software. \n  \n \n1. Infrastructure as a Service (IaaS) \nIaaS provides virtualized computing resources such as servers, storage, and networking over \nthe internet on a pay-as-you-go basis. It offers the highest level of control and flexibility, acting \nas the digital foundation for your IT operations. \n \nHow it works: It is like renting an empty plot of land. The provider gives you the space and \nthe utilities (hardware, network, storage), but you  are entirely responsible for building the \nhouse (installing the OS, middleware, and applications)."
+      },
+      {
+        "page": 10,
+        "text": "Characteristics: \n Eliminates the capital expense of buying physical servers. \n Offers complete control over operating systems, applications, and development \nframeworks. \n Resources can be scaled up or down instantly based on traffic spikes. \nReal-World Use Case:  A tech startup experiencing rapid growth can use IaaS to instantly \nincrease their server capacity to handle web traffic without needing to purchase, house, or wire \nexpensive physical hardware. \nTarget Audience: IT Administrators, Network Architects, and DevOps teams. \nPopular Providers: Amazon Web Services (AWS EC2), Microsoft Azure (Virtual Machines), \nGoogle Compute Engine (GCE), DigitalOcean. \n \n2. Platform as a Service (PaaS) \nPaaS offers a complete, managed cloud environment specifically designed for developing, \ntesting, running, and managing applications. It abstracts the underlying infrastructure so \ndevelopers can focus purely on writing code. \n \nHow it works: It is like renting an unfurnished house. The foundation, plumbing, and \nelectricity are already built and maintained by the landlord; you just need to bring your furniture \nand decorate (write and deploy your code). \n \nCharacteristics: \n Acts as a complet e toolkit for developers, providing pre -built tools, libraries, and \ndevelopment environments. \n The cloud provider handles all backend infrastructure, including server provisioning, \nOS patching, and network routing. \n Automates deployment workflows and allows for easy team collaboration. \nReal-World Use Case: A software development team building a mobile app can use PaaS to \nwrite their code and automatically connect it to managed databases and authentication services \nwithout ever having to configure a backend server. \nTarget Audience: Software Developers and Application Delivery Teams. \nPopular Providers: AWS Elastic Beanstalk, Google App Engine, Heroku, Microsoft Azure \nApp Service."
+      },
+      {
+        "page": 11,
+        "text": "3. Software as a Service (SaaS) \nSaaS is the most user-friendly and widely used cloud model. It delivers fully functional, ready-\nto-use software applications over the internet, typically on a subscription basis. \nHow it works:  It is like staying in a fully furnished, serviced hotel room. Everything is \nprovided, maintained, and cleaned for you; you simply walk in and use it. \n \nCharacteristics: \n Applications are ready to use immediately directly through a web browser or mobile \napp. \n The cloud provider handles absolutely everything: infrastructure, software updates, bug \nfixes, and security maintenance. \n Requires minimal technical expertise to operate. \nReal-World Use Case:  A global sales team uses a cloud -based CRM to track leads and \ncommunicate with clients. They simply log in via their browsers; they don't need to wor ry \nabout where the data is hosted or how the software is updated. \nTarget Audience: End-users, Business Professionals, and Consumers. \nPopular Providers:  Salesforce, Google Workspace (Gmail, Docs), Microsoft 365, Zoom, \nSlack. \n \nCloud Deployment Models \nCloud computing has become an essential part of modern business, offering unparalleled \nflexibility, scalability, and cost -effective solutions. However, to harness its full potential, \nselecting the most appropriate cloud deployment model is critical. Whether you are a small \nstartup or a massive enterprise, your choice will directly dictate your organization's security, \nscalability, and operational efficiency \nWhat is a Cloud Deployment Model? \nA cloud deployment model defines where your cloud infrastructure lives, who owns and \nmanages it, and how it is accessed. It establishes the boundaries of your cloud environment, \ndictating what you can customize, how resources are shared among users, and the overarching \npurpose of the setup. \nUnderstanding these models is the crucial first step for any business migrating to the cloud, as \neach offers distinct trade-offs in governance, cost, security, and management. \nPublic Cloud  \nThe public cloud delivers infrastructure and services over the internet to the general public or \nbroad industry groups. The infrastructure is entirely owned, managed, and maintained by a \nthird-party cloud service provider (e.g., Google Cloud, AWS, Microsoft Azure). Resources are \nshared among multiple tenants."
+      },
+      {
+        "page": 12,
+        "text": "Public Cloud \nAdvantages of the Public Cloud Model \nMinimal Investment: Operates on a pay -per-use model with no substantial upfront capital \nexpenditure. \nZero Setup & Maintenance:  The provider subsidizes and manages all physical hardware \nsetup and ongoing maintenance. \nDynamic Scalability:  On-demand reso urces are nearly limitless, scaling instantly to fulfill \nbusiness needs. \nDisadvantages of the Public Cloud Model \nLower Security: Because resources are shared publicly, meeting strict, high-level compliance \nand security standards can be challenging. \nLow Customization: The standardized environment offers little room for bespoke hardware \nor infrastructure customizations. \nPrivate Cloud  \nThe private cloud deployment model is the exact opposite of the public cloud deployment \nmodel. It's a one -on-one environment for a single user (customer). There is no need to share \nyour hardware with anyone else. The distinction between private and public clouds is in how \nyou handle all of the hardware. It is also called the \"internal cloud\" & it refers to the ability to \naccess s ystems and services within a given border or organization. The cloud platform is \nimplemented in a cloud-based secure environment that is protected by powerful firewalls and \nunder the supervision of an organization's IT department. The private cloud gives g reater \nflexibility of control over cloud resources."
+      },
+      {
+        "page": 13,
+        "text": "Private Cloud \nAdvantages of the Private Cloud Model \nTotal Control: You have complete command over IT operations, service integration, and user \nbehavior. \nElite Security and Privacy: Ideal for sensitive corporate data, allowing for strict access \ncontrols and physical isolation. \nLegacy System Support:  Highly customizable, making it capable of supporting legacy \napplications that cannot migrate to a public environment. \nDisadvantages of the Private Cloud Model \nHigh Cost: Personalized facilities, dedicated hardware, and internal IT management make this \nthe most expensive option. \nLimited Scalability: Scaling is restricted by the physical capacity of the dedicated hardware \npurchased. \nHybrid Cloud  \nBy bridging the public and private worlds with a layer of proprietary software, hybrid cloud \ncomputing gives the best of both worlds. With a hybrid solution, you may host the app in a safe \nenvironment while taking advantage of the public cloud's cost savings. Organizations can move \ndata and applications between different clouds using a combination of two or more cloud \ndeployment methods, depending on their needs."
+      },
+      {
+        "page": 14,
+        "text": "Hybrid Cloud \nAdvantages of the Hybrid Cloud Model \nUltimate Flexibility: Businesses can keep sensitive data secure on the private cloud while \nrunning heavy, non-sensitive applications on the public cloud. \nCost Efficiency: You only pay for additional public cloud capacity when you experience traffic \nspikes that your private cloud cannot handle (known as \"cloud bursting\"). \nTargeted Security: Data theft risks are reduced by keeping the most critical assets completely \nisolated. \nDisadvantages of the Hybrid Cloud Model \nDifficult to manage: Hybrid clouds are difficult to manage as it is a combination of both public \nand private cloud. So, it is complex. \nSlow data transmission: Data transmission in the hybrid cloud takes place through the public \ncloud so latency occurs. \nCommunity Cloud \nA community cloud is a collaborative infrastructure shared by a specific group of organizations \nfrom a similar industry that have shared concerns (e.g., compliance, security requirements, or \nmission goals). It can be managed internally by the organizations or by a third party."
+      },
+      {
+        "page": 15,
+        "text": "Community Cloud \nAdvantages of the Community Cloud Model \nCost Effective: It is cost -effective because the cloud is shared by multiple organizations or \ncommunities. \nSecurity: Community cloud provides better security. \nShared resources:  It allows you to share resources, infrastructure, e tc. with multiple \norganizations. \nCollaboration and data sharing: It is suitable for both collaboration and data sharing. \nDisadvantages of the Community Cloud Model \nLimited Scalability: Community cloud is relatively less scalable as many organizations share \nthe same resources according to their collaborative interests.  \nRigid in customization: As the data and resources are shared among different organizations \naccording to their mutual int erests if an organization wants some changes according to their \nneeds they cannot do so because it will have an impact on other organizations."
+      },
+      {
+        "page": 16,
+        "text": "Cloud Deployment Models Comparison \nThe overall Analysis of these models with respect to different factors is described below. \n \nWhen to choose which model \nMost of the organizations are shifting their businesses to cloud but the way to decide which \ncloud to settle on. There are 4 sorts of clouds namely Public, Private, Hybrid, and Community \ncloud. There are tons of aspects that one must consider before making a transition to the cloud. \nThe cloud has different service deployment models i.e., SaaS, IaaS, PaaS. Each of those \nservices has its benefits and shortcomings. The cloud to be chosen depends on what business \nrequirements are needed to be satisfied. Business  applications within the cloud are typically \nmentioned as SaaS. Iaas and PaaS are purchased to support SaaS. All are available in public, \nprivate, and hybrid Clouds. Determine the proper cloud deployment model which is suitable \nfor the business needs and size is the most important step. Before choosing the cloud there are \ncertain aspects to require care of: \n Understanding the aim, business requirements, virtues, and shortcomings of an \norganization. \n Know and access all data security, access, and privacy risks  associate with an \norganization like a power outage, communications breakdown, and alter of the service \nprovider. \n Verifying the certification of the cloud service provider you're considering and their \nunique qualities. \n Know the dimensions of a corporation. \n Skills to access all the possible feasibility of a deployment model. \n Know the in-house and outsource resources available for a corporation. \n Know the worth factor and migration process and time for each proposed model. \n Consider critically of application and level of support."
+      },
+      {
+        "page": 17,
+        "text": "Cloud Reference Architecture (NIST) \nThe NIST Cloud Computing Reference Model  is a conceptual framework designed to \nstandardize the roles, activities, and interactions within cloud computing environments. It \nprovides a vendor -neutral, high-level architecture to help stakeholders understand cloud \nservices, their components, and the relationships between them. \nKey Actors in the NIST Model \nThe model identifies five primary actors, each with distinct roles and responsibilities: \n1. Cloud Consumer: The end-user or organization that uses cloud services. Consumers \ninteract with service catalogs, establish service -level agreements (SLAs), and pay for \nthe services they consume. They can choose from service models like SaaS, PaaS, or \nIaaS, depending on their needs. \n2. Cloud Provider : The entity responsible for delivering cloud services. Providers \nmanage the infrastructure, deploy software, and ensure service availability. They \nhandle tasks like service orchestration, security, and privacy while offering s ervices \nthrough interfaces like APIs. \n3. Cloud Broker : Cloud brokers act as intermediaries between enterprises and cloud \nservice providers, simplifying multi -cloud management, cost optimization, and \ncompliance. \n4. Cloud Auditor: An independent entity that evaluates cloud services for compliance, \nsecurity, and performance. Auditors ensure that providers meet regulatory and \ncontractual obligations, such as privacy impact assessments and security audits. \n5. Cloud Carrier: The intermediary responsible for connectivity and transport of cloud \nservices between providers and consumers. Carriers ensure reliable and secure data \ntransmission, often governed by SLAs. \n \nArchitectural Components \nThe NIST model emphasizes several architectural components critical to cloud operations: \n Service Deployment: Defines deployment models such as public, private, community, \nand hybrid clouds. Each model varies in exclusivity and resource sharing. \n Service Orchestration : Involves the arrangement and management o f resources to \ndeliver cloud services. It includes layers like the physical resource layer, resource \nabstraction, and service layer. \n Cloud Service Management : Covers business support (e.g., billing, contracts), \nprovisioning and configuration, and portabili ty/interoperability to ensure seamless \nservice delivery. \n Security and Privacy : Addresses cross -cutting concerns like authentication, data \nprotection, and compliance. Security responsibilities are shared between providers and \nconsumers, depending on the service model."
+      },
+      {
+        "page": 18,
+        "text": "Virtualization Technologies \nA hypervisor, sometimes called a  virtual machine monitor (VMM) , creates and coordinates \nvirtual machines (VMs), an essential technology in modern computing infrastructure. A \nhypervisor is what makes virtualization of computers and servers possible. \nVirtualization is technology that you use to create virtual representations of hardware \ncomponents like server or network resources. The software representation uses the underlying \nphysical resource to operate as if it were a physical component. Similarly, a VM is a software-\nbased instance of a computer, with elements like memory, processing power, storage, and an \noperating system. \nVMs are preferable to using real machines thanks to their portability, scalability, cost, resource \noptimization, and reconfigurability. A VM requires a hypervisor to run.  \nHow they work: type 1 vs. type 2 hypervisors \nThe hypervisor is the coordination layer in virtualization technology. It supports multiple \nvirtual machines (VMs) running at once.  \n \n \nType 1 hypervisor \nThe type 1 hypervisor sits on top of the bare metal server and has direct access to the hardware \nresources. Because of this, the type 1 hypervisor is also known as a  bare metal hypervisor. It \ninteracts directly with the underlyi ng machine hardware. A bare metal hypervisor is installed \ndirectly on the host machine’s physical hardware, not through an operating system. In some \ncases, a type 1 hypervisor is embedded in the machine’s firmware. \nThe type 1 hypervisor negotiates directly with server hardware to allocate dedicated resources \nto VMs. It can also flexibly share resources, depending on various VM requests. \nType 2 hypervisor \nA Type 2 Hypervisor , also known as a  hosted hypervisor, is a virtualization software that \nruns on top of a host operating system (OS). Unlike Type 1 hypervisors, which interact directly"
+      },
+      {
+        "page": 19,
+        "text": "with hardware, Type 2 hypervisors rely on the host OS to manage hardware resources. This \nmakes them more accessible and easier to use for non-enterprise environments. \nThe Type 2 hypervisor operates as an application within the host OS. It uses the host OS to \ncommunicate with the underlying hardware, such as CPU, memory, and storage. Virtual \nmachines (VMs) created by the hypervi sor run as isolated environments, each with its own \nvirtualized hardware and operating system. However, the host OS retains priority over resource \nallocation, which can impact performance. \n \nKey differences: type 1 vs. type 2 hypervisors \nWhile type 1 and ty pe 2 hypervisors share the common goal to run and coordinate virtual \nmachines (VMs), they have some significant variations. \nResource allocation \nType 1 hypervisors directly access underlying machine resources. They can implement their \nown custom resource allocation strategies to service their VMs. \nType 2 hypervisors negotiate resource allocation with the operating system, which makes the \nprocess slower and less efficient. \nEase of management \nManaging a type 1 hypervisor and its VM configuration requires sys tem administrator-level \nknowledge, as it’s relatively complex. \nIn contrast, you can install and manage type 2 hypervisors as an application on an operating \nsystem. Even nontechnical users can operate them. \nPerformance \nType 1 hypervisors offer greater performance to their VMs. This is because they don’t need to \nnegotiate resources with the operating system or travel through the operating system layer. The \ntype 1 hypervisor offers dedicated underlying resources without any negotiation required. \nType 2 hypervisors must only use the resources that the operating system is willing to provide. \nIsolation \nType 1 hypervisors offer a greater degree of isolation for each virtual environment. There’s no \nshared layer like there is with the operating system for a type 2 hypervisor. This makes virtual \nmachines running on the type 1 hypervisor inherently more secure. However, updating and \npatching your virtual machine operating systems is a critical security activity. \nWhen to use: type 1 vs. type 2 hypervisors \nType 1 hypervisors are typically used in data centers, enterprise computing workload situations, \nweb servers, and other primarily fixed -use applications. Cloud computing environments run"
+      },
+      {
+        "page": 20,
+        "text": "bare metal hypervisors to offer the most performant virtual machines (VMs) for the underlying \nphysical hardware. Cloud providers also abstract away type 1 hypervisor management and offer \nVMs as cloud instances you can access through APIs. \nType 2 hypervisors are most often used in desktop and development environments, where \nworkloads are not as resource-intensive or critical to operations. They’re also preferred in cases \nwhere users want to simultaneously use two or more operating systems but only have access to \none machine. \n \nVM Lifecycle \nVM lifecycle management covers the end-to-end process of creating, configuring, operating, \nupdating, and retiring virtual machines (VMs). It ensures VMs remain compliant, performant, \nand aligned with operational requirements."
+      },
+      {
+        "page": 21,
+        "text": "A virtual machine (VM) is a software emulation of a physical machine, which allows \nmultiple operating systems to run on a single physical machine. The life cycle of a \nvirtual machine includes several stages, from creation to deletion. Here is a brief \nexplanation of each stage with a diagram: \n1. Creation: The ﬁrst stage of a VM's life cycle is creation. At this stage, the VM \nis created by allocating resources, such as memory, CPU, and storage, to the \nVM. A virtualization management tool, such as VMware vSphere, Microsoft \nHyper-V, or KVM, is used to create the VM. \n2. Conﬁguration: Once the VM is created, it needs to be conﬁgured with the \nappropriate settings, such as the amount of memory, CPU, and storage it will \nuse, as well as the network conﬁguration. Conﬁguration can be done manually \nor through automation tools, such as Ansible or Chef. \n3. Installation: The next stage is the installation of the operating system (OS) \nand any necessary software on the VM. This is done using an ISO image or \nnetwork installation. \n4. Deployment: After the installation of the OS and software, the VM is ready to"
+      },
+      {
+        "page": 22,
+        "text": "be deployed. At this stage, the VM is started, and it begins running its \napplications and services. \n5. Operation: The VM's primary function is to run applications and services. \nDuring the operation stage, the VM's performance and availability are \nmonitored to ensure that it is running correctly. \n6. Maintenance: VMs require regular maintenance to ensure optimal \nperformance and security. This includes updates, patches, and upgrades to \nthe OS and software. It also involves monitoring the VM's performance, \nsecurity, and resource usage. \n7. Backup and recovery: Backing up the VM's data is critical to ensure that data \nis not lost in the event of a failure. At this stage, the VM's data is backed up, \nand the backup is stored offsite. Recovery involves restoring the VM's data in \nthe event of a failure. \n8. Decommissioning: The ﬁnal stage of the VM's life cycle is decommissioning. \nAt this stage, the VM is removed from service, and its resources are released \nback to the pool. The VM's data is archived or deleted, and the VM is deleted. \nIn summary, the life cycle of a virtual machine includes several stages, from creation \nto decommissioning. Each stage is critical to ensure that the VM is conﬁgured, \ndeployed, and maintained correctly, and its data is backed up and recoverable \nExample \nLet's say that you are a system administrator for a small company that needs to set \nup a new virtual machine for a web application. Here is an example of the virtual \nmachine life cycle for this scenario: \n1. Creation: You create a new virtual machine using a virtualization management \ntool, allocating 2 vCPUs, 4 GB of RAM, and a 50 GB disk. You name the virtual"
+      },
+      {
+        "page": 23,
+        "text": "machine \"WebAppVM\" and choose to use Ubuntu 20.04 as the operating \nsystem. \n2. Conﬁguration: You conﬁgure the virtual machine by setting up the network, \nassigning an IP address, and installing necessary packages such as Apache, \nPHP, and MySQL. You also conﬁgure the ﬁrewall and set up SSH access for \nremote administration. \n3. Installation: You install Ubuntu 20.04 from an ISO image and install the \nrequired packages using the command line interface. \n4. Deployment: You start the virtual machine and launch the web application \n5. Operation: You monitor the performance of the virtual machine and the web \napplication, ensuring that they are running optimally. You also monitor \nresource usage, network traﬃc, and other performance metrics. \n6. Maintenance: You apply security patches and updates to the operating \nsystem and the web application. You also perform regular backups of the \nvirtual machine's data to prevent data loss in the event of a failure or disaster. \n7. Backup and recovery: You regularly back up the virtual machine's data and \nstore the backups offsite. In the event of a failure or disaster, you can use the \nbackup to restore the virtual machine's data. \n8. Decommissioning: When the web application is no longer needed, you \ndecommission the virtual machine by shutting it down, archiving or deleting \nits data and deleting the virtual machine itself. \nBy following this virtual machine life cycle, you can ensure that the virtual machine \nand web application are set up correctly, are maintained properly, and are secure and \nreliable throughout their lifecycle."
+      },
+      {
+        "page": 24,
+        "text": "Containers vs Virtual Machines"
+      },
+      {
+        "page": 25,
+        "text": "Overview of Cloud Providers \nAWS, Azure, Google Cloud core services \nThe major cloud providers, including AWS, Microsoft Azure, and Google Cloud Platform \n(GCP), dominate the market by offering a wide range of services and solutions tailored to \nvarious business needs. \nMajor Cloud Providers \n1. Amazon Web Services (AWS): \n Market Share: Approximately 32-34% of the global cloud market. \n Key Services : Offers over 250 services, including Elastic Compute Cloud \n(EC2) for scalable computing, Simple Storage Service (S3) for storage, a nd \nLambda for serverless computing. AWS is known for its extensive global \ninfrastructure, with 36 regions and over 100 availability zones, ensuring low \nlatency and high availability for users worldwide. \n Target Audience: Suitable for startups, enterprises, and government agencies, \nAWS is favored for its reliability, security, and comprehensive service offerings. \n2. Microsoft Azure: \n Market Share: Holds around 21-24% of the cloud market. \n Key Services: Provides over 200 services, including Infrastructure-as-a-Service \n(IaaS), Platform-as-a-Service (PaaS), and Software-as-a-Service (SaaS). Azure \nis particularly strong in hybrid cloud solutions and integrates seamlessly with \nMicrosoft products like Office 365. \n Target Audience : Popular among enterprises, especially tho se with existing \nMicrosoft infrastructure, Azure is recognized for its c ompliance and security \nfeatures."
+      },
+      {
+        "page": 26,
+        "text": "3. Google Cloud Platform (GCP): \n Market Share: Approximately 9-11% of the market. \n Key Services: Known for its strengths in data analytics, machine learning, and \ncontainerized applications, GCP offers services like BigQuery for data analysis \nand Kubernetes for container orchestration. \n Target Audience: GCP is favored by teams focused on data engineeri ng and \nmachine learning, providing a user-friendly experience for developers. \nOther Notable Cloud Providers \n IBM Cloud: Offers a mix of IaaS and PaaS, focusing on enterprise solutions and hybrid \ncloud environments. \n Oracle Cloud : Known for its database services and enterprise applications, Oracle \nCloud is tailored for businesses needing robust database solutions. \n Alibaba Cloud: A major player in Asia, Alibaba Cloud provides a wide range of cloud \nservices and is expanding its global presence. \n DigitalOcean: Targets developers and startups with simple, cost -effective cloud \nsolutions, particularly for web applications. \nService coverage comparison \nOf all three cloud computing technology providers, AWS — launched by Amazon in 2006 — \nhas been around the longest. Its key strength lies in having the broadest range of services. \nGCP is owned by Google and came two years after AWS. While it may not have the same \nservice range and infrastructural coverage as AWS and Azure, it thrives in the big data, AI \nand machine learning fields. \nAzure launched two years after GCP and four years after AWS. It has the highest number of \nregions, with its  key strengths being hybrid/multi -cloud security and ease of integration \nwith Microsoft products. \n \nCompute Service Microsoft Azure, Google Cloud and AWS compare in compute services \nwith AWS excelling in diversity, Azure standing out for Microsoft integration, and GCP \noffering cost-effectiveness. GCP also integrates well with Google’ s data analytics tools. All \nthree cloud providers offer similar compute cloud services."
+      },
+      {
+        "page": 27,
+        "text": "Storage Services Azure, AWS and Google Cloud all offer block, file and object storage, with \nAWS being feature -rich, GCP cost -effective for big data, and Azure ideal f or Microsoft \nintegration. They are scalable, managed storages used in place of physical storage devices. \n \nDatabase Services Azure, AWS and Google Cloud compare in database services with AWS \noffering vast options, Azure having simpler pricing, and GCP’s BigQuery excelling in data \nanalytics speed. They are pretty much the same as regular databases but with the added \nadvantage of scalability, flexibility and durability."
+      },
+      {
+        "page": 28,
+        "text": "Containerization and Docker Basics \nContainerization – process of packing an application as an image. \nDocker is the containerization platform that is used to package your application and all its \ndependencies together in the form of containers to make sure that your application works \nseamlessly in any environment which can be developed or tested or in production. Docker is a \ntool designed to make it easier to create, deploy, and run applications by using containers.  \nContainerization is a form of OS-based virtualization. \n It creates multiple isolated virtual units called containers in the userspace. \n All containers share the same host operating system kernel. \n Isolation between containers is achieved using: \n Namespaces (process, network, filesystem isolation) \n Resource control mechanisms (CPU, memory limits)"
+      },
+      {
+        "page": 29,
+        "text": "Introduction to Images, Containers, volumes, orchestration \nDocker Images - A Docker Image is a lightweight, standalone and executable software \npackage that includes everything needed to run an application: the code, a runtime, system \ntools, libraries and settings. \n The docker image includes the following to run a piece of software. \n Docker images are specific to both the operating system (OS) and the CPU architecture \nfor which they were built. \n \nIf a Dockerfile is the recipe, then a Docker Image is the perfectly packaged, ready-to-use meal \ncreated from that recipe. This package is completely portable, meaning it will run the exact \nsame way on your laptop, a teammate's computer, or a production server. \nComponents of a Docker Image \nA Docker image isn't one large, monolithic file. It's cleverly constructed from a series of layers \nand stored in a registry. \nLayers \nAn image is composed of a stack of read -only layers. Each instruction in \na Dockerfile (like FROM, COPY, RUN) creates a new layer on top of the previous one. \n Efficiency: When you change an instruction in your Dockerfile, Docker only rebuilds \nthat specific layer and the ones that follow it. This makes builds incredibly fast. \n Sharing: If multiple images share the same base layers (e.g., they all start with FROM \nubuntu:22.04), those layers are only stored once on your system. \nBase Image \nThis is the foundational layer of your image, specified by the FROM instruction in a Dockerfile. \nIt can be a minimal operating system like  alpine, a programming language runtime \nlike python:3.9-slim, or an application like nginx."
+      },
+      {
+        "page": 30,
+        "text": "Docker Registries \nA Docker Registry is a storage and distribution system for Docker images. It's a library where \nyou can pull official images, find images shared by the community, and push your own. \n Docker Hub: The default public registry and the largest library of container images. \n Private Registries: Companies often use private registries (like Amazon ECR, Google \nArtifact Registry, or Docker Hub private repos) to store their proprietary application \nimages securely. \n \nDocker Containers - A Container is a runnable instance of an image. It is the actual \"living\" \nprocess. When you start a container, Docker takes the read -only Image and adds a thin Read -\nWrite (R/W) layer on top of it. \nKey Concept: The R/W Layer \n Because the Image is read -only, the Container needs a place to write data (logs, temp \nfiles, database entries). \n Any changes made inside a running container (like creating a file) happen in this \ntemporary top layer. If you delete the container, this layer is destroyed, but the \nunderlying Image remains untouched. \nDocker volumes - Docker Volumes are persistent storage mechanisms managed by Docker \nthat allow containers to retain data beyond their lifecycle. They provide a reliable and efficient \nway to preserve data generated by containers by mounting a dedicated filesystem into the \ncontainer. This ensures data remains intact even if the container is stopped, removed, or \nrecreated. \nPersistent Storage with Docker Volumes \nDocker containers are ephemeral —once a container is removed, any data st ored within its \ninternal filesystem is lost. This is ideal for stateless apps but problematic for databases or \nservices that require data persistence. \nDocker Volumes solve this by decoupling the data from the container's lifecycle. By storing \ndata in a dedicated location on the host machine managed by Docker, you ensure: \n Data Durability:  Information persists even if the container is stopped, deleted, or \nupdated. \n Decoupling: Application logic stays in the container while persistent data lives \nindependently. \n Seamless Updates: You can swap containers or upgrade images without losing your \ndatabase or user uploads."
+      },
+      {
+        "page": 31,
+        "text": "Orchestration \nCloud Orchestration can be defined as the coordination, arrangement, or end-to-end automation \nof the deployment of services in a clou d-based environment. It introduces and enforces a \nworkflow for automated activities of various processes to deliver the desired service to its client. \nCloud Orchestration tools take full use of IaaS services providers to reach out to fully \nautomated deployment, deleting the manual processes which are considered time -consuming. \nSome Orchestration tools are Terraform, Ansible AWS Cloud Formation, etc."
+      },
+      {
+        "page": 32,
+        "text": "Docker  \n \nInstalling Docker \nBefore you can start using Docker CLI commands, you need to install Docker on your machine. \nDocker provides detailed instructions for various operating systems —Windows, macOS, and \nLinux. The installation process typically involves downloading Docker Desktop for Windows \nand macOS or installing Docker Engine for Linux distributions. \nInstallation Steps \n1. Download Docker: Visit the Docker website and download the appropriate version for \nyour operating system. \n2. Install Docker: Follow the installation instructions specific to your OS. On Linux, you \nmight need to configure the Docker  repository and install Docker via your package \nmanager. \n3. Start Docker: Ensure Docker is running on your machine. On  Docker Desktop, you \nmay see an icon in your system tray indicating that Docker is active. \n4. Test Installation: Open your terminal and run the command: \ndocker --version \nThis should return the installed version of Docker if everything was set up correctly. \nDocker CLI basics \nThe Docker CLI allows users to interact with the Docker daemon and manage Docker \ncontainers, images, networks, and volumes. The basic syntax of any Docker command is: \ndocker [OPTIONS] COMMAND [ARG...] \nTo get familiar with Docker commands, you can always start by running:"
+      },
+      {
+        "page": 33,
+        "text": "docker help \nThis command will provide you with a brief overview of available commands. \nEssential Docker CLI Commands \n1. Docker Images \nImages are the blueprints for containers. They contain everything needed to run applications, \nincluding the code, libraries, and runtime. The following commands are fundamental when \nworking with Docker images. \na. Listing Images \nTo list all the images on your local system, use: \ndocker images \nThis command displays a list of images, including their repository, tag, image ID, creation date, \nand size. \nb. Pulling an Image \nTo download a Docker image from Docker Hub, use: \ndocker pull [IMAGE:TAG] \nFor example: \ndocker pull nginx:latest \nThis command fetches the latest version of the Nginx image. \nc. Building an Image \nYou can create your own Docker image using a Dockerfile. Use the following command to \nbuild an image: \ndocker build -t [IMAGE_NAME:TAG] [PATH_TO_DOCKERFILE] \nExample: \ndocker build -t myapp:1.0 . \nThis command builds an image named myap p with the tag 1.0 using the Dockerfile in the \ncurrent directory. \nd. Removing an Image \nTo remove an image, use:"
+      },
+      {
+        "page": 34,
+        "text": "docker rmi [IMAGE_ID] \nIf an image is being used by a container, you might need to remove the container first or use \nthe -f flag to force the removal. \n2. Docker Containers \nContainers are instances of Docker images that run applications. You can create, start, stop, \nand manage containers using various Docker CLI commands. \na. Listing Containers \nTo list running containers, use: \ndocker ps \nTo see all containers (including stopped ones), run: \ndocker ps -a \nb. Running a Container \nTo create and start a new container from an image, use: \ndocker run [OPTIONS] [IMAGE:TAG] \nFor example, to run a new Nginx container: \ndocker run -d -p 80:80 nginx:latest \nThe -d option runs the container in detached mode, and -p maps port 80 of the container to port \n80 of the host. \nc. Stopping a Container \nTo stop a running container, use: \ndocker stop [CONTAINER_ID] \nYou can also use the container name as an identifier. \nd. Removing a Container \nTo remove a stopped container, use: \ndocker rm [CONTAINER_ID] \nFor removing all stopped containers, you can run: \ndocker container prune"
+      },
+      {
+        "page": 35,
+        "text": "e. Viewing Logs \nTo view the logs from a container, use: \ndocker logs [CONTAINER_ID] \nThis is particularly useful for debugging applications running inside a container. \n3. Docker Networks \nDocker allows you to create and manage networks, enabling containers to communicate with \neach other. \na. Listing Networks \nTo see all available networks, use: \ndocker network ls \nb. Creating a Network \nTo create a new network: \ndocker network create [NETWORK_NAME] \nExample: \ndocker network create my_network \nc. Connecting a Container to a Network \nTo connect an existing container to a network: \ndocker network connect [NETWORK_NAME] [CONTAINER_ID] \nd. Disconnecting a Container from a Network \nTo disconnect a container from a network: \ndocker network disconnect [NETWORK_NAME] [CONTAINER_ID] \n4. Docker Volumes \nVolumes are used to persist data generated by and used by Docker containers. They provide a \nway to store data outside of containers, allowing data to remain intact even if containers are \nstopped or removed."
+      },
+      {
+        "page": 36,
+        "text": "a. Listing Volumes \nTo list all volumes, use: \ndocker volume ls \nb. Creating a Volume \nTo create a new volume: \ndocker volume create [VOLUME_NAME] \nc. Inspecting a Volume \nTo get detailed information about a volume: \ndocker volume inspect [VOLUME_NAME] \nd. Removing a Volume \nTo remove a volume: \ndocker volume rm [VOLUME_NAME] \nTo remove all unused volumes: \ndocker volume prune \nMicroservices vs Monolithic Architecture \nMicroservices Architecture is a software design approach in which an application is divided \ninto multiple small, independent services. Each service focuses on a specific business \ncapability and communicates with other services through lightweight APIs or messaging \nsystems. \n Each service handles a specific business functionality. \n Services operate independently and communicate through APIs or message brokers. \n Individual services can be deployed without affecting other services. \n Services can be scaled based on their specific workload and requirements. \n Different services can use different technologies, databases, or programming languages. \nMonolithic architecture \nMonolithic Architecture is a traditional software architecture where all application components, \nsuch as the user interface, business logic, and data access layer, are developed and deployed as"
+      },
+      {
+        "page": 37,
+        "text": "a single application. This approach is simple to build and manage for small to medium -sized \napplications. \n All application modules are maintained within one project. \n The entire application is typically deployed as one package. \n Development, testing, and deployment are managed from a single application. \n Modules are closely connected, making changes more challenging as the application \ngrows. \nDifferences between Monolithic and Microservice Architecture: \n \nAdvantages and Limitations \nPros of Microservices Architecture \nMicroservices shine in complex, scalable environments. Here’s the upside: \n Scalability on Steroids: Scale individual services as needed. For high-traffic features, \nadd resources precisely where they’re required, optimising costs in cloud setups  like \nAWS or Azure."
+      },
+      {
+        "page": 38,
+        "text": " Independent Development and Deployment:  Teams own services end -to-end, \nenabling parallel work. Adopt the best tech for each (e.g., Node.js for real-time, Python \nfor ML). Continuous deployment becomes feasible. \n Fault Isolation and Resili ence: If one service fails, others keep running. Implement \ncircuit breakers (e.g., with Hystrix or Resilience4j) to prevent cascading failures. \n Faster Time-to-Market: Small, focused services mean quicker iterations. Great for \nagile teams experimenting with features. \nCons of Microservices Architecture \n Operational Overhead:  Managing dozens of services requires robust DevOps, \nmonitoring, logging, and service discovery. Distributed tracing with tools like Jaeger is \nessential, but it adds setup time. \n Network Latency and Complexity: Inter-service calls introduce delays and potential \nfailures. Data consistency across services (e.g., via eventual consistency) can be tricky, \nleading to sagas or two-phase commits. \n Higher Resource Consumption: Each service needs its own runtime, increasing costs. \nTesting becomes distributed unit tests are easy, but integration tests are a headache. \n Team and Organisational Challenges:  Requires a mature culture (e.g., DevOps \nmindset). Small teams might drown in the overhead. \nPros of Monolithic Architecture \n Simplicity in Development and Deployment:  With everything in one place, \nonboarding new developers is a breeze. No need to juggle multiple services, just clone \nthe repo and start coding. Deployment is straightforward; push once, and you’re done. \n Easier Debugging and Testing: Since it’s one codebase, end-to-end testing is simpler. \nTools like integrated debuggers work seamlessly across the app. \n Performance Efficiency: No network overhead from inter -service calls. Data flows \nquickly within the same process, making it great for low-latency needs. \n Cost-Effective for Small Teams: Lower operational complexity means fewer DevOps \nresources. Ideal for startups bootstrapping quickly. \nCons of Monolithic Architecture \n Scalability Challenges:  Scaling on e part (e.g., the payment module during Black \nFriday) means scaling everything, wasting resources. \n Tight Coupling Leads to Fragility:  A bug in one area can crash the whole system. \nRefactoring becomes risky as the codebase balloons. \n Slower Development Velocity: Large teams step on each other’s toes with merge \nconflicts. Adopting new tech (e.g., switching languages) requires rewriting the entire \napp. \n Deployment Downtime:  Every update redeploys the monolith, potentially causing \noutages unless you have blue-green deployments in place."
+      },
+      {
+        "page": 39,
+        "text": "Case study examples \nMonolithic Examples \n Etsy (Early Days):  Etsy started as a Ruby on Rails monolith, which allowed rapid \nprototyping for their handmade goods marketplace. It was simple to maintain with a \nsmall team, but as traffic grew, they modularised parts without fully breaking them \napart. Pros in action: Quick iterations in a startup phase. \n Basecamp: The project management tool remains largely monolithic. Why? Their \nteam prioritises simplicity over hyper -scalability, avoiding microservices’ complexity \nfor a product that doesn’t need massive independent scaling. \nMicroservices Examples \n Netflix: Pioneers of microservices, Netflix transitioned from a monolith to handle \nexplosive growth. Services like recommendation engines a nd streaming are \nindependent, allowing them to scale during peak hours (e.g., evenings). They use tools \nlike Spinnaker for deployments. Result? 99.99% uptime and personalised experiences \nfor millions. \n Uber: Uber’s ride -hailing app uses microservices for ma ps, payments, and driver \nmatching. This lets them iterate fast — e.g., updating payment logic without affecting \nrouting. But it wasn’t always smooth; early monolith roots led to a painful migration, \nhighlighting the cons of retrofitting. \n Amazon: Interestingly, Amazon evolved from a monolith to microservices. Today, \nAWS itself is built on microservices, enabling services like S3 and EC2 to scale \nindependently. A key lesson: Microservices support massive ecosystems but require \nstrong governance. \nMulti-tenancy and Interoperability \nMulti-tenancy is a software architecture where a single instance of an application serves \nmultiple customers, known as tenants. Each tenant's data is isolated and remains invisible to \nothers, ensuring privacy and security. This approach is particularly beneficial in Software as a \nService (SaaS) environment , where it allows for cost savings, scalability, and easier \nmanagement of shared resources. \nInteroperability refers to the ability of different systems or components to work together \neffectively. In the context of multi -tenancy, interoperability ensures that multiple tenants can \nutilize shared resources while maintaining data privacy and security. This is crucial for \nmaintaining a seamless user experience across different tenants while  ensuring that each \ntenant's data is protected from unauthorized access. \nTenant isolation APIs \nTenant isolation is the practice of enforcing strict security boundaries between customers in a \nmulti-tenant system, ensuring that data, authentication flows, to kens, and infrastructure \nbelonging to one tenant cannot be accessed by another. In authentication and SSO systems, \ntenant isolation is especially critical because identity misrouting, shared tokens, or reused \nconfigurations can lead to cross-tenant access and security breaches. Effective tenant isolation"
+      },
+      {
+        "page": 40,
+        "text": "requires consistent enforcement across application logic, identity providers, token issuance, \ndata access, and infrastructure. \nIn a multi -tenant system,  tenant isolation  ensures that each tenant’s data, requests, and \npermissions remain fully separated from others. At the API level, this typically involves: \n Authentication with tenant-bound tokens \n Authorization enforcing tenant context \n Routing or filtering resources by tenant \n Prevention of cross-tenant access \n Optional per-tenant rate limits or throttling \n Optional per-tenant compute/runtime isolation \nBut in real systems, isolation is not one thing. It is a set of enforced boundaries across multiple \nlayers: \n Request handling \n Identity routing \n Token issuance \n Data access \n Infrastructure and secrets \n Operations and observability \nTwo users can share: \n The same email username \n The same role name \n Even the same identity provider \nand still must remain completely isolated if they belong to different tenants."
+      },
+      {
+        "page": 41,
+        "text": "Vendor lock-in issues \nTenant isolation APIs can create vendor lock -in when SaaS applications become tightly \ncoupled to provider -specific mechanisms for enforcing cross -tenant boundaries, limiting \nportability and increasing migration costs. \nVendor Lock-In in Tenant Isolation \nVendor lock-in occurs when an application or service becomes deeply dependent on a specific \nAPI or cloud provider , making it difficult, costly, or risky to switch to another provider or \nplatform. In the context of tenant isolation APIs, this dependency can manifest in several ways: \n Provider-Specific Authentication and Connectors: Many tenant isolation APIs, such \nas those in Power Platform, rely on Microsoft Entra ID -based authentication. \nApplications built around these connectors may not function correctly if migrated to a \ndifferent platform. \n Custom Data Mapping and Policies : SaaS applications often implement tenant \nisolation using provider-specific rules or allow lists. Migrating these policies to another \nprovider may require rewriting logic, reconfiguring access controls, and extensive \ntesting. \n Proprietary API Features: Some cloud providers offer unique isolation mechanisms \nor monitoring tools that are not standardized. Using these featur es can accelerate \ndevelopment but increases coupling to the provider. \nRisks of Vendor Lock-In \n1. Reduced Flexibility: Switching providers becomes complex if tenant isolation logic is \ntightly integrated with proprietary APIs. \n2. Increased Costs : Migration may req uire significant engineering effort, data \ntransformation, and retraining teams. \n3. Operational Risk: Dependence on a single provider can expose the system to outages, \nSLA changes, or policy updates that affect tenant isolation enforcement. \n4. Innovation Constraints: Organizations may struggle to adopt better or more suitable \ntechnologies offered by other platforms due to lock-in. \nMitigation Strategies \nTo reduce vendor lock-in while maintaining tenant isolation: \n Abstraction Layers: Introduce an internal interface between your application and the \ntenant isolation API. This allows switching providers with minimal changes to business \nlogic. \n Standardized Protocols : Use open standards for authentication, aut horization, and \ndata access wherever possible to improve portability. \n Multi-Cloud or Hybrid Approaches : Design tenant isolation mechanisms that can \noperate across multiple cloud providers, reducing dependency on a single ecosystem. \n Policy Configuration Man agement: Centralize tenant isolation rules and allow \ndynamic configuration to minimize hard-coded dependencies on provider-specific APIs."
+      },
+      {
+        "page": 42,
+        "text": " Containerization and Infrastructure as Code : Encapsulate services and policies in \nportable containers or scripts to si mplify migration and replication across \nenvironments.  \nLegal and Regulatory Issues \nGDPR, HIPAA, data locality and compliance \nCloud computing raises complex legal and regulatory challenges, including data privacy, \nsecurity, cross-border jurisdiction, and provider liability, requiring compliance with evolving \nnational and international frameworks. \nThe GDPR, HIPAA, and CCPA are key regulations that govern data privacy and compliance \nin cloud computing. These regulations require organizations to ensure the pr otection of \npersonal data and to comply with specific requirements for data handling, storage, and \nprocessing. Compliance involves understanding the applicable regulations, implementing \nrobust security measures, and ensuring data minimization, consent, and  data subject rights. \nOrganizations must also consider data residency laws and industry -specific requirements to \nensure regulatory compliance and avoid potential fines and business disruptions. \nData Privacy and Protection \nCloud computing involves storing a nd processing large volumes of sensitive data, which \ntriggers privacy and data protection obligations. Organizations must comply with laws such \nas the EU’s GDPR, which governs consent, data subject rights, and cross-border transfers, and \nin India, the  Digital Personal Data Protection Act, 2023 , which mandates consent -based \nprocessing and conditional cross -border data transfers . Failure to comply can result in \nsignificant penalties and reputational damage. \nSecurity and Liability \nCloud service providers ( CSPs) are responsible for securing infrastructure, but  ultimate \nliability often rests with the data owner . Legal frameworks require organizations to \nimplement adequate security measures to prevent breaches, unauthorized access, and cyber-\nattacks. In sector s like healthcare, compliance with  HIPAA in the U.S. is critical, while \nfinancial services must adhere to stringent  FinTech regulations to protect sensitive financial \ndata. \nJurisdiction and Cross-Border Data Transfers \nCloud data may be stored across multiple countries, creating  jurisdictional challenges . \nOrganizations must navigate  conflicting national laws , data localization requirements, and \ncontractual obligations with CSP. In India, the abse nce of a dedicated cloud law complicates \ncross-border operations, though initiatives like GI Cloud (Meghraj) and the Draft Data Centre \nPolicy aim to support sovereignty and compliance. \nContractual and Regulatory Compliance \nCloud agreements often involve  complex contractual terms , including service -level \nagreements (SLAs), liability clauses, and data handling responsibilities. Organizations must"
+      },
+      {
+        "page": 43,
+        "text": "ensure regulatory compliance across sectors, including healthcare, finance, and government, \nwhere non -compliance can lead to legal penalties and operational risks . The Indian legal \nframework currently relies on general statutes like the IT Act, 2000, the Indian Contract Act, \n1872, and the  Arbitration and Conciliation Act, 1996 , highlighting the need for updated, \ncloud-specific regulations  \nCase Study Discussion \nEnterprise cloud adoption roadmap \nEnterprise Cloud Adoption \nEnterprise cloud adoption refers to transitioning an organization’s IT infrastructure and \napplications from traditional on -premises solutions to cloud -based services. It involves \nutilizing the power of cloud computing to store, manage, and process data and applications in \na more secure, scalable, and cost-effective manner.  \nAdopting cloud technology enables organizations to access resources and services on-demand \nfrom anywhere in the world without the need for physical hardware and software installations, \nreducing the burden on IT staff and lowering operational costs.  \nImportance of Cloud Adoption Strategy for Businesses \nThe importance of a cloud adoption strategy for businesses cannot be oversta ted. Many \norganizations are realizing the benefits of cloud computing and are transitioning from \ntraditional on-premises solutions to cloud-based services.  Here’s why: \n Cost Efficiency: By using cloud services, businesses can save money on expensive \nhardware and maintenance costs. They only pay for the resources they use, which can \nresult in significant savings. \n Scalability: Cloud services allow businesses to easily scale up or down based on their \nneeds. This flexibility is especially beneficial for businesses with fluctuating demands. \n Accessibility: Cloud services can be accessed from anywhere with an internet \nconnection, making it easier for employees to work remotely or collaborate with team \nmembers in different locations. \n Disaster Recovery:  Cloud s ervices offer reliable backup and recovery solutions, \nensuring that businesses can quickly recover data in the event of a disaster. \n Competitive Advantage: Businesses adopting cloud services can innovate faster and \nrespond more quickly to market changes, giving them a competitive edge. \nA well -thought-out cloud adoption strategy can help businesses reduce costs, improve \nflexibility, enhance security, and gain a competitive advantage in today’s digital economy. \nMigration challenges and best practices \nCloud migration is the process of moving digital assets-data, applications, and workloads-from \non-premises infrastructure to cloud solutions. The promise is clear: lower costs, improved \nscalability, and faster innovation. But as adoption accelerates, so do the c loud migration \nchallenges. According to Gartner, 83% of data migration projects fail or exceed their budget, \nmaking it essential to plan, strategize, and anticipate roadblocks."
+      },
+      {
+        "page": 44,
+        "text": "Benefits of Cloud Migration \nBefore tackling the challenges, let’s ground oursel ves in why so many organizations are \nmaking the move: \n Cost-effectiveness: Pay for what you use, eliminate hardware costs, and avoid over -\nprovisioning. \n Scalability and flexibility: Instantly scale resources up or down to meet demand. \n Improved performance: Access the latest hardware, security, and software updates. \n Business continuity: Built-in disaster recovery and backup options for resilience. \n Faster innovation: Deploy new applications and services rapidly. \n Collaboration: Enable remote work and global teamwork with cloud-based tools. \n Sustainability: Reduce your carbon footprint with energy-efficient infrastructure. \nChallenges faced during Cloud Migration \nLack of a clear Cloud Migration strategy \nMany organizations jump into migration without a clear plan. Th is leads to cost overruns, \ndelays, and failed projects. \nSkills gap \nCloud migration requires specialized expertise. Many teams lack the necessary skills in cloud \narchitecture, security, and operations, making execution difficult. \nSecurity and compliance risks \nMoving sensitive data to the cloud introduces new vulnerabilities. Ensuring compliance with \nregulations like GDPR or HIPAA is a major concern. \nCost management \nCloud promises savings, but costs can spiral without careful monitoring and optimization. \nData Migration complexities \nTransferring large volumes of data, especially from legacy systems, can result in data loss, \ncorruption, or downtime. \nVendor lock-in \nRelying on a single provider can limit flexibility and make future migrations expensive and \ncomplex. \nLegacy system compatibility \nOlder applications may not work well in the cloud, requiring refactoring or replacement."
+      },
+      {
+        "page": 45,
+        "text": "Downtime and service disruption \nEvery minute of downtime can cost thousands. Ensuring business continuity during migration \nis critical. \nChange management and adoption resistance \nChange is hard. Employees may resist new systems, slowing down migration and reducing \nROI. \nStrategies and best practices to overcome Cloud Migration challenges \nStart with a Robust Cloud Migration strategy \nDefine cl ear objectives, assess risks, and create a detailed migration plan. Involve all \nstakeholders and set measurable KPIs. \nAddress skills gaps early \nInvest in cloud training, hire experienced professionals, or partner with managed service \nproviders to fill expertise gaps. \nPrioritize security and compliance \nEncrypt data in transit and at rest, implement strong IAM, and choose providers with proven \ncompliance certifications. Regularly audit security settings and monitor for threats. \nManage costs proactively \nUse cloud-native cost management tools, monitor usage, right-size resources, and set spending \nalerts. Adopt a phased migration to spread costs. \nTackle Data Migration challenges \nPlan incremental transfers, use robust migration tools, and validate data integrity b efore and \nafter migration. Cleanse and standardize data to ensure quality. \nAvoid vendor lock-in \nAdopt a multi-cloud or hybrid cloud strategy, use open standards, and design for portability to \nmaintain flexibility. \nEnsure legacy system compatibility \nAssess legacy systems, use middleware when needed, and consider refactoring or retiring \noutdated applications."
+      },
+      {
+        "page": 46,
+        "text": "Minimize downtime \nSchedule migrations during off -peak hours, use redundant systems, and communicate with \nusers about expected impacts. Implement live migration where possible. \nLead change management \nCommunicate early, provide training, and involve stakeholders in planning. Build buy -in and \naddress resistance proactively."
+      }
+    ],
+    "summary": "Utility Computing (Late 1990-2000) \nUtility Computing is a computing model that defines service provisioning techniques for \nservices such as compute services along with other major services such as storage, \ninfrastructure, etc which are provisioned on a pay-per-use basis. UNIT – 1 \nCloud Computing Fundamentals and Architecture \n \nIntroduction to Cloud Computing \nCloud computing allows users to access a wide range of services stored in the cloud or on the \nInternet.  Key Services : Offers over 250 services, including Elastic Compute Cloud \n(EC2) for scalable computing, Simple Storage Service (S3) for storage, a nd \nLambda for serverless computing. Removing a Volume \nTo remove a volume: \ndocker volume rm [VOLUME_NAME] \nTo remove all unused volumes: \ndocker volume prune \nMicroservices vs Monolithic Architecture \nMicroservices Architecture is a software design approach in which an application is divided \ninto multiple small, independent services. On-demand self -services: The Cloud computing services does not require any human \nadministrators, user themselves are able to provision, monitor and manage computing resources \nas needed.",
+    "topics": [
+      {
+        "name": "Cloud",
+        "confidence": 70,
+        "page": 17
+      },
+      {
+        "name": "Data",
+        "confidence": 70,
+        "page": 42
+      },
+      {
+        "name": "Docker",
+        "confidence": 70,
+        "page": 32
+      },
+      {
+        "name": "Services",
+        "confidence": 70,
+        "page": 36
+      },
+      {
+        "name": "Computing",
+        "confidence": 70,
+        "page": 2
+      },
+      {
+        "name": "Resources",
+        "confidence": 70,
+        "page": 7
+      },
+      {
+        "name": "Service",
+        "confidence": 70,
+        "page": 17
+      },
+      {
+        "name": "Security",
+        "confidence": 70,
+        "page": 17
+      },
+      {
+        "name": "Applications",
+        "confidence": 70,
+        "page": 26
+      },
+      {
+        "name": "Machine",
+        "confidence": 70,
+        "page": 23
+      }
+    ],
+    "word_count": 10410,
+    "character_count": 71459
+  },
+  {
+    "id": "688453d84f0f4257a5b21fa962ad9e76",
+    "name": "Data_Communication_Networks.pdf",
+    "original_name": "Data_Communication_Networks.pdf",
+    "stored_name": "688453d84f0f4257a5b21fa962ad9e76.pdf",
+    "type": "pdf",
+    "subject_id": "6b52957a30ec4fbc8eb00dffb991a4b0",
+    "subject_name": "Data Communication Network",
+    "page_count": 1,
+    "pages": [
+      {
+        "page": 1,
+        "text": ""
+      }
+    ],
+    "summary": "No readable text was found.",
+    "topics": [],
+    "word_count": 0,
+    "character_count": 0
+  },
+  {
+    "id": "a9c9295122ed462a85dffa487a4c03fe",
+    "name": "DCN_MCA_Unit1_and_Unit2_Notes.pdf",
+    "original_name": "DCN_MCA_Unit1_and_Unit2_Notes.pdf",
+    "stored_name": "a9c9295122ed462a85dffa487a4c03fe.pdf",
+    "type": "pdf",
+    "subject_id": "6b52957a30ec4fbc8eb00dffb991a4b0",
+    "subject_name": "Data Communication Network",
+    "page_count": 224,
+    "pages": [
+      {
+        "page": 1,
+        "text": "MCA - SEM III\nDr. M. Pandiyan M.C.A.,M.Phil,NET.,SET.,Ph.D\nAssistant Professor,\nDepartment of Computer Application,\nSRMIST, FSH Campus,\nChennai.\nData Communication Networks"
+      },
+      {
+        "page": 2,
+        "text": "What is Computer Network?\n• Computer Network is a group of computers \nconnected with each other through wires, optical \nfibres or optical links so that various devices can \ninteract with each other through a network.\n• The aim of the computer network is the sharing of \nresources among various devices.\n• In the case of computer network technology, there \nare several types of networks that vary from simple \nto complex level"
+      },
+      {
+        "page": 3,
+        "text": "Evolution of Networks\nARPANET (Advanced Research Agency Network):\n• ARPANET was the network that became the basis for the\nInternet. It was the first network that came into existence in 1969,\nwhich was designed and named by the Advanced Research\nProjects Agency (ARPA) and US Department of Defence (DoD).\n• It was where a bunch of PCs were associated at various\ncolleges and US DoD for sharing of information and\nmessages and playing long separation diversions and\nassociating with individuals to share their perspectives."
+      },
+      {
+        "page": 4,
+        "text": "• NSFNET (National Science Federation Network):\nIn mid 80’s another federal agency, NSFNET (National Science\nFederation Network) created a new network which was more\ncapable than ARPANET and became the first backbone\ninfrastructure for the commercial public Internet.\n• Its main aim was to use network only for academic research and\nnot for any kind of private business activity. Later, many\nprivately owned businesses with their very own private systems\njoined with ARPANET and NSFNET to make more capable and\nwide network, the Internet.\nEvolution of Networks"
+      },
+      {
+        "page": 5,
+        "text": "Evolution of Networks\nARPANET + NSFNET + PRIVATE NETWORKS = INTERNET"
+      },
+      {
+        "page": 6,
+        "text": "Internet\nInternet:\n•In the Internet, which is a network of networks, came into\nexistence.\n•The internet has evolved from ARPANET.\n•The internet is a globally connected network system that\nutilizes TCP/IP to transmit information.\n•It allows computers of different types to exchange\ninformation and is known as internet."
+      },
+      {
+        "page": 7,
+        "text": "Data Communication is defined as exchange of data between two devices via\nsome form of transmission media such as a cable, wire or it can be air or vacuum\nalso. For occurrence of data communication, communicating devices must be a\npart of communication system made up of a combination of hardware or\nsoftware devices and programs.\nData Communication System Components: \nThere are mainly five components of a data communication system:\n1. Message\n2. Sender\n3. Receiver\n4. Transmission Medium\n5. Set of rules (Protocol)\nAll above mentioned elements are described below:"
+      },
+      {
+        "page": 8,
+        "text": ""
+      },
+      {
+        "page": 9,
+        "text": "Computer Network Types\nA computer network is a group of computers linked to \neach other that enables the computer to communicate \nwith another computer and share their resources, data, \nand applications.\nA computer network can be categorized by their size. \nA computer network is mainly of four types:\n• LAN(Local Area Network)\n• PAN(Personal Area Network)\n• MAN(Metropolitan Area Network)\n• WAN(Wide Area Network)"
+      },
+      {
+        "page": 10,
+        "text": "LAN(Local Area Network)\n• Local Area Network is a group of computers \nconnected to each other in a small area such as \nbuilding, office.\n• LAN is used for connecting two or more personal \ncomputers through a communication medium such \nas twisted pair, coaxial cable, etc.\n• The data is transferred at an extremely faster rate in \nLocal Area Network.\n• Local Area Network provides higher security."
+      },
+      {
+        "page": 11,
+        "text": "LAN(Local Area Network)"
+      },
+      {
+        "page": 12,
+        "text": "PAN(Personal Area Network)\nPersonal Area Network is a network arranged within an individual \nperson, typically within a range of 10 meters.\nPersonal Area Network is used for connecting the computer \ndevices of personal use is known as Personal Area Network.\nThomas Zimmerman was the first research scientist to bring the \nidea of the Personal Area Network.\nPersonal Area Network covers an area of 30 feet. Personal \ncomputer devices that are used to develop the personal area network \nare the laptop, mobile phones,\nmedia player and play stations."
+      },
+      {
+        "page": 13,
+        "text": "PAN(Personal Area Network)"
+      },
+      {
+        "page": 14,
+        "text": "Types of Personal Area Network\nTwo types of PAN\n• Wired Personal Area Network\n• Wireless Personal Area Network\n• Wireless Personal Area Network: Wireless \nPersonal Area Network is developed by simply \nusing wireless technologies such as WiFi, \nBluetooth. It is a low range network.\n• Wired Personal Area Network: Wired Personal \nArea Network is created by using the USB."
+      },
+      {
+        "page": 15,
+        "text": "MAN(Metropolitan Area Network)\n• A metropolitan area network is a network that \ncovers a larger geographic area by interconnecting \na different LAN to form a larger network.\n• Government agencies use MAN to connect to the \ncitizens and private industries.\n• In MAN, various LANs are connected to each \nother through a telephone exchange line.\n• It has a higher range than Local Area \nNetwork(LAN)."
+      },
+      {
+        "page": 16,
+        "text": ""
+      },
+      {
+        "page": 17,
+        "text": "WAN(Wide Area Network)\n• A Wide Area Network is a network that extends over a \nlarge geographical area such as states or countries.\n• A Wide Area Network is quite bigger network than the \nLAN.\n• A Wide Area Network is not limited to a single location, \nbut it spans over a large geographical area through a \ntelephone line, fibre optic cable or satellite links.\n• The internet is one of the biggest WAN in the world.\n• A Wide Area Network is widely used in the field of \nBusiness, government, and education."
+      },
+      {
+        "page": 18,
+        "text": ""
+      },
+      {
+        "page": 19,
+        "text": "Components of Data Communication Network"
+      },
+      {
+        "page": 20,
+        "text": ""
+      },
+      {
+        "page": 21,
+        "text": "Network Interface Card (NIC)\nA  network  interface  card  (NIC)  is  a  hardware \ncomponent without which a computer cannot be \nconnected over a network.\nIt is a circuit board installed in a computer that \nprovides a dedicated network connection to the \ncomputer.\nIt  is  also  called  network  interface  controller, \nnetwork adapter card, Ethernet Card or LAN card"
+      },
+      {
+        "page": 22,
+        "text": "NIC Card Purpose\n•A Network Interface Card (NIC), also known as a network\nadapter or network interface controller, is a hardware\ncomponent that connects a computer or other devices to a\nnetwork.\n•It serves as the interface between the computer and the\nnetwork medium, enabling communication with other\ndevices on the network.\n•The NIC provides the physical connection between the\ncomputer and the network medium, which could be wired\n(e.g., Ethernet cable) or wireless (e.g., Wi-Fi)."
+      },
+      {
+        "page": 23,
+        "text": "Modem\n• Modem is a device that enables a computer to send or receive data \nover telephone or cable lines. The data stored on the computer is \ndigital whereas a telephone line or cable wire can transmit only \nanalog data.\n• The main function of the modem is to convert digital signal into \nanalog and vice versa. Modem is a combination of two devices \nmodulator and demodulator. \n• The modulator converts digital data into analog data when the \ndata is being sent by the computer. The demodulator converts \nanalog data signals into digital data when it is being received by \nthe computer."
+      },
+      {
+        "page": 24,
+        "text": "Repeater\n• A repeater is a simple network device that operates at the\nphysical layer (Layer 1) of the OSI model.\n• Its primary function is to regenerate or amplify signals received\non one network segment before retransmitting them on another\nnetwork segment.\n• Repeaters are used to extend the reach or range of a network by\nboosting the strength of signals, thus overcoming attenuation\n(signal loss) over long distances or through obstacles."
+      },
+      {
+        "page": 25,
+        "text": "Hub\n• A hub works at physical layer(layer 1)\n• A hub is a simple networking device that connects\nmultiple devices in a network. Its primary function is to\nbroadcast incoming data packets to all devices\nconnected to it.\n• Hubs do not differentiate between the source and\ndestination of data; instead, they replicate and transmit\ndata to all connected devices.Hubs cannot filter data, so \ndata packets are sent to  all  connected  devices"
+      },
+      {
+        "page": 26,
+        "text": "Switch\n• A switch is a data link layer device.\n• Switch has memory it stores MAC addresses\n• It has intelligent to forward the correct \ndestination(unicast)\n• The switch  can perform error checking before \nforwarding data, that makes it very efficient"
+      },
+      {
+        "page": 27,
+        "text": "Aspect Hub Switch\nFunctionality\nBasic networking device that \noperates at the physical layer \n(Layer 1) and broadcasts data to all \nconnected devices\nAdvanced networking device \nthat operates at the data link \nlayer (Layer 2) and forwards data \nselectively to the intended \nrecipient\nOperation\nOperates as a broadcast medium; it \nsends data to all devices connected \nto it\nOperates as a selective \nforwarding device; it forwards \ndata only to the intended \nrecipient based on MAC \naddresses\nCollision \nDomain\nShares a single collision domain, \nmeaning all devices connected to \nthe hub share the same bandwidth \nand may experience collisions\nProvides separate collision \ndomains for each port, thereby \nreducing collisions and \nimproving network performance"
+      },
+      {
+        "page": 28,
+        "text": "MAC Address \nLearning\nDoes not have the capability to learn \nMAC addresses; it simply forwards \nincoming data to all connected \ndevices\nLearns MAC addresses by \nexamining source addresses of \nincoming frames, maintains a \nMAC address table, and uses it to \nforward frames intelligently\nEfficiency\nLess efficient due to broadcast \ntransmissions and potential collisions, \nleading to network congestion and \nslower performance\nMore efficient as it selectively \nforwards data only to the intended \nrecipient, reducing unnecessary \ntraffic and improving network \nperformance\nBandwidth\nShares the total available bandwidth \namong connected devices, leading to \npotential congestion and slower \nnetwork speeds\nOffers dedicated bandwidth for \neach port, allowing simultaneous \ncommunication between devices at \nfull speed"
+      },
+      {
+        "page": 29,
+        "text": "Routers\n• Router is mainly a Network Layer device\n• A router is a device like a switch that routes data\npackets based on their IP addresses.\n• Routers normally connect LANs and WANs  together \nand have a dynamically updating  routing table based on \nwhich they make  decisions on routing the data packets\n• The data is transferred across the network by using the \nrouting protocols. It is much more costly in comparison to \nother network devices like hub, switch etc."
+      },
+      {
+        "page": 30,
+        "text": "Bridge\n• A bridge is a network device that operates at the data\nlink layer (Layer 2) of the OSI model.\n• Its primary function is to connect two or more network\nsegments and forward data frames between them based\non MAC addresses.\n• It is also used for interconnecting two LANs working \non the same protocol."
+      },
+      {
+        "page": 31,
+        "text": "Gateway\n• A gateway, as the name suggests, is a passage to \nconnect  two  networks  together  that  may  work \nupon different networking models\n• Gateways are also called protocol converters and can \noperate at any layer.\n•  Gateways are generally more complex than switch or \nrouter. It works all the seven layer of OSI model."
+      },
+      {
+        "page": 32,
+        "text": "Functionality\nConnect and divide network segments, forward \ndata frames based on MAC addresses, filter traffic \nwithin a single network\nProvide interconnection between \nnetworks with different protocols, \ntranslate data formats, enable \ncommunication between \nheterogeneous networks\nLayer of \nOperation Data Link Layer (Layer 2) Network Layer (Layer 3) or above\nScope of \nOperation Typically used within a single network or LAN Used to connect networks with \ndifferent protocols or architectures\nData Handling\nForward data frames between network segments \nbased on MAC addresses, learn MAC addresses \ndynamically, maintain forwarding table\nHandle routing of data packets \nbetween different networks based \non IP addresses, perform protocol \ntranslation, packet filtering, routing \nfunctions\nExample Ethernet bridge Router\nBridge Gateway"
+      },
+      {
+        "page": 33,
+        "text": ""
+      },
+      {
+        "page": 34,
+        "text": "Transmission Modes in Computer Networks (Simplex, Half-Duplex\nand Full-Duplex)\nTransmission mode means transferring data between two devices. It is also known as a \ncommunication mode. Buses and networks are designed to allow communication to occur \nbetween individual devices that are interconnected.\nThere are three types of transmission mode: -"
+      },
+      {
+        "page": 35,
+        "text": "1. Simplex Mode –\nIn Simplex mode, the communication is unidirectional, as on a one -way street. Only \none of the two devices on a link can transmit, the other can only receive. \nExample: Keyboard and traditional monitors. The keyboard can only introduce input, \nthe monitor can only give the output\nAdvantages:\n• Simplex mode is the easiest and most reliable mode of communication.\n• It is the most cost-effective mode, as it only requires one communication channel.\n• Simplex mode is particularly useful in situations where feedback or response is not\nrequired, such as broadcasting or surveillance.\nDisadvantages:\n• Only one-way communication is possible.\n• There is no way to verify if the transmitted data has been received correctly.\n• Simplex mode is not suitable for applications that require bidirectional\ncommunication."
+      },
+      {
+        "page": 36,
+        "text": "Half-Duplex Mode –\nIn half-duplex mode, each station can both transmit and receive, but not at the \nsame time. When one device is sending, the other can only receive, and vice \nversa. The half-duplex mode is used in cases where there is no need for \ncommunication in both directions at the same time. The entire capacity of the \nchannel can be utilized for each direction.\nExample: Walkie-talkie in which message is sent one at a time and messages \nare sent in both directions."
+      },
+      {
+        "page": 37,
+        "text": "Advantages:\n• Half-duplex mode allows for bidirectional communication, which is useful in situations\nwhere devices need to send and receive data.\n• It is a more efficient mode of communication than simplex mode, as the channel can be\nused for both transmission and reception.\n• Half-duplex mode is less expensive than full-duplex mode, as it only requires one\ncommunication channel.\nDisadvantages:\n• Half-duplex mode is less reliable than Full-Duplex mode, as both devices cannot\ntransmit at the same time.\n• There is a delay between transmission and reception, which can cause problems in\nsome applications.\n• There is a need for coordination between the transmitting and receiving devices, which\ncan complicate the communication process."
+      },
+      {
+        "page": 38,
+        "text": "Full-Duplex Mode –\n• In full-duplex mode, both stations can transmit and receive   \nsimultaneously. \n• Full-duplex mode is used when communication in both directions is \nrequired all the time. \n• The capacity of the channel, however, must be divided between the two \ndirections.\nExample: Telephone Network in which there is communication between \ntwo persons by a telephone line, through which both can talk and listen at \nthe same time."
+      },
+      {
+        "page": 39,
+        "text": "Advantages:\n• Full-duplex mode allows for simultaneous bidirectional communication, which is ideal\nfor real-time applications such as video conferencing or online gaming.\n• It is the most efficient mode of communication, as both devices can transmit and\nreceive data simultaneously.\n• Full-duplex mode provides a high level of reliability and accuracy, as there is no need\nfor error correction mechanisms.\nDisadvantages:\n• Full-duplex mode is the most expensive mode, as it requires two communication\nchannels.\n• It is more complex than simplex and half-duplex modes, as it requires two physically\nseparate transmission paths or a division of channel capacity.\n• Full-duplex mode may not be suitable for all applications, as it requires a high level of\nbandwidth and may not be necessary for some types of communication."
+      },
+      {
+        "page": 40,
+        "text": "Characteristics of OSI Model:\nUpper Layer\nLower Layer\nThe upper layer of the OSI model mainly deals with the application \nrelated issues, and they are implemented only in the software.\nThe lower layer of the OSI model deals with the data transport issues. \nThe data link layer and the physical layer are implemented in hardware \nand software."
+      },
+      {
+        "page": 41,
+        "text": "Functions of OSI Layer"
+      },
+      {
+        "page": 42,
+        "text": "1. PHYSICAL LAYER\n• It is responsible for the actual physical connection \nbetween the devices. The physical layer contains \ninformation in the form of bits. It is responsible for \ntransmitting individual bits from one node to the \nnext.\nThe functions of the physical layer are :\n• Bit synchronization : This clock controls both \nsender and receiver thus providing synchronization at \nbit level."
+      },
+      {
+        "page": 43,
+        "text": "The functions of the physical layer are\n• Bit rate control: The Physical layer also defines \nthe transmission rate i.e. the number of bits sent \nper second.\n• Physical topologies: bus, tree, star, ring and \nmesh topology.\n• Transmission mode: The data flows between the two \nconnected devices. The various transmission modes\npossible are: Simplex, half-duplex and full- duplex."
+      },
+      {
+        "page": 44,
+        "text": "2.Data Link Layer(DLL)\n• The data link layer is responsible for the node to node\ndelivery of the message.\nThe functions of the Data Link Layer are :\nFraming: The data link layer translates the physical's \nraw bit stream into packets known as Frames.\n• The Data link layer adds the header and trailer to the \nframe.\n• frame contains the hardware destination and source \naddress"
+      },
+      {
+        "page": 45,
+        "text": "Functions of the Data-link layer\nPhysical Addressing: After creating frames, Data link layer \nadds physical addresses (MAC address) of sender and/or \nreceiver in the header of each frame\n•Flow Control: It is the technique through which the constant \ndata rate is maintained on both the sides so that no data get \ncorrupted.\n• Error Control: Data link layer provides the mechanism of error \ncontrol in which it detects and retransmits damaged or lost frames.\n• Access Control: When two or more devices are connected to the \nsame communication channel, then the data link layer protocols are \nused to determine which device has control over the link at a given \ntime"
+      },
+      {
+        "page": 46,
+        "text": "3.Network Layer\n• Network layer works for the transmission of \ndata(Packets) from one host to the other located in \ndifferent networks.\n• It determines the best path to move data from source to \nthe destination based on the network conditions, the \npriority of service, and other factors."
+      },
+      {
+        "page": 47,
+        "text": "The functions of the Network layer are\n• Routing: The network layer protocols \ndetermine which route is suitable from source \nto destination. This function of network layer is \nknown as routing.\n• Logical Addressing: In order to identify each \ndevice on internetwork uniquely, network layer \ndefines an addressing scheme."
+      },
+      {
+        "page": 48,
+        "text": "4. Transport layer\n• The Transport layer is ensures that messages are \ntransmitted in the order in which they are sent and  \nthere is no duplication of data.\n• It receives the data from the upper layer and \nconverts them into smaller units known as \nsegments.(Data in the Transport Layer is called as \nSegments)\n• This layer can be termed as an end-to-end layer as it \nprovides a point-to-point connection between \nsource and destination to deliver the data reliably."
+      },
+      {
+        "page": 49,
+        "text": "Functions of Transport Layer\n• Segmentation and Reassembly: This layer accepts the message \nfrom the (session) layer , breaks the message into smaller units .\n• Each of the segment produced has a header associated with it.\n• The transport layer at the destination station reassembles the \nmessage.\n• Service Point Addressing: In order to deliver the message to correct \nprocess, transport layer header includes a type of address called \nservice point address or port address.\n• Thus by specifying this address, transport layer makes sure that \nthe message is delivered to the correct process."
+      },
+      {
+        "page": 50,
+        "text": "5. Session layer\n• The Session layer is used to establish, maintain and\nssynchronizes the interaction between communicating \ndevices.\nFunctions of Session layer:\n• Session establishment, maintenance and termination: The layer \nallows the two processes to establish, use and terminate a connection.\n• Synchronization :. These synchronization point help to identify \nthe error so that the data is re-synchronized properly, and ends of \nthe messages are not cut prematurely  and data loss is avoided.\n• Dialog control: Session layer acts as a dialog controller that \ncreates a dialog between two processes"
+      },
+      {
+        "page": 51,
+        "text": "6. Presentation layer\n• A Presentation layer is mainly concerned with the syntax \nand semantics of the information exchanged between \nthe two systems.\n• This layer is a part of the operating system that converts \nthe data from one presentation format to another format.\nFunctions of Presentation layer:\n• Translation: The processes in two systems exchange the \ninformation in the form of character strings, numbers \nand so on."
+      },
+      {
+        "page": 52,
+        "text": "Functions of Presentation layer:\n• Different computers use different encoding methods, the \npresentation layer handles the interoperability between the \ndifferent encoding methods. : For example, ASCII to \nUNICODE\n• Encryption: Data encryption translates the data into another \nform or code. The encrypted data is known as the cipher text \nand the decrypted data is known as plain text.\n• Compression: Data compression is a process of compressing \nthe data, i.e., it reduces the number of bits to be transmitted. \nData compression is very important in multimedia such as text, \naudio, video."
+      },
+      {
+        "page": 53,
+        "text": "7. Application Layer\n• This layer provides the network services to the end-users.\nFunctions of Application layer:\n• File transfer, access, and management (FTAM):An \napplication layer allows a user to access the files in a \nremote computer, to retrieve the files from a computer \nand to manage the files in a remote computer.\n• Mail services: An application layer provides the facility \nfor email forwarding and storage."
+      },
+      {
+        "page": 54,
+        "text": "Hop to Hop delivery\nSummary of OSI Layers"
+      },
+      {
+        "page": 55,
+        "text": "TCP/IP Model"
+      },
+      {
+        "page": 56,
+        "text": "OSI Vs TCP/IP"
+      },
+      {
+        "page": 57,
+        "text": "• The TCP model stands for Transmission Control \nProtocol, whereas IP stands for Internet Protocol. A \nnumber of protocols that make the internet possibly \ncomes under the TCP/IP mode.\nThe four layers in the TCP/IP protocol suite are :\n• Link Layer −It is the lowest layer that is concerned \nwith the physical transmission of data. TCP/IP does \nnot specifically define any protocol here but supports \nall the standard protocols.\nTransmission Control Protocol"
+      },
+      {
+        "page": 58,
+        "text": "• Internet Layer −It defines the protocols for logical transmission of \ndata over the network. The main protocol in this layer is Internet \nProtocol (IP) and it is supported by the protocols ICMP(Internet \nControl Message Protocol), IGMP(Internet Group Management \nProtocol), RARP, and ARP.\n• Transport Layer − It is responsible for error-free end-to-end \ndelivery of data. The protocols defined here are Transmission \nControl Protocol (TCP) and User Datagram Protocol (UDP).\n• Application Layer − This is the topmost layer and defines the \ninterface of host programs with the transport layer services. This \nlayer includes all high-level protocols like Telnet, DNS, HTTP, FTP, \nSMTP, etc."
+      },
+      {
+        "page": 59,
+        "text": "Analog and Digital Signals\nAnalog Signal\nAnalog signals have infinitely so many levels of intensity over a period of time. When\nthe wave moves from value A to value B, it passes through and it includes an infinite\nnumber of values along its path."
+      },
+      {
+        "page": 60,
+        "text": "Characteristics of Analog Signal\n•Continuous in both time and amplitude. \n•Can have infinite values. \n•More susceptible to noise and interference. \n•Difficult to regenerate after distortion. \n•Used in traditional communication systems like radio and \ntelephone. \n•Represented using a sine wave."
+      },
+      {
+        "page": 61,
+        "text": "Parameters of Analog Signal\n1.Amplitude (A)\n1. Maximum height of the signal. \n2. Measured in Volts (V). \n3. Represents the signal strength. \n2.Frequency (f)\n1. Number of cycles completed in one second. \n2. Measured in Hertz (Hz). \n3. Formula:\n𝑓 = 1\n𝑇\nwhere T = Time Period.\nTime Period (T)\n1. Time taken to complete one cycle. \n2. Measured in seconds. \n3. Phase (φ)\n1. Position of the waveform relative to \ntime. \n2. Measured in degrees or radians."
+      },
+      {
+        "page": 62,
+        "text": "Bandwidth\nBandwidth is the maximum amount of data transmitted through a \ncommunication channel in one second.\nUnit-bits per second (bps)\nExamples\n1 Mbps\n100 Mbps\n1 Gbps\nFormula\nBandwidth = Maximum Data Transfer Rate\nExample\nA channel transmits\n100 Mbps\nIt can send\n100 million bits per second."
+      },
+      {
+        "page": 63,
+        "text": "Throughput\nThroughput is the actual amount of data successfully transmitted.\nAlways\nThroughput ≤ Bandwidth\nExample\nBandwidth\n100 Mbps\nActual transferred\n80 Mbps\nThen\nThroughput\n80 Mbps"
+      },
+      {
+        "page": 64,
+        "text": "Latency\nLatency is the time taken for one packet to travel from source to \ndestination.\nMeasured in\nmilliseconds (ms)\nComponents\nPropagation delay \nTransmission delay \nQueuing delay \nProcessing delay\nLatency = \nPropagation + \nTransmission + \nQueuing + \nProcessing\nExample\nPropagation\n10 ms\nTransmission\n5 ms\nQueuing\n3 ms\nProcessing\n2 ms\nTotal\n20 ms"
+      },
+      {
+        "page": 65,
+        "text": "Digital data to digital signals\nA digital signal is sequence of discrete , discontinuous voltage pulses. Each pulses a\nsignal element. Encoding scheme is an important factor in how successfully the\nreceiver interprets the incoming signal."
+      },
+      {
+        "page": 66,
+        "text": "Digital Signal\nDigital signals can have only a limited number of defined values. Although\neach value can be any number, it is often as simple as 0 or 1.\n• The easiest way to show signals is by plotting them on a pair of\nperpendicular axes.\n• The vertical axis represents the value or strength of a signal.\n• The horizontal axis represents time."
+      },
+      {
+        "page": 67,
+        "text": "Digital Signal\nA digital signal consists of discrete values. It represents \ninformation using binary digits (0 and 1).\nCharacteristics of Digital Signal\n•Discrete in amplitude. \n•Usually represented by square waves. \n•Less affected by noise. \n•Easy to regenerate using repeaters. \n•Supports error detection and correction. \n•Used in computers, LANs, and the Internet."
+      },
+      {
+        "page": 68,
+        "text": "Parameters of Digital Signal\n1.Bit Interval\n1. Time required to transmit one bit. \n2. Unit: Seconds. \n2.Bit Rate\n1. Number of bits transmitted per second. \n2. Unit: bps (bits per second). \n3.Data Rate\n1. Speed of digital communication. \n2. Unit: kbps, Mbps, Gbps."
+      },
+      {
+        "page": 69,
+        "text": "Analog signals Digital signals\nAnalog signals are difficult to get analysed\nat first.\nDigital signals are easy to analyse.\nAnalog signals are more accurate than\ndigital signals.\nDigital signals are less accurate.\nAnalog signals take time to be stored. It has\ninfinite memory.\nDigital signals can be easily stored.\nTo record an analog signal, the technique\nused, preserves the original signals.\nIn recording digital signal, the sample signals\nare taken and preserved.\nThere is a continuous representation of\nsignals in analog signals.\nThere is a discontinuous representation of\nsignals in digital signals.\nAnalog signals produce too much noise. Digital signals do not produce noise.\nExamples of analog signals are Human voice,\nThermometer, Analog phones etc.\nExamples of digital signals are Computers,\nDigital Phones, Digital pens, etc."
+      },
+      {
+        "page": 70,
+        "text": "Bandwidth, Throughput and Latency;"
+      },
+      {
+        "page": 71,
+        "text": "Throughput refers to the amount of data able to be transmitted\nand received during a specific time period. This means the\nthroughput metric measures the average rate at which transmitted\nmessages successfully arrive at the relevant destination.\nRather than measuring theoretical delivery of packets, throughput\nprovides a practical measurement of the actual delivery of\npackets.\nThe unit of measurement for network throughput metric is bits per\nsecond (bps)."
+      },
+      {
+        "page": 72,
+        "text": "Bandwidth refers to the amount of data that can be transmitted and\nreceived during a specific period of time. For instance, if a network\nhas high bandwidth, this means a higher amount of data can be\ntransmitted and received.\nLike throughput, the unit of measurement for bandwidth is bits per\nsecond (bps). Bandwidth can also be measured in gigabits per second\n(Gbps) and megabits per second (Mbps)\nbbandwidth is confused with speed, but this is a widespread\nmisconception. Bandwidth measures capacity, not speed"
+      },
+      {
+        "page": 73,
+        "text": ""
+      },
+      {
+        "page": 74,
+        "text": "Latency measures delay. Delay is simply the time taken for a\ndata packet to reach its destination after being sent. We measure\nnetwork latency as round trips, although it may sometimes be\nmeasured in one-way trips. However, round-trip measurements\nare more common, because devices usually wait for an\nacknowledgment from the destination machine to be returned\nbefore transmitting the complete set of data. This\nacknowledgment verifies the connection to the destination device.\nIf your network is experiencing high levels of latency, this signals\npoor or slow"
+      },
+      {
+        "page": 75,
+        "text": ""
+      },
+      {
+        "page": 76,
+        "text": "Latency vs. Bandwidth\nThere is a close relationship between bandwidth and latency. Bandwidth\nessentially determines the amount of data that can be transmitted and received,\ntheoretically, at any given time. Latency also plays an important part in how data\nis transmitted and received, because it measures how quickly the data packets\nreach the destination.\nThe lower your bandwidth, the more time it will take for data packets to reach\ntheir destination, which can lead to higher latency. Similarly, the higher\nbandwidth, the quicker your packets will travel, which can result in lower\nlatency."
+      },
+      {
+        "page": 77,
+        "text": "Analog to Digital Conversion (ADC)\nConverts an analog signal into a digital signal.\nSteps\n1.Sampling \n2.Quantization \n3.Encoding \nTechniques\n•PCM (Pulse Code Modulation)\nApplications\n•Digital audio recording \n•Voice over IP (VoIP) \n•CD/DVD recording"
+      },
+      {
+        "page": 78,
+        "text": "Digital to Analog Conversion (DAC)\nConverts digital data into an analog signal for transmission through \nanalog channels.\nTechniques\n•ASK (Amplitude Shift Keying)\n•FSK (Frequency Shift Keying)\n•PSK (Phase Shift Keying)\nApplications\n•Modems \n•Mobile communication \n•Radio transmission"
+      },
+      {
+        "page": 79,
+        "text": "Analog to Analog Conversion\nConverts one analog signal into another analog\nsignal.\nTechniques\n•AM (Amplitude Modulation)\n•FM (Frequency Modulation)\n•PM (Phase Modulation)\nApplications\n•Radio broadcasting \n•Television broadcasting"
+      },
+      {
+        "page": 80,
+        "text": "A modem (modulator-demodulator) converts digital data to analog signal. There are 3 \nways to modulate a digital signal on an analog carrier signal.\nAmplitude shift keying (ASK): is a form of modulation which represents digital data as \nvariations in the amplitude of a carrier wave. Two different amplitudes of carrier frequency \nrepresent '0' , '1'."
+      },
+      {
+        "page": 81,
+        "text": "2. Frequency shift keying (FSK): In Frequency Shift Keying, the change in \nfrequency define different digits. Two different frequencies near carrier frequency \nrepresent '0' ,''1'"
+      },
+      {
+        "page": 82,
+        "text": "3. Phase shift keying (PSK): The phase of the carrier is discretely varied in relation \neither to a reference phase or to the phase of the immediately preceding signal \nelement, in accordance with data being transmitted. Phase of carrier signal is shifted \nto represent '0' , '1'."
+      },
+      {
+        "page": 83,
+        "text": "Transmission Impairments\nDuring transmission, signals lose quality.\nMain types\n1.Attenuation \n2.Noise \n3.Distortion"
+      },
+      {
+        "page": 84,
+        "text": "Attenuation\nSignal strength decreases while travelling.\nExample\nWiFi signal becomes weak when moving away \nfrom router.\nSolution\nUse repeaters or amplifiers."
+      },
+      {
+        "page": 85,
+        "text": "Noise\nNoise is unwanted electrical interference.\nTypes\nThermal Noise \nCrosstalk \nImpulse Noise \nExample\nRadio static\nTelephone disturbance"
+      },
+      {
+        "page": 86,
+        "text": "Distortion\nDifferent frequencies travel at different speeds.\nSignal shape changes.\nExample\nVoice becomes unclear."
+      },
+      {
+        "page": 87,
+        "text": "Data Encoding Techniques (Line Encoding)\nWhat is Data Encoding?\nData Encoding (also called Line Encoding) is the process of converting\ndigital data (0s and 1s) into digital signals that can be transmitted\nthrough a communication medium (copper cable, fiber optic cable,\netc.).\nWhy do we need Encoding?\nComputers understand binary data (0 and 1), but the transmission\nmedium carries electrical signals. Therefore, binary data must be\nconverted into electrical voltage levels."
+      },
+      {
+        "page": 88,
+        "text": "Computers store data as binary numbers, but network cables transmit \nelectrical signals.\nComputer A\n|\nBinary Data (10110010)\n|\nEncoding\n|\nElectrical Signals\n|\nTransmission Medium\n|\nDecoding\n|\nBinary Data\n|\nComputer B\nThe receiver decodes the received electrical signals back into binary data."
+      },
+      {
+        "page": 89,
+        "text": "Example:\nSuppose you want to send the binary data:\n10110010\nThis binary sequence is converted into electrical voltage \nsignals using an encoding technique such as NRZ, \nManchester, or Differential Manchester."
+      },
+      {
+        "page": 90,
+        "text": "1. NRZ (Non-Return-to-Zero)\nDefinition\nIn NRZ encoding, the signal remains at the same voltage level\nthroughout the bit duration. It does not return to zero after\ntransmitting each bit.\nHence the name:\nNRZ = Non Return to Zero\nWorking Principle\nOne voltage level represents 1, and \nanother voltage level represents 0.\nUsually,\n1 → High Voltage (+V)\n0 → Low Voltage (-V)"
+      },
+      {
+        "page": 91,
+        "text": "Characteristics\n•Simple implementation \n•Low bandwidth requirement \n•No transition between identical bits \n•Long sequence of 0s or 1s causes synchronization \nproblems"
+      },
+      {
+        "page": 92,
+        "text": "2. Manchester Encoding\nManchester encoding introduces one transition at \nthe middle of every bit.\nThis transition helps the receiver synchronize its \nclock.\nRule\nIEEE 802.3 Ethernet standard uses:\n1 = High → Low\n0 = Low → High\nEvery bit has one transition."
+      },
+      {
+        "page": 93,
+        "text": "Why is Manchester Better?\nBecause every bit has a transition.\nReceiver easily detects\n•Beginning of bit \n•End of bit \nNo synchronization problem.\nCharacteristics\n•One transition per bit \n•Self-clocking \n•Better synchronization \n•More reliable than NRZ \nBandwidth\nManchester requires almost double \nthe bandwidth of NRZ because each \nbit always contains a transition."
+      },
+      {
+        "page": 94,
+        "text": "Differential Manchester Encoding\nDifferential Manchester is an improved version of\nManchester encoding.\nThere is always a transition in the middle of every bit\n(for clock synchronization), but the bit value depends\non whether there is a transition at the beginning of the\nbit period. Middle transition → Always \npresent\nBeginning transition:\n0 → Transition at beginning\n1 → No transition at beginning"
+      },
+      {
+        "page": 95,
+        "text": ""
+      },
+      {
+        "page": 96,
+        "text": ""
+      },
+      {
+        "page": 97,
+        "text": "Switching\nSwitching is the process of transferring data from\nthe source to the destination through one or more\nintermediate devices (switches/routers).\nSwitching is the technique used to establish a path\nbetween the sender and the receiver for\ntransmitting data."
+      },
+      {
+        "page": 98,
+        "text": "Why Do We Need Switching?\nSuppose every computer is directly connected to every \nother computer.\nExample:\n5 computers require many cables.\nThis becomes very expensive and difficult.\nInstead,we connect computers through switches."
+      },
+      {
+        "page": 99,
+        "text": "Types of Switching\nThere are three major switching techniques.\nSwitching\n1. Circuit Switching\n2. Message Switching\n3. Packet Switching"
+      },
+      {
+        "page": 100,
+        "text": "Circuit Switching\nA dedicated communication path is established between \nthe sender and receiver before data transmission begins.\nOnce established, the entire path is reserved until \ncommunication ends.\nCharacteristics\n•Dedicated path \n•No congestion after setup \n•Fixed bandwidth \n•Delay only during setup \n•Suitable for voice communication"
+      },
+      {
+        "page": 101,
+        "text": "Message Switching\nIn message switching, the entire message is transmitted\nfrom one node to another.\nEach switch stores the complete message before\nforwarding it. This is called Store and Forward.\nCharacteristics\n•No dedicated path \n•Entire message stored \n•Store-and-forward technique \n•Large delay"
+      },
+      {
+        "page": 102,
+        "text": "Packet Switching\nInstead of sending one large message, the message is \ndivided into small packets.\nEach packet travels independently through the network.\nThe receiver combines the packets.\nWhy Packet Switching?\nInstead of occupying one path,\npackets share the network.\nBetter bandwidth utilization."
+      },
+      {
+        "page": 103,
+        "text": "Example\nMessage\nHELLO WORLD\nis divided into\nPacket 1\nHEL\nPacket 2\nLO\nPacket 3\nWOR\nPacket 4\nLD\nNote: Each packet may take a \ndifferent route: \nPacket 1 A → R1 → R2 → B\nPacket 2 A → R3 → R5 → B \nPacket 3 A → R1 → R4 → B\nAt destination,\npackets are reassembled."
+      },
+      {
+        "page": 104,
+        "text": "Network Topology\nIn Computer Network ,there are various ways through which different\ncomponents are connected to one another. Network Topology is the\nway that defines the structure, and how these components are\nconnected to each other.\nTypes of Network Topology: The various network topologies are:\nPoint to Point Topology\n• Mesh Topology\n• Star Topology\n• Bus Topology\n• Ring Topology\n• Tree Topology\n• Hybrid Topology"
+      },
+      {
+        "page": 105,
+        "text": "Point to Point Topology\nPoint-to-Point Topology is a type of topology that works on the\nfunctionality of the sender and receiver. It is the simplest\ncommunication between two nodes, in which one is the sender and\nthe other one is the receiver. Point-to-Point provides high bandwidth."
+      },
+      {
+        "page": 106,
+        "text": "Bus Topology\nBus Topology is a network type in which every computer and network device is\nconnected to a single cable. It is bi-directional. It is a multi-point connection and a\nnon-robust topology because if the backbone fails the topology crashes. In Bus\nTopology, various MAC (Media Access Control) protocols are followed by LAN\nethernet connections like TDMA, Pure Aloha, CDMA, Slotted Aloha, etc."
+      },
+      {
+        "page": 107,
+        "text": "Advantages of Bus Topology\n•If N devices are connected to each other in a bus topology, then\nthe number of cables required to connect them is 1, known as\nbackbone cable, and N drop lines are required.\n•Coaxial or twisted pair cables are mainly used in bus-based\nnetworks\n•The cost of the cable is less compared to other topologies, but it is\nused to build small networks.\n•Bus topology is familiar technology as installation and\ntroubleshooting techniques are well known."
+      },
+      {
+        "page": 108,
+        "text": "Drawbacks of Bus Topology\n•If the common cable fails, then the whole system will crash\ndown.\n•If the network traffic is heavy, it increases collisions in the\nnetwork. To avoid this, various protocols are used in the MAC\nlayer known as Pure Aloha, Slotted Aloha, CSMA/CD, etc.\n•Adding new devices to the network would slow down\nnetworks.\n•Security is very low."
+      },
+      {
+        "page": 109,
+        "text": "Mesh Topology\nIn a mesh topology, every device is connected to another device via a particular\nchannel. In Mesh Topology, the protocols used are AHCP (Ad Hoc Configuration\nProtocols), DHCP (Dynamic Host Configuration Protocol), etc.\nEvery device is connected to another via\ndedicated channels. These channels are\nknown as links.\n•Suppose, the N number of devices are\nconnected with each other in a mesh\ntopology, the total number of ports that are\nrequired by each device is N-1. In this\nFigure, there are 5 devices connected to each\nother, hence the total number of ports\nrequired by each device is 4. The total\nnumber of ports required = N * (N-1)."
+      },
+      {
+        "page": 110,
+        "text": "•Suppose, N number of devices are connected with each other in a mesh topology,\nthen the total number of dedicated links required to connect them is i.e. N(N-1)/2.\nIn the above Figure, there are 5 devices connected to each other, hence the total\nnumber of links required is 5*4/2 = 10.\nAdvantages of Mesh Topology\n•Communication is very fast between the nodes.\n•Mesh Topology is robust.\n•The fault is diagnosed easily. Data is reliable because data is transferred among\nthe devices through dedicated channels or links.\n•Provides security and privacy.\nDrawbacks of Mesh Topology\n•Installation and configuration are difficult.\n•The cost of cables is high as bulk wiring is required, hence suitable for less\nnumber of devices.\n•The cost of maintenance is high."
+      },
+      {
+        "page": 111,
+        "text": "Ring Topology\nIn a Ring Topology, it forms a ring connecting devices with exactly\ntwo neighbouring devices. A number of repeaters are used for Ring\ntopology with a large number of nodes, because if someone wants to\nsend some data to the last node in the ring topology with 100 nodes,\nthen the data will have to pass through 99 nodes to reach the 100th\nnode. Hence to prevent data loss repeaters are used in the network.\nThe data flows in one direction, i.e. it is unidirectional, but it can be\nmade bidirectional by having 2 connections between each Network\nNode, it is called Dual Ring Topology. In-Ring Topology, the Token\nRing Passing protocol is used by the workstations to transmit the data."
+      },
+      {
+        "page": 112,
+        "text": ""
+      },
+      {
+        "page": 113,
+        "text": "Operations of Ring Topology\n1.One station is known as a monitor station which takes all the\nresponsibility for performing the operations.\n2.To transmit the data, the station has to hold the token. After the\ntransmission is done, the token is to be released for other stations to\nuse.\n3.When no station is transmitting the data, then the token will\ncirculate in the ring.\n4.There are two types of token release techniques: Early token\nrelease releases the token just after transmitting the data\nand Delayed token release releases the token after the\nacknowledgment is received from the receiver."
+      },
+      {
+        "page": 114,
+        "text": "Advantages of Ring Topology\n•The data transmission is high-speed.\n•The possibility of collision is minimum in this type of topology.\n•Cheap to install and expand.\n•It is less costly than a star topology.\nDrawbacks of Ring Topology\n•The failure of a single node in the network can cause the entire\nnetwork to fail.\n•Troubleshooting is difficult in this topology.\n•The addition of stations in between or the removal of stations can\ndisturb the whole topology.\n•Less secure."
+      },
+      {
+        "page": 115,
+        "text": "Star topology\n•Star Topology A star may be a topology for a Local Area\nNetwork (LAN) during which all nodes are individually\nconnected to a central connection point, sort of a hub or a\nswitch.\n• A star takes more cable than e.g. a bus, but the benefit is that\nif a cable fails, just one node is going to be brought down. Each\ndevice within the network is connected to a central device\ncalled a hub.\n• If one device wants to send data to another device, it’s to first\nsend the info to the hub then the hub transmits that data to the\ndesignated device. The number of links required to connect\nnodes in the star topology is N where N is the number of nodes."
+      },
+      {
+        "page": 116,
+        "text": "Star Topology"
+      },
+      {
+        "page": 117,
+        "text": "Advantages of Star Topology\n•It is high-performing as no data collisions can occur\n•Less expensive because each device only need one I/O port and\nwishes to be connected with hub with one link.\n•Easier to put in\n•Easy fault detection because the link are often easily identified.\n•No disruptions to the network when connecting or removing\ndevices.\n•Each device requires just one port i.e. to attach to the hub.\n•If N devices are connected to every other in star, then the\namount of cables required to attach them is N. So, it’s easy to\nline up."
+      },
+      {
+        "page": 118,
+        "text": "Disadvantages of Star Topology\n•Requires more cable than a linear bus .\n•If the connecting network device (network switch) fails, nodes\nattached are disabled and can’t participate in network communication.\n•More expensive than linear bus topology due to the value of the\nconnecting devices (network switches)\n•If hub goes down everything goes down, none of the devices can work\nwithout hub.\n•Hub requires more resources and regular maintenance because it’s the\ncentral system of star .\n•Extra hardware is required (hubs or switches) which adds to cost"
+      },
+      {
+        "page": 119,
+        "text": "Tree Topology\nThis topology is the variation of the Star topology. This topology has a\nhierarchical flow of data\nIn this, the various secondary hubs are\nconnected to the central hub which\ncontains the repeater. This data flow\nfrom top to bottom i.e. from the\ncentral hub to the secondary and then\nto the devices or from bottom to top\ni.e. devices to the secondary hub and\nthen to the central hub.\nIt is a multi-point connection and a\nnon-robust topology because if the\nbackbone fails the topology crashes."
+      },
+      {
+        "page": 120,
+        "text": "Advantages of Tree Topology\n•It allows more devices to be attached to a single central hub thus it\ndecreases the distance that is traveled by the signal to come to the\ndevices.\n•It allows the network to get isolated and also prioritize from\ndifferent computers.\n•Error detection and error correction are very easy in a tree\ntopology.\nDrawbacks of Tree Topology\n•If the central hub gets fails the entire system fails.\n•The cost is high because of the cabling.\n•If new devices are added, it becomes difficult to reconfigure."
+      },
+      {
+        "page": 121,
+        "text": "Hybrid Topology\nThis topological technology is the combination of all\nthe various types of topologies we have studied above.\nHybrid Topology is used when the nodes are free to\ntake any form. It means these can be individuals such\nas Ring or Star topology or can be a combination of\nvarious types of topologies seen in the following figure."
+      },
+      {
+        "page": 122,
+        "text": ""
+      },
+      {
+        "page": 123,
+        "text": "Advantages of Hybrid Topology\n•This topology is very flexible.\n•The size of the network can be easily expanded by adding new\ndevices.\nDrawbacks of Hybrid Topology\n•It is challenging to design the architecture of the Hybrid\nNetwork.\n•The infrastructure cost is very high as a hybrid\nnetwork requires a lot of cabling and network devices."
+      },
+      {
+        "page": 124,
+        "text": ""
+      },
+      {
+        "page": 125,
+        "text": "Data-link Layer and Protocols"
+      },
+      {
+        "page": 126,
+        "text": "Introduction to Framing\nFraming is one of the most important functions performed by the\nData Link Layer (Layer 2) of the OSI Model.\nWhen data is transmitted from one computer to another, it is\nsent as a continuous stream of bits. The receiver must know:\n•Where the data starts.\n•Where the data ends.\n•Which bits belong to one message.\nTo solve this problem, the Data Link Layer divides the continuous\nbit stream into smaller units called frames."
+      },
+      {
+        "page": 127,
+        "text": "Why is Framing Needed?\nImagine that a sender transmits the following bit stream:\n101010101111000111100001010101010100111010101\nThe receiver sees only a long sequence of bits.\nWithout framing, the receiver cannot determine:\n•Where one message begins. \n•Where it ends. \n•Which bits belong together. \nFraming provides boundaries to each message.\nExample:\nFrame 1\n|------------------|\n101010111001010101\nFrame 2\n|----------------------|\n111100001010100011110"
+      },
+      {
+        "page": 128,
+        "text": "1. Character-Oriented (Byte-Oriented) Framing\nCharacter-oriented framing is a framing technique in\nwhich special characters (bytes) are used to indicate the\nbeginning and end of a frame.\nInstead of looking at individual bits, the protocol examines\ncomplete bytes."
+      },
+      {
+        "page": 129,
+        "text": "Frame Format\n+------+-----------------------+------+\n| STX  |        DATA           | ETX  |\n+------+-----------------------+------+\nWhere\n•STX = Start of Text \n•ETX = End of Text \nSometimes additional fields are \nadded.\n+------+---------+-----------+------+\n| STX  | Header  |   Data    | ETX  \n|\n+------+---------+-----------+------+\nWorking Principle\nSuppose we want to send:\nHELLO\nThe sender actually transmits\nSTX HELLO ETX\nReceiver reads\nSTX\n↓\nStart reading data\nHELLO\nETX\n↓\nStop reading"
+      },
+      {
+        "page": 130,
+        "text": "Problem in Character-Oriented Framing\nSuppose the actual data is\nHELLO ETX WORLD\nThe transmitted frame becomes\nSTX HELLO ETX WORLD ETX\nReceiver interprets\nSTX HELLO ETX\nas the complete frame.\nRemaining\nWORLD ETX\nappears as another frame.\nThis creates an error."
+      },
+      {
+        "page": 131,
+        "text": "Solution: Character Stuffing\nAn extra character called ESC (Escape) is inserted before every \ncontrol character that appears inside the data.\nExample\nOriginal Data\nHELLO ETX WORLD\nAfter Character Stuffing\nHELLO ESC ETX WORLD\nSender transmits\nSTX HELLO ESC ETX WORLD ETX\nReceiver ignores the escaped ETX and treats it as ordinary \ndata."
+      },
+      {
+        "page": 132,
+        "text": "Advantages\n•Very easy to implement. \n•Suitable for text communication. \n•Simple error detection. \nDisadvantages\n•Works mainly for character-based data. \n•Inefficient for binary files. \n•Extra bytes increase overhead. \n•Depends on character encoding (ASCII, Unicode)."
+      },
+      {
+        "page": 133,
+        "text": "Bit-Oriented Framing\nDefinition\nBit-oriented framing uses a special bit pattern\nto identify the beginning and end of each frame.\nInstead of characters, it works directly with bits.\nFlag Pattern\nEvery frame begins and ends with\n01111110\nThis pattern is called the Flag.\nFrame Format\n+-----------+-------------------+-\n----------+\n| 01111110  |   DATA   |01111110   \n|\n+-----------+-------------------+-\n----------+"
+      },
+      {
+        "page": 134,
+        "text": "Example\nSuppose data is\n110010101010\nSender transmits\n01111110\n110010101010\n01111110\nReceiver searches for the flag\n01111110\nEverything between two flags belongs to one frame."
+      },
+      {
+        "page": 135,
+        "text": "Problem in Bit-Oriented Framing\nSuppose the data itself contains\n01111110\nReceiver cannot distinguish whether this is\n•actual data \n•or frame boundary"
+      },
+      {
+        "page": 136,
+        "text": "Rule\nFive consecutive 1s\n↓\nInsert one 0\nExample 1\nOriginal Data\n01111110\nAfter Stuffing\n011111010\nThe inserted 0 prevents the flag pattern from \nappearing in the data."
+      },
+      {
+        "page": 137,
+        "text": "FRAMING\nFRAMING:\nThe packet received from the Network layer is known as a \nframe in the Data link layer. At the sender’s side, DLL receives \npackets from the Network layer and divides them into small frames, \nthen, sends each frame bit-by-bit to the physical layer.\nAt the receiver’s end, DLL takes bits from the Physical layer \norganizes them into the frame, and sends them to the Network layer."
+      },
+      {
+        "page": 138,
+        "text": "Frames are the units of digital transmission, particularly in \ncomputer networks and telecommunications.\nEthernet, token ring, frame relay, and other data link layer \ntechnologies have their own frame structures.\nFrames have headers that contain information such as error-\nchecking codes."
+      },
+      {
+        "page": 139,
+        "text": "ADDRESSING:\nThe data link layer encapsulates the source and destination’s MAC\naddress/ physical address in the header of each frame to ensure node-to-\nnode delivery.\nERROR CONTROL:\nData can get corrupted due to various reasons like noise,\nattenuation, etc. So, it is the responsibility of the data link layer, to detect\nthe error in the transmitted data and correct it using error detection and\ncorrection"
+      },
+      {
+        "page": 140,
+        "text": "FLOW CONTROL:\nIf the receiver’s receiving speed is lower than the sender’s sending speed, then this\ncan lead to an overflow in the receiver’s buffer and some frames may get lost. So, it’s\nthe responsibility of DLL to synchronize the sender’s and receiver’s speeds and\nestablish flow control between them.\nACCESS CONTROL:\nWhen multiple devices share the same communication channel there is a high\nprobability of collision, so it’s the responsibility of DLL to check which device has\ncontrol over the channel and CSMA/CD and CSMA/CA can be used to avoid\ncollisions and loss of frames in the channel."
+      },
+      {
+        "page": 141,
+        "text": "TYPES OF ERRORS\nThere may be three types of errors:\nSingle bit error\nIn a frame, there is only one bit, anywhere though, which is corrupt.\nMultiple bits error\nFrame is received with more than one bits in corrupted state.\nBurst error\nFrame contains more than1 consecutive bits corrupted."
+      },
+      {
+        "page": 142,
+        "text": "ERROR CONTROL\nError control mechanism may involve two possible ways:\n1.Error detection\n2.Error correction\nERROR DETECTION:\n1.Simple Parity Check\n2.Checksum\n3.Cyclic Redundancy Check (CRC)\nERROR CORRECTION:\n1.Backward Error Correction  \n2.Forward Error Correction"
+      },
+      {
+        "page": 143,
+        "text": "ERROR CONTROL\nError control mechanism may involve two possible ways:\n1.Error detection\n2.Error correction\nERROR DETECTION:\n1.Simple Parity Check\n2.Checksum\n3.Cyclic Redundancy Check (CRC)\nERROR CORRECTION:\n1.Backward Error Correction  \n2.Forward Error Correction"
+      },
+      {
+        "page": 144,
+        "text": "PARITY CHECK\n• One extra bit is sent along with the original bits to make number of 1s either even in \ncase of even parity, or odd in case of odd parity.\n• The sender while creating a frame counts the number of 1s in it. For example, if \neven parity is used and number of 1s is even then one bit with value 0 is added. \nThis way number of 1s remains even. If the number of 1s is odd, to make it even a \nbit with value 1 is added.\n• The receiver simply counts the number of 1s in a frame. If the count of 1s is even \nand even parity is used, the frame is considered to be not-corrupted and is accepted. \nIf the count of 1s is odd and odd parity is used, the frame is still not corrupted.\n• If a single bit flips in transit, the receiver can detect it by counting the number of 1s. \nBut when more than one bits are erroneous, then it is very hard for the receiver to \ndetect the error."
+      },
+      {
+        "page": 145,
+        "text": "MCQ\nGiven code word 1110001010 is to be \ntransmitted with even parity check bit. The \nencoded word to be transmitted for this code is\n(A)11100010101\n(B) 11100010100\n(C) 1110001010\n(D) 111000101"
+      },
+      {
+        "page": 146,
+        "text": "Solution\nBecause even parity will make it even no of 1`s , it \nmean see in the transmitted data 1110001010 \nthere are five 1 which is odd .\nTo make it even it will add extra 1 as parity . \nso it will be 11100010101 .\nAnswer: option A"
+      },
+      {
+        "page": 147,
+        "text": "Checksum\nChecksum error detection is a method used to identify errors in \ntransmitted data. This method makes the use of Checksum Generator \non Sender side and Checksum Checker on Receiver side.\nAt the Sender side, the data is divided into equal subunits of n bit \nlength by the checksum generator. This bit is generally of 16-bit \nlength. These subunits are then added together using one’s \ncomplement method. This sum is of n bits. The resultant bit is then \ncomplemented. This complemented sum which is called checksum is \nappended to the end of original data unit and is then transmitted to \nReceiver."
+      },
+      {
+        "page": 148,
+        "text": ""
+      },
+      {
+        "page": 149,
+        "text": "The Receiver after receiving data + checksum passes it to\nchecksum checker. Checksum checker divides this data unit into\nvarious subunits of equal length and adds all these subunits.\nThese subunits also contain checksum as one of the subunits. The\nresultant bit is then complemented.\nIf the complemented result is zero, it means the data is error-free.\nIf the result is non-zero it means the data contains an error and\nReceiver rejects it."
+      },
+      {
+        "page": 150,
+        "text": ""
+      },
+      {
+        "page": 151,
+        "text": ""
+      },
+      {
+        "page": 152,
+        "text": "Example –\nIf the data unit to be transmitted is 10101001 00111001, the following procedure is \nused at Sender site and Receiver site.\nSender Site :\n10101001 subunit 1\n00111001 subunit 2 \n11100010 sum (using 1s complement) \n00011101 checksum (complement of sum)\nData transmitted to Receiver is –\nReceiver Site :\n10101001 subunit 1\n00111001 subunit 2 \n00011101 checksum \n11111111 sum \n00000000\nsum's complement Result is zero, it means no error."
+      },
+      {
+        "page": 153,
+        "text": "Advantage :\nThe checksum detects all the errors involving an odd number of bits \nas well as the error involving an even number of bits.\nDisadvantage :\nThe main problem is that the error goes undetected if one or more \nbits of a subunit is damaged and the corresponding bit or bits of a \nsubunit are damaged and the corresponding bit or bits of opposite \nvalue in second subunit are also damaged. This is because the sum of \nthose columns remains unchanged."
+      },
+      {
+        "page": 154,
+        "text": "Example –\nIf the data transmitted along with checksum is 10101001 00111001 \n00011101. But the data received at destination is 00101001 10111001 \n00011101.\nReceiver Site :\n00101001 1st bit of subunit 1 is damaged \n10111001 1st bit of subunit 2 is damaged \n00011101 checksum \n11111111 sum \n00000000 Ok 1's complement\nAlthough data is corrupted, the error is \nundetected."
+      },
+      {
+        "page": 155,
+        "text": "Cyclic Redundancy Check and Modulo-2 Division\nCRC or Cyclic Redundancy Check is a method of detecting \naccidental changes/errors in the communication channel.\nCRC uses Generator Polynomial which is available on both \nsender and receiver side. An example generator polynomial is of \nthe form like x3 + x + 1. This generator polynomial represents key \n1011. Another example is x2 + 1 that represents key 101.\nn : Number of bits in data to be sent from sender side. \nk : Number of bits in the key obtained from generator \npolynomial."
+      },
+      {
+        "page": 156,
+        "text": "Sender Side (Generation of Encoded Data from Data and Generator \nPolynomial (or Key)):\n1.The binary data is first augmented by adding k-1 zeros in the end of the \ndata\n2.Use modulo-2 binary division to divide binary data by the key and store \nremainder of division.\n3.Append the remainder at the end of the data to form the encoded data \nand send the same\nReceiver Side (Check if there are errors introduced in transmission)\nPerform modulo-2 division again and if the remainder is 0, then there are \nno errors."
+      },
+      {
+        "page": 157,
+        "text": "Modulo 2 Division:\nThe process of modulo-2 binary division is the same as the familiar \ndivision process we use for decimal numbers. Just that instead of \nsubtraction, we use XOR here.\n•In each step, a copy of the divisor (or data) is XORed with the k bits of\nthe dividend (or key).\n•The result of the XOR operation (remainder) is (n-1) bits, which is used\nfor the next step after 1 extra bit is pulled down to make it n bits long.\n•When there are no bits left to pull down, we have a result. The (n-1)-bit\nremainder which is appended at the sender side."
+      },
+      {
+        "page": 158,
+        "text": "Illustration:\nExample 1 (No error in transmission):\nData word to be sent - 100100 and generator polynomial x3 + x2 + 1]\nSender \nSide:\nTherefore, the remainder is \n001 and hence the encoded \ndata sent is 100100001."
+      },
+      {
+        "page": 159,
+        "text": "Receiver Side: Code word received at the receiver side 100100001\nTherefore, the \nremainder is all zeros. \nHence, the data \nreceived has no error."
+      },
+      {
+        "page": 160,
+        "text": "Example 2: (Error in transmission)\nData word to be sent - 100100 Key - 1101\nSender Side:\nTherefore, the \nremainder is 001 and \nhence the \ncode word sent is \n100100001.\nReceiver Side Let there be an error in \ntransmission media Code word received at \nthe receiver side - 100000001\nSince the remainder is \nnot all zeroes, the \nerror\nis detected at the \nreceiver side."
+      },
+      {
+        "page": 161,
+        "text": ""
+      },
+      {
+        "page": 162,
+        "text": "Why Hamming Code is Needed?\nDuring transmission, data may be corrupted due to\n•Electrical noise \n•Signal attenuation \n•Interference \n•Hardware faults \nExample\nOriginal Data\n1011\nReceived Data\n1001"
+      },
+      {
+        "page": 163,
+        "text": "Number of Parity Bits\nFormula\n2𝑟 ≥ 𝑚+𝑟+1\nWhere\n•r = parity bits \n•m = data bits \nExample\nSuppose data bits = 4\nNeed to find parity bits.\nr = 2\n2² = 4\n4 < 4+2+1 =7 Not sufficient\nTry r=3\n2³ =8\n8 ≥4+3+1=8\nCorrect\nTherefore\nData bits =4\nParity bits =3\nTotal bits\n7 bits"
+      },
+      {
+        "page": 164,
+        "text": "Error Correction(Hamming Distance code)\n• The Hamming distance between two words is the \nnumber of differences between corresponding bits.\nLet us find the Hamming distance between two pairs of  \nwords.\n1. The Hamming distance d(000, 011) is 2 because\n2.The Hamming distance d(10101, 11110) is 3  \nbecause"
+      },
+      {
+        "page": 165,
+        "text": "UGC NET QUESTIONS\nHamming distance between 100101000110 and \n110111101101 is\n(A)3\n(B) 4\n(C) 5\n(D) 6"
+      },
+      {
+        "page": 166,
+        "text": "Solutions\nGiven 100101000110 and 110111101101\nHamming distance:\n100101000110\n110111101101\nSo 6 bits changed\nAnswer : Option D"
+      },
+      {
+        "page": 167,
+        "text": "Data-link Control & Protocols\nData-link layer is responsible for implementation of point-to-\npoint flow and error control mechanism.\nFlow Control\nWhen a data frame (Layer-2 data) is sent from one host to\nanother over a single medium, it is required that the sender and\nreceiver should work at the same speed.\nThat is, sender sends at a speed on which the receiver can\nprocess and accept the data. What if the speed\n(hardware/software) of the sender or receiver differs? If sender is\nsending too fast the receiver may be overloaded, (swamped) and\ndata may be lost."
+      },
+      {
+        "page": 168,
+        "text": "PURPOSE OF FLOW CONTROL\nThe device on the receiving end has a limited amount of memory (to store \nincoming data) and limited speed (to process incoming data). The receiver \nmight get overwhelmed if the rate at which the sender sends data is faster or \nthe amount of data sent is more than its capacity.\nBuffers are blocks in the memory that store data until it is processed. If the \nbuffer is overloaded and there is more incoming data, then the receiver will \nstart losing frames.\nThe flow control mechanism was devised to avoid the loss and wastage of \nframes. Following this mechanism, the receiver, as per its capacity, sends an \nacknowledgment to send fewer frames or temporarily halt the transmission \nuntil it can receive again."
+      },
+      {
+        "page": 169,
+        "text": "Methods of Flow Control\n1. Stop-and-wait\n2. Sliding window."
+      },
+      {
+        "page": 170,
+        "text": "Simple Stop and Wait Protocol\nSender:\nRule 1) Send one data packet at a time.\nRule 2) Send next packet only after receiving acknowledgement for \nprevious.\nReceiver:\nRule 1) Send acknowledgement after receiving and consuming of \ndata  packet.\nRule 2) After consuming packet acknowledgement need to be sent \n(Flow Control)"
+      },
+      {
+        "page": 171,
+        "text": "Stop and Wait"
+      },
+      {
+        "page": 172,
+        "text": ""
+      },
+      {
+        "page": 173,
+        "text": "Two types of mechanisms can be deployed to control the flow\nStop and Wait\nThis flow control mechanism forces the sender after transmitting\na data frame to stop and wait until the acknowledgement of the\ndata-frame sent is received.\nSliding Window\nThe Sliding Window is a method of flow control in which a\nsender can transmit the several frames before getting an\nacknowledgement.\nA single ACK acknowledge multiple frames. The size of the\nwindow is represented as n-1. Therefore, maximum n-1 frames\ncan be sent before acknowledgement."
+      },
+      {
+        "page": 174,
+        "text": "Problems :1\nLost Data:"
+      },
+      {
+        "page": 175,
+        "text": "Problems :2\nLost Acknowledgement:"
+      },
+      {
+        "page": 176,
+        "text": "Problem 3. Delayed Acknowledgement/Data: After\ntimeout on sender side, a long delayed\nacknowledgement might be wrongly considered as\nacknowledgement of some other recent packet"
+      },
+      {
+        "page": 177,
+        "text": "Solution\nStop and Wait ARQ (Automatic Repeat Request)\nAbove 3 problems are resolved by Stop and Wait ARQ \n(Automatic Repeat Request) that does both error control \nand flow control."
+      },
+      {
+        "page": 178,
+        "text": "Time out-\nSolution for lose \nof data"
+      },
+      {
+        "page": 179,
+        "text": "2. Sequence Number (Data)\n3. Delayed Acknowledgement:\nThis is resolved by introducing sequence number for acknowledgement \nalso."
+      },
+      {
+        "page": 180,
+        "text": "Error Control\n•When data-frame is transmitted, there is a probability that data-\nframe may be lost in the transit or it is received corrupted. \n•In both cases, the receiver does not receive the correct data-\nframe and sender does not know anything about any loss.\n•In such case, both sender and receiver are equipped with some \nprotocols which helps them to detect transit errors such as loss \nof data-frame.\n• Hence, either the sender retransmits the data-frame or the \nreceiver may request to resend the previous data-frame"
+      },
+      {
+        "page": 181,
+        "text": ""
+      },
+      {
+        "page": 182,
+        "text": "Stop-and-wait\nThe sender maintains a timeout counter.\nWhen a frame is sent, the sender starts the \ntimeout counter.\nIf acknowledgement of frame comes in time, the \nsender transmits the next frame in queue.\nIf acknowledgement does not come in time, the \nsender assumes that either the frame or its \nacknowledgement is lost in transit. Sender \nretransmits the frame and starts the timeout \ncounter.\nIf a negative acknowledgement is received, the \nsender retransmits the frame."
+      },
+      {
+        "page": 183,
+        "text": "Problem in Stop and Wait ARQ\n• The Stop and Wait ARQ solves main three problems, but \nmay cause big performance issues as sender always waits \nfor acknowledgement even if it has next packet ready to \nsend. Consider a situation where you have a high \nbandwidth connection and propagation delay is also high \n(you are connected to some server in some other country \nthough a high speed connection). \n• To solve this problem, we can send more than one packet at \na time with a larger sequence numbers."
+      },
+      {
+        "page": 184,
+        "text": "Sliding window protocol\n•Sliding window protocols are data link layer protocols for \nreliable and sequential delivery of data frames.\n• The sliding window is also used in Transmission Control \nProtocol.\n•In this protocol, multiple frames can be sent by a sender at a \ntime before receiving an acknowledgment from the receiver.\n• The term sliding window refers to the imaginary boxes to \nhold frames. Sliding window method is also known as \nwindowing."
+      },
+      {
+        "page": 185,
+        "text": "SLIDING WINDOW PROTOCOL\nThe sliding window is a technique for sending multiple frames at a \ntime. It controls the data packets between the two devices where \nreliable and gradual delivery of data frames is needed. It is also used \nin TCP (Transmission Control Protocol).\nIn this technique, each frame has sent from the sequence number. \nThe sequence numbers are used to find the missing data in the \nreceiver end. The purpose of the sliding window technique is to \navoid duplicate data, so it uses the sequence number.\n1. Go-Back-N ARQ\n2. Selective Repeat ARQ"
+      },
+      {
+        "page": 186,
+        "text": "Go-Back-N ARQ\nStop and wait ARQ mechanism does not utilize the \nresources at their best.When the acknowledgement is \nreceived, the sender sits idle and does nothing. In Go-\nBack-N ARQ method, both sender and receiver \nmaintain a window.\nThe sending-window size enables the sender to send \nmultiple frames without receiving the \nacknowledgement of the previous ones. The \nreceiving-window enables the receiver to receive \nmultiple frames and acknowledge them. The receiver \nkeeps track of incoming frame’s sequence number.\nIf all frames are positively acknowledged, the sender \nsends next set of frames. If sender finds that it has \nreceived NACK or has not receive any ACK for a \nparticular frame, it retransmits all the frames after \nwhich it does not receive any positive ACK."
+      },
+      {
+        "page": 187,
+        "text": "Selective Repeat ARQ\nIn Go-back-N ARQ, it is assumed that the \nreceiver does not have any buffer space for \nits window size and has to process each \nframe as it comes. This enforces the sender \nto retransmit all the frames which are not \nacknowledged.\nIn Selective-Repeat ARQ, the receiver while \nkeeping track of sequence numbers, buffers \nthe frames in memory and sends NACK for \nonly frame which is missing or damaged.\nThe sender in this case, sends only packet \nfor which NACK is received."
+      },
+      {
+        "page": 188,
+        "text": "HDLC Protocol (High-Level Data Link Control)\nHDLC (High-Level Data Link Control) is a bit-oriented data\nlink layer protocol developed by ISO for reliable\ncommunication over point-to-point and multipoint links. It\nworks at the Data Link Layer (Layer 2) of the OSI model.\nHDLC provides:\n• Framing\n• Error detection\n• Flow control\n• Reliable data transfer\n• Link management"
+      },
+      {
+        "page": 189,
+        "text": "HDLC is a bit-oriented synchronous data link layer protocol that\norganizes data into frames and ensures reliable transmission between\ntwo nodes using error detection and control mechanisms.\nPurpose of an HDLC Frame\nAn HDLC frame enables the receiver to:\n• Identify the start and end of a frame\n• Recognize the intended destination\n• Control communication flow\n• Detect transmission errors\n• Ensure reliable data delivery"
+      },
+      {
+        "page": 190,
+        "text": ""
+      },
+      {
+        "page": 191,
+        "text": "Field Name Size (bits)\nFlag Field 8 bits\nAddress Field 8 bits\nControl Field 8 or 16 bits\nInformation Field Variable (not used in some type of \nHDLC frames)\nFCS (Frame Check Sequence) Field 16 or 32 bits\nClosing Flag Field 8 bits"
+      },
+      {
+        "page": 192,
+        "text": "1. Flag Field\n• Marks the beginning and end of a frame\n• Uses an 8-bit pattern 01111110 (0x7E)\n• Provides synchronization\n2. Address Field\n• Identifies the secondary station\n• Supports individual, group, and broadcast addressing\n• Length may vary based on network requirements"
+      },
+      {
+        "page": 193,
+        "text": "3. Control Field\n• Controls communication and frame type\n• Supports three frame types: Information (I-Frame): Data transfer, \nSupervisory (S-Frame): Flow and error control , Unnumbered (U-\nFrame): Link management\n4. Information Field\n• Contains user data or management information\n• Optional and variable in length"
+      },
+      {
+        "page": 194,
+        "text": "5. Frame Check Sequence (FCS)\n• Used for error detection\n• Uses CRC-16 or CRC-32\n• Ensures frame integrity\n6. Ending Flag Field\nIndicates the end of the frame\nMay serve as the starting flag for the next frame"
+      },
+      {
+        "page": 195,
+        "text": "HDLC Operating Modes\na) Normal Response Mode (NRM)\n• Secondary transmits only when permitted by\nprimary.\n• Used in multipoint networks.\nb) Asynchronous Response Mode (ARM)\n• Secondary may transmit without explicit\npermission.\n• Rarely used.\nc) Asynchronous Balanced Mode (ABM)\n• Both stations can transmit anytime.\n• Most commonly used."
+      },
+      {
+        "page": 196,
+        "text": "Type of frame is basically determined by control field of \nframe. Each type of frame generally serves as an envelope \nfor transmission of various types of messages. These three \ndifferent classes of frames used in HDLC are given below."
+      },
+      {
+        "page": 197,
+        "text": "I-frame : I-frame stands for Information frames.\nThis frame is generally used for transporting user data from\nnetwork layer.\nThese frames actually carry actual data or information of upper\nlayer and some control information.\nThis frame carries data along with both send sequence number and\nan acknowledgment number. It can also be used to piggyback\nacknowledgement\ninformation in case of ABM (Asynchronous Balanced Mode). The\nfirst bit of this frame of control field is 0."
+      },
+      {
+        "page": 198,
+        "text": "S-frame : S-frame stands for Supervisory frames. These\nframes are basically required and essential for error\ncontrol and flow control.\nThey also provide control information. It contains or\nincludes only an Acknowledgment number. First two bit\nof this frame of control field is 10.\nS-frame does not have any information fields. This frame\ncontains send and receive sequence numbers."
+      },
+      {
+        "page": 199,
+        "text": "Example -\n• Receive Ready (RR)\n• Receive Not Ready (RNR)\n• Reject on frame N(R) (REJ)\n• Selective reject on N(R) (SREJ), etc."
+      },
+      {
+        "page": 200,
+        "text": "U-frame : U-frame stands for Unnumbered frames.\nThese frames are also required in various functions like link setup\nand disconnections. These frames basically support control purposes\nand are not sequenced. First, two-bit of this frame of control field is\n11.\nSome U-frame contains an information field depending on the type.\nThese frames are also used for different miscellaneous purposes\nalong with link management. U-frame is required for managing link\nitself.\nThis frame does not include any type of acknowledgment\ninformation i.e. in turn it includes or is contained in sequence\nnumber. These frames are generally reserved for system\nmanagement."
+      },
+      {
+        "page": 201,
+        "text": "Example -\n• Set Normal Response Mode \n(SNRM)\n• Set Asynchronous Response Mode \n(SARM)\n• Set Asynchronous Balanced Mode \n(SABM)\n• Unnumbered Polling (UP)"
+      },
+      {
+        "page": 202,
+        "text": ""
+      },
+      {
+        "page": 203,
+        "text": "Types of HDLC Frames\nHDLC defines three frame \ntypes.\n1. Information Frame (I-frame)\nUsed for carrying user data.\nControl Field Format\n0 | N(S) | P/F | N(R)\n• N(S) → Send sequence \nnumber\n• N(R) → Next expected frame \nnumber\n• P/F → Poll/Final bit\nExample\nIf:\n• Sending frame number = 3\n• Expecting next frame = 5\nThen:\n• N(S) = 3\n• N(R) = 5\nThe receiver knows which frame \narrived and which frame is \nexpected next."
+      },
+      {
+        "page": 204,
+        "text": "Code Meaning\nRR Receive Ready\nRNR Receive Not Ready\nREJ Reject\nSREJ Selective Reject\nSupervisory Frame (S-frame)\nUsed for flow and error control.\nTypes\nExample\nReceiver sends RR(4) meaning:\n\"Frames up to 3 received correctly; send frame 4 next.\""
+      },
+      {
+        "page": 205,
+        "text": "Multiple Access Protocols in Computer Network\n• Multiple Access Protocols are methods used in computer\nnetworks to control how data is transmitted when multiple\ndevices are trying to communicate over the same network.\n• These protocols ensure that data packets are sent and\nreceived efficiently, without collisions or interference.\n• They help manage the network traffic so that all devices can\nshare the communication channel smoothly and effectively."
+      },
+      {
+        "page": 206,
+        "text": "Multiple Access Control\nIf there is a dedicated link between the sender and the receiver then\ndata link control layer is sufficient, however if there is no dedicated\nlink present then multiple stations can access the channel\nsimultaneously.\nHence multiple access protocols are required to decrease collision\nand avoid crosstalk.\nFor example, in a classroom full of students, when a teacher asks a\nquestion and all the students (or stations) start answering\nsimultaneously (send data at same time) then a lot of chaos is\ncreated( data overlap or data lost) then it is the job of the teacher\n(multiple access protocols) to manage the students and make them\nanswer one at a time."
+      },
+      {
+        "page": 207,
+        "text": ""
+      },
+      {
+        "page": 208,
+        "text": ""
+      },
+      {
+        "page": 209,
+        "text": "1. Random Access Protocol\nIn this, all stations have same superiority that is no station\nhas more priority than another station. Any station can send\ndata depending on medium's state( idle or busy). It has two\nfeatures:\n•There is no fixed time for sending data\n•There is no fixed sequence of stations sending data\nThe Random access protocols are further subdivided as:"
+      },
+      {
+        "page": 210,
+        "text": ""
+      },
+      {
+        "page": 211,
+        "text": "Pure ALOHA\nWhen a station sends data it waits for an acknowledgement. If\nthe acknowledgement doesn't come within the allotted time\nthen the station waits for a random amount of time called\nback-off time (Tb) and re-sends the data. Since different\nstations wait for different amount of time, the probability of\nfurther collision decreases.\nSlotted ALOHA\nIt is similar to pure aloha, except that we divide time into slots\nand sending of data is allowed only at the beginning of these\nslots. If a station misses out the allowed time, it must wait for\nthe next slot. This reduces the probability of collision."
+      },
+      {
+        "page": 212,
+        "text": ""
+      },
+      {
+        "page": 213,
+        "text": "CSMA\nCarrier Sense Multiple Access ensures fewer collisions as the station is\nrequired to first sense the medium (for idle or busy) before transmitting\ndata. If it is idle then it sends data, otherwise it waits till the channel\nbecomes idle. However there is still chance of collision in CSMA due to\npropagation delay.\nFor example, if station A wants to send data, it will first sense the\nmedium. If it finds the channel idle, it will start sending data. However, by\nthe time the first bit of data is transmitted (delayed due to propagation\ndelay) from station A, if station B requests to send data and senses the\nmedium it will also find it idle and will also send data. This will result in\ncollision of data from station A and B."
+      },
+      {
+        "page": 214,
+        "text": ""
+      },
+      {
+        "page": 215,
+        "text": "•1-Persistent: The node senses the channel, if idle it sends the data, otherwise it\ncontinuously keeps on checking the medium for being idle and transmits\nunconditionally(with 1 probability) as soon as the channel gets idle.\n•Non-Persistent: The node senses the channel, if idle it sends the data, otherwise it\nchecks the medium after a random amount of time (not continuously) and transmits\nwhen found idle.\n•P-Persistent: The node senses the medium, if idle it sends the data with p\nprobability. If the data is not transmitted ((1-p) probability) then it waits for some\ntime and checks the medium again, now if it is found idle then it send with p\nprobability. This repeat continues until the frame is sent. It is used in Wifi and packet\nradio systems.\n•O-Persistent: Superiority of nodes is decided beforehand and transmission occurs in\nthat order. If the medium is idle, node waits for its time slot to send data."
+      },
+      {
+        "page": 216,
+        "text": "CSMA/CD\nCarrier sense multiple access with collision detection. Stations\ncan terminate transmission of data if collision is detected. For\nmore details refer - Efficiency of CSMA/CD .\nCSMA/CA\nCarrier sense multiple access with collision avoidance. The\nprocess of collisions detection involves sender receiving\nacknowledgement signals. If there is just one signal(its own) then\nthe data is successfully sent but if there are two signals(its own\nand the one with which it has collided) then it means a collision\nhas occurred. To distinguish between these two cases, collision\nmust have a lot of impact on received signal. However it is not so\nin wired networks, so CSMA/CA is used in this case."
+      },
+      {
+        "page": 217,
+        "text": "2. Controlled Access\nControlled access protocols ensure that only one device\nuses the network at a time. Think of it like taking turns in a\nconversation so everyone can speak without talking over\neach other.\nIn this, the data is sent by that station which is approved by\nall other stations. For further details refer - Controlled\nAccess Protocols"
+      },
+      {
+        "page": 218,
+        "text": "Controlled Access\nIn controlled access, the stations seek data from one\nanother to find which station has the right to send. It\nallows only one node to send at a time, to avoid the\ncollision of messages on a shared medium. The three\ncontrolled-access methods are:\n•Reservation\n•Polling\n•Token Passing"
+      },
+      {
+        "page": 219,
+        "text": "1. Reservation\n•In the reservation method, a station needs to make a reservation \nbefore sending data.\n•The timeline has two kinds of periods:\n• Reservation interval of fixed time length\n• Data transmission period of variable frames.\n•If there are M stations, the reservation interval is divided into M slots, \nand each station has one slot.\n•Suppose if station 1 has a frame to send, it transmits 1 bit during the \nslot 1. No other station is allowed to transmit during this slot."
+      },
+      {
+        "page": 220,
+        "text": "2. Polling\n•Polling process is similar to the roll-call performed in class. Just \nlike the teacher, a controller sends a message to each node in turn.\n•In this, one acts as a primary station(controller) and the others are \nsecondary stations. All data exchanges must be made through the \ncontroller.\n•The message sent by the controller contains the address of the \nnode being selected for granting access."
+      },
+      {
+        "page": 221,
+        "text": "3. Token Passing\n•In token passing scheme, the stations are connected logically to\neach other in form of ring and access to stations is governed by\ntokens.\n•A token is a special bit pattern or a small message, which circulate\nfrom one station to the next in some predefined order.\n•In Token ring, token is passed from one station to another adjacent\nstation in the ring whereas incase of Token bus, each station uses\nthe bus to send the token to the next station in some predefined\norder."
+      },
+      {
+        "page": 222,
+        "text": "3. Channelization\nIn this, the available bandwidth of the link is shared in time, frequency and\ncode to multiple stations to access channel simultaneously.\nFrequency Division Multiple Access (FDMA) - The available bandwidth is\ndivided into equal bands so that each station can be allocated its own band.\nGuard bands are also added so that no two bands overlap to avoid crosstalk\nand noise.\nTime Division Multiple Access (TDMA) - In this, the bandwidth is shared\nbetween multiple stations. To avoid collision time is divided into slots and\nstations are allotted these slots to transmit data. However there is a overhead\nof synchronization as each station needs to know its time slot. This is\nresolved by adding synchronization bits to each slot. Another issue with\nTDMA is propagation delay which is resolved by addition of guard bands."
+      },
+      {
+        "page": 223,
+        "text": "•Code Division Multiple Access (CDMA) - One channel carries all\ntransmissions simultaneously. There is neither division of bandwidth nor\ndivision of time. For example, if there are many people in a room all\nspeaking at the same time, then also perfect reception of data is possible\nif only two person speak the same language. Similarly, data from\ndifferent stations can be transmitted simultaneously in different code\nlanguages."
+      },
+      {
+        "page": 224,
+        "text": ""
+      }
+    ],
+    "summary": "• Switch has memory it stores MAC addresses\n• It has intelligent to forward the correct \ndestination(unicast)\n• The switch  can perform error checking before \nforwarding data, that makes it very efficient\nAspect Hub Switch\nFunctionality\nBasic networking device that \noperates at the physical layer \n(Layer 1) and broadcasts data to all \nconnected devices\nAdvanced networking device \nthat operates at the data link \nlayer (Layer 2) and forwards data \nselectively to the intended \nrecipient\nOperation\nOperates as a broadcast medium; it \nsends data to all devices connected \nto it\nOperates as a selective \nforwarding device; it forwards \ndata only to the intended \nrecipient based on MAC \naddresses\nCollision \nDomain\nShares a single collision domain, \nmeaning all devices connected to \nthe hub share the same bandwidth \nand may experience collisions\nProvides separate collision \ndomains for each port, thereby \nreducing collisions and \nimproving network performance\nMAC Address \nLearning\nDoes not have the capability to learn \nMAC addresses; it simply forwards \nincoming data to all connected \ndevices\nLearns MAC addresses by \nexamining source addresses of \nincoming frames, maintains a \nMAC address table, and uses it to \nforward frames intelligently\nEfficiency\nLess efficient due to broadcast \ntransmissions and potential collisions, \nleading to network congestion and \nslower performance\nMore efficient as it selectively \nforwards data only to the intended \nrecipient, reducing unnecessary \ntraffic and improving network \nperformance\nBandwidth\nShares the total available bandwidth \namong connected devices, leading to \npotential congestion and slower \nnetwork speeds\nOffers dedicated bandwidth for \neach port, allowing simultaneous \ncommunication between devices at \nfull speed\nRouters\n• Router is mainly a Network Layer device\n• A router is a device like a switch that routes data\npackets based on their IP addresses. Functionality\nConnect and divide network segments, forward \ndata frames based on MAC addresses, filter traffic \nwithin a single network\nProvide interconnection between \nnetworks with different protocols, \ntranslate data formats, enable \ncommunication between \nheterogeneous networks\nLayer of \nOperation Data Link Layer (Layer 2) Network Layer (Layer 3) or above\nScope of \nOperation Typically used within a single network or LAN Used to connect networks with \ndifferent protocols or architectures\nData Handling\nForward data frames between network segments \nbased on MAC addresses, learn MAC addresses \ndynamically, maintain forwarding table\nHandle routing of data packets \nbetween different networks based \non IP addresses, perform protocol \ntranslation, packet filtering, routing \nfunctions\nExample Ethernet bridge Router\nBridge Gateway\n\nTransmission Modes in Computer Networks (Simplex, Half-Duplex\nand Full-Duplex)\nTransmission mode means transferring data between two devices. Types of Network Topology: The various network topologies are:\nPoint to Point Topology\n• Mesh Topology\n• Star Topology\n• Bus Topology\n• Ring Topology\n• Tree Topology\n• Hybrid Topology\nPoint to Point Topology\nPoint-to-Point Topology is a type of topology that works on the\nfunctionality of the sender and receiver. • frame contains the hardware destination and source \naddress\nFunctions of the Data-link layer\nPhysical Addressing: After creating frames, Data link layer \nadds physical addresses (MAC address) of sender and/or \nreceiver in the header of each frame\n•Flow Control: It is the technique through which the constant \ndata rate is maintained on both the sides so that no data get \ncorrupted. • Access Control: When two or more devices are connected to the \nsame communication channel, then the data link layer protocols are \nused to determine which device has control over the link at a given \ntime\n3.Network Layer\n• Network layer works for the transmission of \ndata(Packets) from one host to the other located in \ndifferent networks.",
+    "topics": [
+      {
+        "name": "Data",
+        "confidence": 70,
+        "page": 23
+      },
+      {
+        "name": "Network",
+        "confidence": 70,
+        "page": 32
+      },
+      {
+        "name": "Layer",
+        "confidence": 70,
+        "page": 58
+      },
+      {
+        "name": "Frame",
+        "confidence": 70,
+        "page": 200
+      },
+      {
+        "name": "Topology",
+        "confidence": 70,
+        "page": 104
+      },
+      {
+        "name": "Receiver",
+        "confidence": 70,
+        "page": 167
+      },
+      {
+        "name": "Devices",
+        "confidence": 70,
+        "page": 25
+      },
+      {
+        "name": "Control",
+        "confidence": 70,
+        "page": 45
+      },
+      {
+        "name": "Error",
+        "confidence": 70,
+        "page": 142
+      },
+      {
+        "name": "Sender",
+        "confidence": 70,
+        "page": 182
+      }
+    ],
+    "word_count": 12087,
+    "character_count": 75408
+  }
+]

@@ -1,0 +1,824 @@
+/* =========================================================
+   AI KNOWLEDGE DNA - FULL WIDTH DASHBOARD
+========================================================= */
+
+.dashboard-page {
+  width: 100%;
+  min-width: 0;
+  min-height: 100vh;
+
+  margin: 0 !important;
+  margin-left: 0 !important;
+
+  padding: 45px 48px 60px !important;
+
+  box-sizing: border-box;
+
+  background:
+    radial-gradient(
+      circle at 15% 15%,
+      rgba(88, 70, 255, 0.12),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 85% 20%,
+      rgba(168, 85, 247, 0.09),
+      transparent 35%
+    ),
+    #080719;
+
+  color: #ffffff;
+
+  overflow-x: hidden;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.dashboard-header {
+  width: 100%;
+  max-width: none;
+
+  margin: 0 0 30px !important;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 25px;
+
+  box-sizing: border-box;
+}
+
+.dashboard-welcome {
+  min-width: 0;
+  flex: 1;
+}
+
+.dashboard-label {
+  margin: 0 0 12px;
+
+  color: #a78bfa;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  letter-spacing: 2.5px;
+}
+
+.dashboard-welcome h1 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 48px;
+  line-height: 1.1;
+
+  font-weight: 750;
+}
+
+.dashboard-subtitle {
+  margin: 10px 0 0;
+
+  color: #a4a0b8;
+
+  font-size: 16px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   KNOWLEDGE DNA SCORE
+========================================================= */
+
+.dna-score {
+  width: 150px;
+  min-width: 150px;
+  min-height: 125px;
+
+  padding: 18px;
+
+  box-sizing: border-box;
+
+  border-radius: 20px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  border: 1px solid
+    rgba(167, 139, 250, 0.3);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(38, 26, 74, 0.9),
+      rgba(25, 17, 52, 0.9)
+    );
+}
+
+.dna-score > span {
+  font-size: 18px;
+
+  margin-bottom: 5px;
+}
+
+.dna-score small {
+  color: #aaa5bd;
+
+  font-size: 12px;
+}
+
+.dna-score strong {
+  margin-top: 3px;
+
+  font-size: 34px;
+
+  line-height: 1;
+
+  background:
+    linear-gradient(
+      90deg,
+      #9b7cff,
+      #d084ff
+    );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+}
+
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+.stats-grid {
+  width: 100%;
+  max-width: none;
+
+  margin: 0 0 25px !important;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 18px;
+
+  box-sizing: border-box;
+}
+
+.stat-card {
+  min-width: 0;
+  min-height: 125px;
+
+  padding: 20px 24px;
+
+  box-sizing: border-box;
+
+  border-radius: 18px;
+
+  border: 1px solid
+    rgba(255, 255, 255, 0.07);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(30, 28, 59, 0.9),
+      rgba(20, 18, 43, 0.9)
+    );
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+
+  border-color:
+    rgba(139, 92, 246, 0.3);
+}
+
+.stat-icon {
+  width: 30px;
+  height: 30px;
+
+  margin-bottom: 13px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: flex-start;
+
+  color: #ffffff;
+
+  font-size: 17px;
+}
+
+.stat-card p {
+  margin: 0 0 4px;
+
+  color: #aaa5bd;
+
+  font-size: 14px;
+}
+
+.stat-card strong {
+  display: block;
+
+  color: #ffffff;
+
+  font-size: 30px;
+
+  line-height: 1.1;
+
+  font-weight: 750;
+}
+
+
+/* =========================================================
+   MAIN DASHBOARD GRID
+========================================================= */
+
+.dashboard-main-grid {
+  width: 100%;
+  max-width: none;
+
+  margin: 0 0 35px !important;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr);
+
+  gap: 20px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   UPLOAD CARD
+========================================================= */
+
+.dashboard-upload-card {
+  width: 100%;
+  min-width: 0;
+  min-height: 300px;
+
+  padding: 28px;
+
+  box-sizing: border-box;
+
+  border-radius: 20px;
+
+  border: 1px solid
+    rgba(255, 255, 255, 0.07);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(28, 27, 57, 0.95),
+      rgba(18, 17, 40, 0.95)
+    );
+}
+
+.dashboard-upload-icon {
+  width: 40px;
+  height: 40px;
+
+  margin-bottom: 14px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: flex-start;
+
+  color: #a78bfa;
+
+  font-size: 21px;
+}
+
+.dashboard-upload-card h2 {
+  margin: 0 0 9px;
+
+  color: #ffffff;
+
+  font-size: 25px;
+
+  line-height: 1.2;
+}
+
+.dashboard-upload-card p {
+  max-width: 700px;
+
+  margin: 0 0 18px;
+
+  color: #9e9ab2;
+
+  font-size: 14px;
+
+  line-height: 1.65;
+}
+
+
+/* =========================================================
+   FILE TYPES
+========================================================= */
+
+.upload-types {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 7px;
+
+  margin-bottom: 20px;
+}
+
+.upload-types span {
+  padding: 6px 10px;
+
+  border-radius: 7px;
+
+  border: 1px solid
+    rgba(255, 255, 255, 0.09);
+
+  background:
+    rgba(255, 255, 255, 0.025);
+
+  color: #aaa5bd;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.primary-button {
+  min-height: 44px;
+
+  padding: 0 17px;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  border: none;
+
+  border-radius: 11px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #635bff,
+      #934df4
+    );
+
+  color: #ffffff;
+
+  font-size: 14px;
+
+  font-weight: 650;
+
+  cursor: pointer;
+
+  text-decoration: none;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.primary-button:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 8px 25px
+      rgba(124, 58, 237, 0.3);
+}
+
+
+/* =========================================================
+   WEAK CONCEPTS
+========================================================= */
+
+.weak-concepts-card {
+  width: 100%;
+  min-width: 0;
+  min-height: 300px;
+
+  padding: 28px;
+
+  box-sizing: border-box;
+
+  border-radius: 20px;
+
+  border: 1px solid
+    rgba(255, 255, 255, 0.07);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(28, 27, 57, 0.95),
+      rgba(18, 17, 40, 0.95)
+    );
+}
+
+.weak-concepts-header h2 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 25px;
+}
+
+.weak-concepts-header p {
+  margin: 5px 0 22px;
+
+  color: #77738c;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   WEAK CONCEPT ITEMS
+========================================================= */
+
+.weak-concept {
+  margin-bottom: 19px;
+}
+
+.weak-concept:last-child {
+  margin-bottom: 0;
+}
+
+.weak-concept-top {
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 8px;
+}
+
+.weak-concept-top > div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.weak-concept-top strong {
+  color: #ffffff;
+
+  font-size: 14px;
+}
+
+.weak-concept-top span {
+  color: #77738c;
+
+  font-size: 11px;
+}
+
+.weak-concept-top b {
+  color: #a78bfa;
+
+  font-size: 13px;
+}
+
+.weak-progress {
+  width: 100%;
+
+  height: 6px;
+
+  overflow: hidden;
+
+  border-radius: 20px;
+
+  background:
+    rgba(255, 255, 255, 0.08);
+}
+
+.weak-progress div {
+  height: 100%;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      90deg,
+      #635bff,
+      #c084fc
+    );
+}
+
+
+/* =========================================================
+   SUBJECT SECTION
+========================================================= */
+
+.subject-manager {
+  width: 100%;
+  max-width: none;
+
+  margin: 0 0 35px !important;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   QUIZ SECTION
+========================================================= */
+
+.quiz-generator {
+  width: 100%;
+  max-width: none;
+
+  margin: 0 0 35px !important;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   KNOWLEDGE DNA PREVIEW
+========================================================= */
+
+.knowledge-dna-preview {
+  width: 100%;
+  max-width: none;
+
+  margin: 0 !important;
+
+  padding: 25px 28px;
+
+  box-sizing: border-box;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 20px;
+
+  border-radius: 20px;
+
+  border: 1px solid
+    rgba(167, 139, 250, 0.16);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(34, 24, 69, 0.9),
+      rgba(20, 18, 44, 0.9)
+    );
+}
+
+.knowledge-dna-icon {
+  width: 48px;
+  height: 48px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #7658ff,
+      #a855f7
+    );
+
+  color: #ffffff;
+
+  font-size: 19px;
+}
+
+.knowledge-dna-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.knowledge-dna-content > span {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #a78bfa;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.7px;
+}
+
+.knowledge-dna-content h2 {
+  margin: 0 0 6px;
+
+  color: #ffffff;
+
+  font-size: 20px;
+}
+
+.knowledge-dna-content p {
+  margin: 0;
+
+  color: #858197;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+}
+
+.knowledge-dna-value {
+  min-width: 110px;
+
+  text-align: center;
+}
+
+.knowledge-dna-value strong {
+  display: block;
+
+  font-size: 32px;
+
+  font-weight: 750;
+
+  background:
+    linear-gradient(
+      90deg,
+      #9b7cff,
+      #d084ff
+    );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+}
+
+.knowledge-dna-value span {
+  color: #77738c;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   REMOVE COMMON GLOBAL LAYOUT OFFSETS
+========================================================= */
+
+.dashboard-page,
+.dashboard-page * {
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .dashboard-page {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+  }
+
+  .stats-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .dashboard-main-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+@media (max-width: 650px) {
+
+  .dashboard-page {
+    padding: 30px 16px 45px !important;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dashboard-welcome h1 {
+    font-size: 36px;
+  }
+
+  .dashboard-subtitle {
+    font-size: 14px;
+  }
+
+  .dna-score {
+    width: 100%;
+    min-width: 0;
+    min-height: 105px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+  }
+
+  .stat-card {
+    min-height: 105px;
+
+    padding: 17px 20px;
+  }
+
+  .stat-card strong {
+    font-size: 26px;
+  }
+
+  .dashboard-upload-card,
+  .weak-concepts-card {
+    padding: 22px;
+  }
+
+  .knowledge-dna-preview {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+  .knowledge-dna-value {
+    text-align: left;
+  }
+
+}
+/* =========================================================
+   FORCE DASHBOARD TO USE FULL AVAILABLE WIDTH
+========================================================= */
+
+html,
+body,
+#root {
+  width: 100%;
+  min-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard-page {
+  width: 100vw !important;
+  max-width: none !important;
+
+  margin: 0 !important;
+
+  padding-left: 48px !important;
+  padding-right: 48px !important;
+
+  box-sizing: border-box;
+
+  overflow-x: hidden;
+}
+
+.dashboard-header,
+.stats-grid,
+.dashboard-main-grid,
+.subject-manager,
+.quiz-generator,
+.knowledge-dna-preview {
+  width: 100% !important;
+  max-width: none !important;
+
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+
+  box-sizing: border-box;
+}

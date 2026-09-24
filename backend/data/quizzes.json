@@ -1,0 +1,160 @@
+[
+  {
+    "id": "82aacd03a5b64c9e9870e303f6c4fa4b",
+    "subject_id": "6b52957a30ec4fbc8eb00dffb991a4b0",
+    "subject_name": "Data Communication Network",
+    "document_ids": [
+      "688453d84f0f4257a5b21fa962ad9e76",
+      "a9c9295122ed462a85dffa487a4c03fe"
+    ],
+    "question_count": 10,
+    "difficulty": "easy",
+    "questions": [
+      {
+        "id": "b4bcdc6cd78b4e51aba76692603674c4",
+        "question": "What is the primary aim of a computer network?",
+        "options": [
+          "To share resources among various connected devices",
+          "To increase the physical size of computing hardware",
+          "To eliminate the need for transmission media",
+          "To convert all digital communications into analog formats"
+        ],
+        "correct_answer": 0,
+        "explanation": "The main goal of a computer network is to allow various connected devices to share resources with each other.",
+        "page": 2,
+        "topic": "Computer Network Basics"
+      },
+      {
+        "id": "ee4279c1953744a09ec96c7d6a3e6efb",
+        "question": "Which combination of networks historically came together to form the public Internet?",
+        "options": [
+          "LAN, MAN, and PAN",
+          "ARPANET, NSFNET, and Private Networks",
+          "Only ARPANET and NSFNET without private systems",
+          "A collection of local telephone exchange lines"
+        ],
+        "correct_answer": 1,
+        "explanation": "As shown in the evolution diagram, the Internet was formed by combining ARPANET, NSFNET, and various Private Networks.",
+        "page": 5,
+        "topic": "Evolution of Networks"
+      },
+      {
+        "id": "922d98a813774d0b80b7ee36771fabe3",
+        "question": "If a network is set up for an individual person and covers an area of up to 30 feet (about 10 meters), what type of network is it?",
+        "options": [
+          "Local Area Network (LAN)",
+          "Personal Area Network (PAN)",
+          "Metropolitan Area Network (MAN)",
+          "Wide Area Network (WAN)"
+        ],
+        "correct_answer": 1,
+        "explanation": "A Personal Area Network (PAN) is arranged within an individual person, typically covering an area of 10 meters or 30 feet.",
+        "page": 12,
+        "topic": "Computer Network Types"
+      },
+      {
+        "id": "b2611eafbcf245758f6a003f669d112a",
+        "question": "Which hardware component is absolutely necessary to physically connect a computer over a network?",
+        "options": [
+          "Network Interface Card (NIC)",
+          "Repeater",
+          "Bridge",
+          "Gateway"
+        ],
+        "correct_answer": 0,
+        "explanation": "A Network Interface Card (NIC) is a circuit board installed in a computer that provides a dedicated network connection, and without it, a computer cannot connect over a network.",
+        "page": 21,
+        "topic": "Network Interface Card"
+      },
+      {
+        "id": "3fe1de40a415485f90b0f181ed1246b1",
+        "question": "How does a modem allow a computer to send digital data over analog telephone lines?",
+        "options": [
+          "It amplifies the digital signal so it can travel longer distances",
+          "It converts the computer's digital signal into an analog signal, and vice versa",
+          "It broadcasts the digital signal directly into the air as radio waves",
+          "It forces the telephone lines to accept pure digital pulses"
+        ],
+        "correct_answer": 1,
+        "explanation": "A modem converts a computer's digital data into analog data (using a modulator) when sending, and converts analog signals back to digital data (using a demodulator) when receiving.",
+        "page": 23,
+        "topic": "Modem"
+      },
+      {
+        "id": "3a5c50b684ae40cb8aab2ea845e10bf4",
+        "question": "Why is a switch considered more efficient than a hub in a network?",
+        "options": [
+          "A switch broadcasts incoming data to all connected devices on the network",
+          "A switch shares a single collision domain among all connected ports",
+          "A switch selectively forwards data only to the intended recipient based on MAC addresses",
+          "A switch only operates at the physical layer, avoiding complex processing"
+        ],
+        "correct_answer": 2,
+        "explanation": "A switch learns MAC addresses and selectively forwards frames to the correct destination port, whereas a hub simply replicates and broadcasts data to every connected device.",
+        "page": 27,
+        "topic": "Hub vs Switch"
+      },
+      {
+        "id": "7668c4b491fb49fbadd7df7781b52d8b",
+        "question": "In which transmission mode can both connected devices transmit and receive data at the exact same time, like a telephone call?",
+        "options": [
+          "Simplex Mode",
+          "Half-Duplex Mode",
+          "Full-Duplex Mode",
+          "Semi-Simplex Mode"
+        ],
+        "correct_answer": 2,
+        "explanation": "In full-duplex mode, both stations can transmit and receive simultaneously, allowing real-time, two-way communication.",
+        "page": 38,
+        "topic": "Transmission Modes"
+      },
+      {
+        "id": "58a888c93a3145aeac6a8a168cae70a2",
+        "question": "If a network has a maximum capacity of 100 Mbps but is currently transmitting 80 Mbps of data successfully, what are its bandwidth and throughput?",
+        "options": [
+          "Bandwidth is 80 Mbps, Throughput is 100 Mbps",
+          "Bandwidth is 100 Mbps, Throughput is 80 Mbps",
+          "Bandwidth is 100 Mbps, Latency is 80 ms",
+          "Both Bandwidth and Throughput are 100 Mbps"
+        ],
+        "correct_answer": 1,
+        "explanation": "Bandwidth is the maximum theoretical capacity (100 Mbps), while throughput is the actual amount of data successfully transmitted (80 Mbps).",
+        "page": 63,
+        "topic": "Network Performance Metrics"
+      },
+      {
+        "id": "e9eaa3f37b5343a2a5e23c27b1276fa5",
+        "question": "Why does Manchester encoding require almost double the bandwidth of NRZ (Non-Return-to-Zero) encoding?",
+        "options": [
+          "Manchester encoding uses twice as many voltage levels",
+          "Manchester encoding requires two separate physical cables",
+          "Manchester encoding always contains a transition in the middle of each bit",
+          "Manchester encoding only transmits analog wave signals"
+        ],
+        "correct_answer": 2,
+        "explanation": "Because Manchester encoding always includes a transition in the middle of every bit for synchronization, it requires almost double the bandwidth of NRZ.",
+        "page": 93,
+        "topic": "Data Encoding Techniques"
+      },
+      {
+        "id": "ed2e9b6c581c44528deb1a87a7e167c2",
+        "question": "Which function of the Data Link Layer is used to synchronize sender and receiver speeds to prevent a slow receiver's buffer from overflowing?",
+        "options": [
+          "Access Control",
+          "Routing",
+          "Flow Control",
+          "Framing"
+        ],
+        "correct_answer": 2,
+        "explanation": "Flow control is the mechanism used by the Data Link Layer to maintain a constant, compatible data rate between both sides so that a fast sender does not overwhelm a slow receiver's buffer.",
+        "page": 45,
+        "topic": "Data Link Layer Functions"
+      }
+    ],
+    "created_at": "2026-08-17 17:37:40",
+    "attempted": true,
+    "score": 2,
+    "accuracy": 20.0,
+    "completed_at": "2026-08-17 17:38:16"
+  }
+]
