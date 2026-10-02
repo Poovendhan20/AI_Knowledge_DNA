@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import DocumentViewer from "./pages/DocumentViewer";
 import Quiz from "./pages/Quiz";
+import VoiceAssistant from "./pages/VoiceAssistant";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
 function Login() {
   const { login } = useAuth();
+  const location = useLocation();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,7 +23,7 @@ function Login() {
     setIsLoading(true);
     try {
       await login({ email, password });
-      navigate("/dashboard");
+      navigate(location.state?.from || "/dashboard", { replace: true });
     } catch (err) {
       setError(err.response?.data?.message || "Login failed. Please check your credentials.");
     } finally {
@@ -95,6 +97,27 @@ function Register() {
   );
 }
 
+function RequireAuth({ children }) {
+  const { isAuthenticated, isLoading } = useAuth();
+  const location = useLocation();
+
+  if (isLoading) {
+    return (
+      <main className="auth-page">
+        <div className="auth-card">
+          <p>Checking your session…</p>
+        </div>
+      </main>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace state={{ from: location.pathname }} />;
+  }
+
+  return children;
+}
+
 function AppRoutes() {
   return (
     <>
@@ -104,6 +127,14 @@ function AppRoutes() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route
+          path="/voice-assistant"
+          element={(
+            <RequireAuth>
+              <VoiceAssistant />
+            </RequireAuth>
+          )}
+        />
         <Route path="/document/:documentId" element={<DocumentViewer />} />
         <Route path="/quiz/:quizId" element={<Quiz />} />
       </Routes>

@@ -1,0 +1,126 @@
+/* ============================================================
+   DASHBOARD CTA
+   ============================================================ */
+
+.home-dashboard-cta {
+  width: 100%;
+  margin-top: 80px;
+  padding: 48px 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  box-sizing: border-box;
+  border: 1px solid rgba(139, 92, 246, 0.28);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 85% 50%, rgba(139, 92, 246, 0.18), transparent 35%),
+    linear-gradient(135deg, rgba(20, 18, 42, 0.96), rgba(12, 11, 28, 0.96));
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  position: relative;
+}
+
+.home-dashboard-cta::before {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  right: -70px;
+  top: -100px;
+  border-radius: 50%;
+  background: rgba(139, 92, 246, 0.12);
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+.home-dashboard-cta > div {
+  position: relative;
+  z-index: 1;
+}
+
+.home-dashboard-cta > div > span {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #a78bfa;
+}
+
+.home-dashboard-cta h2 {
+  margin: 0 0 12px;
+  font-size: 34px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.home-dashboard-cta p {
+  margin: 0;
+  max-width: 560px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #a8a4c0;
+}
+
+.cta-button {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-shrink: 0;
+  padding: 14px 24px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  background: linear-gradient(135deg, #7c3aed, #9333ea);
+  border: 1px solid rgba(167, 139, 250, 0.45);
+  box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cta-button svg {
+  font-size: 14px;
+  transition: transform 0.25s ease;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 35px rgba(124, 58, 237, 0.45);
+}
+
+.cta-button:hover svg {
+  transform: translateX(4px);
+}
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .home-dashboard-cta {
+    margin-top: 50px;
+    padding: 32px 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    border-radius: 20px;
+  }
+
+  .home-dashboard-cta h2 {
+    font-size: 28px;
+  }
+
+  .home-dashboard-cta p {
+    font-size: 14px;
+  }
+
+  .cta-button {
+    width: 100%;
+  }
+}

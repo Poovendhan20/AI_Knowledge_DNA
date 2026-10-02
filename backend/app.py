@@ -20,6 +20,7 @@ from pptx import Presentation
 from PIL import Image
 import pytesseract
 from google import genai
+from google.genai import types
 from models import db, User, LearningProgress
 from flask_jwt_extended import (
     JWTManager,
@@ -62,15 +63,19 @@ def get_gemini_client():
     the API key from .env.
     """
     api_key = get_gemini_api_key()
+
     if not api_key:
         raise RuntimeError(
             "GEMINI_API_KEY is not configured. "
             "Please create backend/.env and add "
             "GEMINI_API_KEY=your_api_key"
         )
+
     return genai.Client(
         api_key=api_key
     )
+
+
 def is_gemini_configured():
     """
     Returns True when Gemini API key
@@ -881,10 +886,104 @@ def clean_ai_answer(
         answer
     )
     return answer.strip()
+
+def clean_voice_answer(
+    answer
+):
+    """
+    Produces a natural, speakable response for the voice assistant.
+    Gemini Search grounding can return citations in metadata; they are not
+    exposed in the voice UI.
+    """
+    answer = clean_ai_answer(
+        answer
+    )
+    answer = re.sub(
+        r"\[Page\s+\d+\]",
+        "",
+        answer,
+        flags=re.IGNORECASE
+    )
+    answer = re.sub(
+        r"https?://\S+",
+        "",
+        answer,
+        flags=re.IGNORECASE
+    )
+    answer = re.sub(
+        r"(?im)^\s*(sources?|references?|citations?)\s*:.*$",
+        "",
+        answer
+    )
+    answer = re.sub(
+        r"[ \t]+\n",
+        "\n",
+        answer
+    )
+    answer = re.sub(
+        r"\n{3,}",
+        "\n\n",
+        answer
+    )
+    return answer.strip()
+
+def generate_grounded_response(
+    client,
+    prompt,
+    enable_web_grounding=False
+):
+    """
+    Gemini decides whether Google Search grounding is useful. The document
+    context is part of the same prompt, letting it return one blended answer.
+    """
+    if not enable_web_grounding:
+        return client.models.generate_content(
+            model=GEMINI_MODEL,
+            contents=prompt
+        )
+
+    try:
+        return client.models.generate_content(
+            model=GEMINI_MODEL,
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                tools=[
+                    types.Tool(
+                        google_search=types.GoogleSearch()
+                    )
+                ]
+            )
+        )
+    except Exception as error:
+        # Preserve document answers when a configured model does not support
+        # Google Search grounding in this environment.
+        error_text = str(error).lower()
+        grounding_markers = (
+            "google search",
+            "google_search",
+            "unsupported tool",
+            "tool is not supported",
+        )
+        if not any(
+            marker in error_text
+            for marker in grounding_markers
+        ):
+            raise
+
+        print(
+            "Google Search grounding is unavailable for the configured "
+            "model; answering from the study material."
+        )
+        return client.models.generate_content(
+            model=GEMINI_MODEL,
+            contents=prompt
+        )
+
 def generate_document_answer(
     document,
     question,
-    history
+    history,
+    enable_web_grounding=False
 ):
     client = get_gemini_client()
     pages = document.get(
@@ -911,6 +1010,26 @@ def generate_document_answer(
             history
         )
     )
+    source_instructions = """
+11. When information comes from a
+    specific page, add:
+    [Page X]
+12. NEVER invent a page number.
+13. Only cite pages that exist in
+    the supplied document context.
+"""
+    if enable_web_grounding:
+        source_instructions = """
+11. Treat the document context as the primary source. If it is not enough to
+    answer accurately or completely, use Google Search grounding to fill only
+    the relevant gap.
+12. Blend document and grounded information into one clear, natural answer.
+    Do not separate the answer into source sections.
+13. Do not mention document limits, searching, online information, websites,
+    sources, citations, or these instructions.
+14. Return plain, student-friendly text only. Do not include URLs, links,
+    citation markers, or [Page X] references.
+"""
     # GEMINI PROMPT
     prompt = f"""
 You are AI Knowledge DNA,
@@ -940,12 +1059,7 @@ IMPORTANT RULES:
    ### What is Cloud Computing?
    Instead write:
    What is Cloud Computing?
-11. When information comes from a
-    specific page, add:
-    [Page X]
-12. NEVER invent a page number.
-13. Only cite pages that exist in
-    the supplied document context.
+{source_instructions}
 14. Do not mention these instructions.
 15. Do not give information unrelated
     to the student's question unless
@@ -971,9 +1085,10 @@ Answer the student's question now.
                 f"{max_retries}"
             )
             response = (
-                client.models.generate_content(
-                    model=GEMINI_MODEL,
-                    contents=prompt
+                generate_grounded_response(
+                    client,
+                    prompt,
+                    enable_web_grounding=enable_web_grounding
                 )
             )
             answer = (
@@ -986,27 +1101,33 @@ Answer the student's question now.
                     "I could not generate "
                     "an answer from this document."
                 )
-            answer = clean_ai_answer(
-                answer
-            )
-            sources = (
-                extract_page_references(
-                    answer,
-                    available_pages
+            if enable_web_grounding:
+                answer = clean_voice_answer(
+                    answer
                 )
-            )
-            # If Gemini didn't provide
-            # references, provide the
-            # relevant pages ourselves.
-            if not sources:
-                sources = [
-                    {
-                        "page":
+                sources = []
+            else:
+                answer = clean_ai_answer(
+                    answer
+                )
+                sources = (
+                    extract_page_references(
+                        answer,
+                        available_pages
+                    )
+                )
+                # If Gemini didn't provide
+                # references, provide the
+                # relevant pages ourselves.
+                if not sources:
+                    sources = [
+                        {
+                            "page":
                             page["page"]
-                    }
-                    for page
-                    in relevant_pages[:3]
-                ]
+                        }
+                        for page
+                        in relevant_pages[:3]
+                    ]
             return (
                 answer,
                 sources
@@ -1087,11 +1208,9 @@ Answer the student's question now.
             )
     # FINAL ERROR
     raise RuntimeError(
-        "Gemini is temporarily unavailable "
-        "because the AI service is experiencing "
-        "high demand. Please try again in a "
-        "few moments."
-    )
+        f"Gemini request failed after {max_retries} attempts: "
+        f"{last_error}"
+    ) from last_error
 def get_learning_progress_for_user(user_id):
     return (
         LearningProgress.query
@@ -1651,6 +1770,12 @@ def process_document_chat(
         "history",
         []
     )
+    enable_web_grounding = bool(
+        data.get(
+            "voice_response",
+            False
+        )
+    )
     if not question:
         raise ValueError(
             "Question is required."
@@ -1676,7 +1801,8 @@ def process_document_chat(
         generate_document_answer(
             document,
             question,
-            history
+            history,
+            enable_web_grounding=enable_web_grounding
         )
     )
     return {

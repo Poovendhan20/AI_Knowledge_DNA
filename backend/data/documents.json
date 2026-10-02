@@ -2165,5 +2165,969 @@
     ],
     "word_count": 3386,
     "character_count": 21549
+  },
+  {
+    "id": "bc12aeadebab4deb94591528173c9ca6",
+    "name": "DCN_MCA_Unit1_and_Unit2_Notes.pdf",
+    "original_name": "DCN_MCA_Unit1_and_Unit2_Notes.pdf",
+    "stored_name": "bc12aeadebab4deb94591528173c9ca6.pdf",
+    "type": "pdf",
+    "user_id": 60001,
+    "subject_id": "b4e818e3ae6c467f9d5756cffd9b85f0",
+    "subject_name": "DCN",
+    "page_count": 224,
+    "pages": [
+      {
+        "page": 1,
+        "text": "MCA - SEM III\nDr. M. Pandiyan M.C.A.,M.Phil,NET.,SET.,Ph.D\nAssistant Professor,\nDepartment of Computer Application,\nSRMIST, FSH Campus,\nChennai.\nData Communication Networks"
+      },
+      {
+        "page": 2,
+        "text": "What is Computer Network?\n• Computer Network is a group of computers \nconnected with each other through wires, optical \nfibres or optical links so that various devices can \ninteract with each other through a network.\n• The aim of the computer network is the sharing of \nresources among various devices.\n• In the case of computer network technology, there \nare several types of networks that vary from simple \nto complex level"
+      },
+      {
+        "page": 3,
+        "text": "Evolution of Networks\nARPANET (Advanced Research Agency Network):\n• ARPANET was the network that became the basis for the\nInternet. It was the first network that came into existence in 1969,\nwhich was designed and named by the Advanced Research\nProjects Agency (ARPA) and US Department of Defence (DoD).\n• It was where a bunch of PCs were associated at various\ncolleges and US DoD for sharing of information and\nmessages and playing long separation diversions and\nassociating with individuals to share their perspectives."
+      },
+      {
+        "page": 4,
+        "text": "• NSFNET (National Science Federation Network):\nIn mid 80’s another federal agency, NSFNET (National Science\nFederation Network) created a new network which was more\ncapable than ARPANET and became the first backbone\ninfrastructure for the commercial public Internet.\n• Its main aim was to use network only for academic research and\nnot for any kind of private business activity. Later, many\nprivately owned businesses with their very own private systems\njoined with ARPANET and NSFNET to make more capable and\nwide network, the Internet.\nEvolution of Networks"
+      },
+      {
+        "page": 5,
+        "text": "Evolution of Networks\nARPANET + NSFNET + PRIVATE NETWORKS = INTERNET"
+      },
+      {
+        "page": 6,
+        "text": "Internet\nInternet:\n•In the Internet, which is a network of networks, came into\nexistence.\n•The internet has evolved from ARPANET.\n•The internet is a globally connected network system that\nutilizes TCP/IP to transmit information.\n•It allows computers of different types to exchange\ninformation and is known as internet."
+      },
+      {
+        "page": 7,
+        "text": "Data Communication is defined as exchange of data between two devices via\nsome form of transmission media such as a cable, wire or it can be air or vacuum\nalso. For occurrence of data communication, communicating devices must be a\npart of communication system made up of a combination of hardware or\nsoftware devices and programs.\nData Communication System Components: \nThere are mainly five components of a data communication system:\n1. Message\n2. Sender\n3. Receiver\n4. Transmission Medium\n5. Set of rules (Protocol)\nAll above mentioned elements are described below:"
+      },
+      {
+        "page": 8,
+        "text": ""
+      },
+      {
+        "page": 9,
+        "text": "Computer Network Types\nA computer network is a group of computers linked to \neach other that enables the computer to communicate \nwith another computer and share their resources, data, \nand applications.\nA computer network can be categorized by their size. \nA computer network is mainly of four types:\n• LAN(Local Area Network)\n• PAN(Personal Area Network)\n• MAN(Metropolitan Area Network)\n• WAN(Wide Area Network)"
+      },
+      {
+        "page": 10,
+        "text": "LAN(Local Area Network)\n• Local Area Network is a group of computers \nconnected to each other in a small area such as \nbuilding, office.\n• LAN is used for connecting two or more personal \ncomputers through a communication medium such \nas twisted pair, coaxial cable, etc.\n• The data is transferred at an extremely faster rate in \nLocal Area Network.\n• Local Area Network provides higher security."
+      },
+      {
+        "page": 11,
+        "text": "LAN(Local Area Network)"
+      },
+      {
+        "page": 12,
+        "text": "PAN(Personal Area Network)\nPersonal Area Network is a network arranged within an individual \nperson, typically within a range of 10 meters.\nPersonal Area Network is used for connecting the computer \ndevices of personal use is known as Personal Area Network.\nThomas Zimmerman was the first research scientist to bring the \nidea of the Personal Area Network.\nPersonal Area Network covers an area of 30 feet. Personal \ncomputer devices that are used to develop the personal area network \nare the laptop, mobile phones,\nmedia player and play stations."
+      },
+      {
+        "page": 13,
+        "text": "PAN(Personal Area Network)"
+      },
+      {
+        "page": 14,
+        "text": "Types of Personal Area Network\nTwo types of PAN\n• Wired Personal Area Network\n• Wireless Personal Area Network\n• Wireless Personal Area Network: Wireless \nPersonal Area Network is developed by simply \nusing wireless technologies such as WiFi, \nBluetooth. It is a low range network.\n• Wired Personal Area Network: Wired Personal \nArea Network is created by using the USB."
+      },
+      {
+        "page": 15,
+        "text": "MAN(Metropolitan Area Network)\n• A metropolitan area network is a network that \ncovers a larger geographic area by interconnecting \na different LAN to form a larger network.\n• Government agencies use MAN to connect to the \ncitizens and private industries.\n• In MAN, various LANs are connected to each \nother through a telephone exchange line.\n• It has a higher range than Local Area \nNetwork(LAN)."
+      },
+      {
+        "page": 16,
+        "text": ""
+      },
+      {
+        "page": 17,
+        "text": "WAN(Wide Area Network)\n• A Wide Area Network is a network that extends over a \nlarge geographical area such as states or countries.\n• A Wide Area Network is quite bigger network than the \nLAN.\n• A Wide Area Network is not limited to a single location, \nbut it spans over a large geographical area through a \ntelephone line, fibre optic cable or satellite links.\n• The internet is one of the biggest WAN in the world.\n• A Wide Area Network is widely used in the field of \nBusiness, government, and education."
+      },
+      {
+        "page": 18,
+        "text": ""
+      },
+      {
+        "page": 19,
+        "text": "Components of Data Communication Network"
+      },
+      {
+        "page": 20,
+        "text": ""
+      },
+      {
+        "page": 21,
+        "text": "Network Interface Card (NIC)\nA  network  interface  card  (NIC)  is  a  hardware \ncomponent without which a computer cannot be \nconnected over a network.\nIt is a circuit board installed in a computer that \nprovides a dedicated network connection to the \ncomputer.\nIt  is  also  called  network  interface  controller, \nnetwork adapter card, Ethernet Card or LAN card"
+      },
+      {
+        "page": 22,
+        "text": "NIC Card Purpose\n•A Network Interface Card (NIC), also known as a network\nadapter or network interface controller, is a hardware\ncomponent that connects a computer or other devices to a\nnetwork.\n•It serves as the interface between the computer and the\nnetwork medium, enabling communication with other\ndevices on the network.\n•The NIC provides the physical connection between the\ncomputer and the network medium, which could be wired\n(e.g., Ethernet cable) or wireless (e.g., Wi-Fi)."
+      },
+      {
+        "page": 23,
+        "text": "Modem\n• Modem is a device that enables a computer to send or receive data \nover telephone or cable lines. The data stored on the computer is \ndigital whereas a telephone line or cable wire can transmit only \nanalog data.\n• The main function of the modem is to convert digital signal into \nanalog and vice versa. Modem is a combination of two devices \nmodulator and demodulator. \n• The modulator converts digital data into analog data when the \ndata is being sent by the computer. The demodulator converts \nanalog data signals into digital data when it is being received by \nthe computer."
+      },
+      {
+        "page": 24,
+        "text": "Repeater\n• A repeater is a simple network device that operates at the\nphysical layer (Layer 1) of the OSI model.\n• Its primary function is to regenerate or amplify signals received\non one network segment before retransmitting them on another\nnetwork segment.\n• Repeaters are used to extend the reach or range of a network by\nboosting the strength of signals, thus overcoming attenuation\n(signal loss) over long distances or through obstacles."
+      },
+      {
+        "page": 25,
+        "text": "Hub\n• A hub works at physical layer(layer 1)\n• A hub is a simple networking device that connects\nmultiple devices in a network. Its primary function is to\nbroadcast incoming data packets to all devices\nconnected to it.\n• Hubs do not differentiate between the source and\ndestination of data; instead, they replicate and transmit\ndata to all connected devices.Hubs cannot filter data, so \ndata packets are sent to  all  connected  devices"
+      },
+      {
+        "page": 26,
+        "text": "Switch\n• A switch is a data link layer device.\n• Switch has memory it stores MAC addresses\n• It has intelligent to forward the correct \ndestination(unicast)\n• The switch  can perform error checking before \nforwarding data, that makes it very efficient"
+      },
+      {
+        "page": 27,
+        "text": "Aspect Hub Switch\nFunctionality\nBasic networking device that \noperates at the physical layer \n(Layer 1) and broadcasts data to all \nconnected devices\nAdvanced networking device \nthat operates at the data link \nlayer (Layer 2) and forwards data \nselectively to the intended \nrecipient\nOperation\nOperates as a broadcast medium; it \nsends data to all devices connected \nto it\nOperates as a selective \nforwarding device; it forwards \ndata only to the intended \nrecipient based on MAC \naddresses\nCollision \nDomain\nShares a single collision domain, \nmeaning all devices connected to \nthe hub share the same bandwidth \nand may experience collisions\nProvides separate collision \ndomains for each port, thereby \nreducing collisions and \nimproving network performance"
+      },
+      {
+        "page": 28,
+        "text": "MAC Address \nLearning\nDoes not have the capability to learn \nMAC addresses; it simply forwards \nincoming data to all connected \ndevices\nLearns MAC addresses by \nexamining source addresses of \nincoming frames, maintains a \nMAC address table, and uses it to \nforward frames intelligently\nEfficiency\nLess efficient due to broadcast \ntransmissions and potential collisions, \nleading to network congestion and \nslower performance\nMore efficient as it selectively \nforwards data only to the intended \nrecipient, reducing unnecessary \ntraffic and improving network \nperformance\nBandwidth\nShares the total available bandwidth \namong connected devices, leading to \npotential congestion and slower \nnetwork speeds\nOffers dedicated bandwidth for \neach port, allowing simultaneous \ncommunication between devices at \nfull speed"
+      },
+      {
+        "page": 29,
+        "text": "Routers\n• Router is mainly a Network Layer device\n• A router is a device like a switch that routes data\npackets based on their IP addresses.\n• Routers normally connect LANs and WANs  together \nand have a dynamically updating  routing table based on \nwhich they make  decisions on routing the data packets\n• The data is transferred across the network by using the \nrouting protocols. It is much more costly in comparison to \nother network devices like hub, switch etc."
+      },
+      {
+        "page": 30,
+        "text": "Bridge\n• A bridge is a network device that operates at the data\nlink layer (Layer 2) of the OSI model.\n• Its primary function is to connect two or more network\nsegments and forward data frames between them based\non MAC addresses.\n• It is also used for interconnecting two LANs working \non the same protocol."
+      },
+      {
+        "page": 31,
+        "text": "Gateway\n• A gateway, as the name suggests, is a passage to \nconnect  two  networks  together  that  may  work \nupon different networking models\n• Gateways are also called protocol converters and can \noperate at any layer.\n•  Gateways are generally more complex than switch or \nrouter. It works all the seven layer of OSI model."
+      },
+      {
+        "page": 32,
+        "text": "Functionality\nConnect and divide network segments, forward \ndata frames based on MAC addresses, filter traffic \nwithin a single network\nProvide interconnection between \nnetworks with different protocols, \ntranslate data formats, enable \ncommunication between \nheterogeneous networks\nLayer of \nOperation Data Link Layer (Layer 2) Network Layer (Layer 3) or above\nScope of \nOperation Typically used within a single network or LAN Used to connect networks with \ndifferent protocols or architectures\nData Handling\nForward data frames between network segments \nbased on MAC addresses, learn MAC addresses \ndynamically, maintain forwarding table\nHandle routing of data packets \nbetween different networks based \non IP addresses, perform protocol \ntranslation, packet filtering, routing \nfunctions\nExample Ethernet bridge Router\nBridge Gateway"
+      },
+      {
+        "page": 33,
+        "text": ""
+      },
+      {
+        "page": 34,
+        "text": "Transmission Modes in Computer Networks (Simplex, Half-Duplex\nand Full-Duplex)\nTransmission mode means transferring data between two devices. It is also known as a \ncommunication mode. Buses and networks are designed to allow communication to occur \nbetween individual devices that are interconnected.\nThere are three types of transmission mode: -"
+      },
+      {
+        "page": 35,
+        "text": "1. Simplex Mode –\nIn Simplex mode, the communication is unidirectional, as on a one -way street. Only \none of the two devices on a link can transmit, the other can only receive. \nExample: Keyboard and traditional monitors. The keyboard can only introduce input, \nthe monitor can only give the output\nAdvantages:\n• Simplex mode is the easiest and most reliable mode of communication.\n• It is the most cost-effective mode, as it only requires one communication channel.\n• Simplex mode is particularly useful in situations where feedback or response is not\nrequired, such as broadcasting or surveillance.\nDisadvantages:\n• Only one-way communication is possible.\n• There is no way to verify if the transmitted data has been received correctly.\n• Simplex mode is not suitable for applications that require bidirectional\ncommunication."
+      },
+      {
+        "page": 36,
+        "text": "Half-Duplex Mode –\nIn half-duplex mode, each station can both transmit and receive, but not at the \nsame time. When one device is sending, the other can only receive, and vice \nversa. The half-duplex mode is used in cases where there is no need for \ncommunication in both directions at the same time. The entire capacity of the \nchannel can be utilized for each direction.\nExample: Walkie-talkie in which message is sent one at a time and messages \nare sent in both directions."
+      },
+      {
+        "page": 37,
+        "text": "Advantages:\n• Half-duplex mode allows for bidirectional communication, which is useful in situations\nwhere devices need to send and receive data.\n• It is a more efficient mode of communication than simplex mode, as the channel can be\nused for both transmission and reception.\n• Half-duplex mode is less expensive than full-duplex mode, as it only requires one\ncommunication channel.\nDisadvantages:\n• Half-duplex mode is less reliable than Full-Duplex mode, as both devices cannot\ntransmit at the same time.\n• There is a delay between transmission and reception, which can cause problems in\nsome applications.\n• There is a need for coordination between the transmitting and receiving devices, which\ncan complicate the communication process."
+      },
+      {
+        "page": 38,
+        "text": "Full-Duplex Mode –\n• In full-duplex mode, both stations can transmit and receive   \nsimultaneously. \n• Full-duplex mode is used when communication in both directions is \nrequired all the time. \n• The capacity of the channel, however, must be divided between the two \ndirections.\nExample: Telephone Network in which there is communication between \ntwo persons by a telephone line, through which both can talk and listen at \nthe same time."
+      },
+      {
+        "page": 39,
+        "text": "Advantages:\n• Full-duplex mode allows for simultaneous bidirectional communication, which is ideal\nfor real-time applications such as video conferencing or online gaming.\n• It is the most efficient mode of communication, as both devices can transmit and\nreceive data simultaneously.\n• Full-duplex mode provides a high level of reliability and accuracy, as there is no need\nfor error correction mechanisms.\nDisadvantages:\n• Full-duplex mode is the most expensive mode, as it requires two communication\nchannels.\n• It is more complex than simplex and half-duplex modes, as it requires two physically\nseparate transmission paths or a division of channel capacity.\n• Full-duplex mode may not be suitable for all applications, as it requires a high level of\nbandwidth and may not be necessary for some types of communication."
+      },
+      {
+        "page": 40,
+        "text": "Characteristics of OSI Model:\nUpper Layer\nLower Layer\nThe upper layer of the OSI model mainly deals with the application \nrelated issues, and they are implemented only in the software.\nThe lower layer of the OSI model deals with the data transport issues. \nThe data link layer and the physical layer are implemented in hardware \nand software."
+      },
+      {
+        "page": 41,
+        "text": "Functions of OSI Layer"
+      },
+      {
+        "page": 42,
+        "text": "1. PHYSICAL LAYER\n• It is responsible for the actual physical connection \nbetween the devices. The physical layer contains \ninformation in the form of bits. It is responsible for \ntransmitting individual bits from one node to the \nnext.\nThe functions of the physical layer are :\n• Bit synchronization : This clock controls both \nsender and receiver thus providing synchronization at \nbit level."
+      },
+      {
+        "page": 43,
+        "text": "The functions of the physical layer are\n• Bit rate control: The Physical layer also defines \nthe transmission rate i.e. the number of bits sent \nper second.\n• Physical topologies: bus, tree, star, ring and \nmesh topology.\n• Transmission mode: The data flows between the two \nconnected devices. The various transmission modes\npossible are: Simplex, half-duplex and full- duplex."
+      },
+      {
+        "page": 44,
+        "text": "2.Data Link Layer(DLL)\n• The data link layer is responsible for the node to node\ndelivery of the message.\nThe functions of the Data Link Layer are :\nFraming: The data link layer translates the physical's \nraw bit stream into packets known as Frames.\n• The Data link layer adds the header and trailer to the \nframe.\n• frame contains the hardware destination and source \naddress"
+      },
+      {
+        "page": 45,
+        "text": "Functions of the Data-link layer\nPhysical Addressing: After creating frames, Data link layer \nadds physical addresses (MAC address) of sender and/or \nreceiver in the header of each frame\n•Flow Control: It is the technique through which the constant \ndata rate is maintained on both the sides so that no data get \ncorrupted.\n• Error Control: Data link layer provides the mechanism of error \ncontrol in which it detects and retransmits damaged or lost frames.\n• Access Control: When two or more devices are connected to the \nsame communication channel, then the data link layer protocols are \nused to determine which device has control over the link at a given \ntime"
+      },
+      {
+        "page": 46,
+        "text": "3.Network Layer\n• Network layer works for the transmission of \ndata(Packets) from one host to the other located in \ndifferent networks.\n• It determines the best path to move data from source to \nthe destination based on the network conditions, the \npriority of service, and other factors."
+      },
+      {
+        "page": 47,
+        "text": "The functions of the Network layer are\n• Routing: The network layer protocols \ndetermine which route is suitable from source \nto destination. This function of network layer is \nknown as routing.\n• Logical Addressing: In order to identify each \ndevice on internetwork uniquely, network layer \ndefines an addressing scheme."
+      },
+      {
+        "page": 48,
+        "text": "4. Transport layer\n• The Transport layer is ensures that messages are \ntransmitted in the order in which they are sent and  \nthere is no duplication of data.\n• It receives the data from the upper layer and \nconverts them into smaller units known as \nsegments.(Data in the Transport Layer is called as \nSegments)\n• This layer can be termed as an end-to-end layer as it \nprovides a point-to-point connection between \nsource and destination to deliver the data reliably."
+      },
+      {
+        "page": 49,
+        "text": "Functions of Transport Layer\n• Segmentation and Reassembly: This layer accepts the message \nfrom the (session) layer , breaks the message into smaller units .\n• Each of the segment produced has a header associated with it.\n• The transport layer at the destination station reassembles the \nmessage.\n• Service Point Addressing: In order to deliver the message to correct \nprocess, transport layer header includes a type of address called \nservice point address or port address.\n• Thus by specifying this address, transport layer makes sure that \nthe message is delivered to the correct process."
+      },
+      {
+        "page": 50,
+        "text": "5. Session layer\n• The Session layer is used to establish, maintain and\nssynchronizes the interaction between communicating \ndevices.\nFunctions of Session layer:\n• Session establishment, maintenance and termination: The layer \nallows the two processes to establish, use and terminate a connection.\n• Synchronization :. These synchronization point help to identify \nthe error so that the data is re-synchronized properly, and ends of \nthe messages are not cut prematurely  and data loss is avoided.\n• Dialog control: Session layer acts as a dialog controller that \ncreates a dialog between two processes"
+      },
+      {
+        "page": 51,
+        "text": "6. Presentation layer\n• A Presentation layer is mainly concerned with the syntax \nand semantics of the information exchanged between \nthe two systems.\n• This layer is a part of the operating system that converts \nthe data from one presentation format to another format.\nFunctions of Presentation layer:\n• Translation: The processes in two systems exchange the \ninformation in the form of character strings, numbers \nand so on."
+      },
+      {
+        "page": 52,
+        "text": "Functions of Presentation layer:\n• Different computers use different encoding methods, the \npresentation layer handles the interoperability between the \ndifferent encoding methods. : For example, ASCII to \nUNICODE\n• Encryption: Data encryption translates the data into another \nform or code. The encrypted data is known as the cipher text \nand the decrypted data is known as plain text.\n• Compression: Data compression is a process of compressing \nthe data, i.e., it reduces the number of bits to be transmitted. \nData compression is very important in multimedia such as text, \naudio, video."
+      },
+      {
+        "page": 53,
+        "text": "7. Application Layer\n• This layer provides the network services to the end-users.\nFunctions of Application layer:\n• File transfer, access, and management (FTAM):An \napplication layer allows a user to access the files in a \nremote computer, to retrieve the files from a computer \nand to manage the files in a remote computer.\n• Mail services: An application layer provides the facility \nfor email forwarding and storage."
+      },
+      {
+        "page": 54,
+        "text": "Hop to Hop delivery\nSummary of OSI Layers"
+      },
+      {
+        "page": 55,
+        "text": "TCP/IP Model"
+      },
+      {
+        "page": 56,
+        "text": "OSI Vs TCP/IP"
+      },
+      {
+        "page": 57,
+        "text": "• The TCP model stands for Transmission Control \nProtocol, whereas IP stands for Internet Protocol. A \nnumber of protocols that make the internet possibly \ncomes under the TCP/IP mode.\nThe four layers in the TCP/IP protocol suite are :\n• Link Layer −It is the lowest layer that is concerned \nwith the physical transmission of data. TCP/IP does \nnot specifically define any protocol here but supports \nall the standard protocols.\nTransmission Control Protocol"
+      },
+      {
+        "page": 58,
+        "text": "• Internet Layer −It defines the protocols for logical transmission of \ndata over the network. The main protocol in this layer is Internet \nProtocol (IP) and it is supported by the protocols ICMP(Internet \nControl Message Protocol), IGMP(Internet Group Management \nProtocol), RARP, and ARP.\n• Transport Layer − It is responsible for error-free end-to-end \ndelivery of data. The protocols defined here are Transmission \nControl Protocol (TCP) and User Datagram Protocol (UDP).\n• Application Layer − This is the topmost layer and defines the \ninterface of host programs with the transport layer services. This \nlayer includes all high-level protocols like Telnet, DNS, HTTP, FTP, \nSMTP, etc."
+      },
+      {
+        "page": 59,
+        "text": "Analog and Digital Signals\nAnalog Signal\nAnalog signals have infinitely so many levels of intensity over a period of time. When\nthe wave moves from value A to value B, it passes through and it includes an infinite\nnumber of values along its path."
+      },
+      {
+        "page": 60,
+        "text": "Characteristics of Analog Signal\n•Continuous in both time and amplitude. \n•Can have infinite values. \n•More susceptible to noise and interference. \n•Difficult to regenerate after distortion. \n•Used in traditional communication systems like radio and \ntelephone. \n•Represented using a sine wave."
+      },
+      {
+        "page": 61,
+        "text": "Parameters of Analog Signal\n1.Amplitude (A)\n1. Maximum height of the signal. \n2. Measured in Volts (V). \n3. Represents the signal strength. \n2.Frequency (f)\n1. Number of cycles completed in one second. \n2. Measured in Hertz (Hz). \n3. Formula:\n𝑓 = 1\n𝑇\nwhere T = Time Period.\nTime Period (T)\n1. Time taken to complete one cycle. \n2. Measured in seconds. \n3. Phase (φ)\n1. Position of the waveform relative to \ntime. \n2. Measured in degrees or radians."
+      },
+      {
+        "page": 62,
+        "text": "Bandwidth\nBandwidth is the maximum amount of data transmitted through a \ncommunication channel in one second.\nUnit-bits per second (bps)\nExamples\n1 Mbps\n100 Mbps\n1 Gbps\nFormula\nBandwidth = Maximum Data Transfer Rate\nExample\nA channel transmits\n100 Mbps\nIt can send\n100 million bits per second."
+      },
+      {
+        "page": 63,
+        "text": "Throughput\nThroughput is the actual amount of data successfully transmitted.\nAlways\nThroughput ≤ Bandwidth\nExample\nBandwidth\n100 Mbps\nActual transferred\n80 Mbps\nThen\nThroughput\n80 Mbps"
+      },
+      {
+        "page": 64,
+        "text": "Latency\nLatency is the time taken for one packet to travel from source to \ndestination.\nMeasured in\nmilliseconds (ms)\nComponents\nPropagation delay \nTransmission delay \nQueuing delay \nProcessing delay\nLatency = \nPropagation + \nTransmission + \nQueuing + \nProcessing\nExample\nPropagation\n10 ms\nTransmission\n5 ms\nQueuing\n3 ms\nProcessing\n2 ms\nTotal\n20 ms"
+      },
+      {
+        "page": 65,
+        "text": "Digital data to digital signals\nA digital signal is sequence of discrete , discontinuous voltage pulses. Each pulses a\nsignal element. Encoding scheme is an important factor in how successfully the\nreceiver interprets the incoming signal."
+      },
+      {
+        "page": 66,
+        "text": "Digital Signal\nDigital signals can have only a limited number of defined values. Although\neach value can be any number, it is often as simple as 0 or 1.\n• The easiest way to show signals is by plotting them on a pair of\nperpendicular axes.\n• The vertical axis represents the value or strength of a signal.\n• The horizontal axis represents time."
+      },
+      {
+        "page": 67,
+        "text": "Digital Signal\nA digital signal consists of discrete values. It represents \ninformation using binary digits (0 and 1).\nCharacteristics of Digital Signal\n•Discrete in amplitude. \n•Usually represented by square waves. \n•Less affected by noise. \n•Easy to regenerate using repeaters. \n•Supports error detection and correction. \n•Used in computers, LANs, and the Internet."
+      },
+      {
+        "page": 68,
+        "text": "Parameters of Digital Signal\n1.Bit Interval\n1. Time required to transmit one bit. \n2. Unit: Seconds. \n2.Bit Rate\n1. Number of bits transmitted per second. \n2. Unit: bps (bits per second). \n3.Data Rate\n1. Speed of digital communication. \n2. Unit: kbps, Mbps, Gbps."
+      },
+      {
+        "page": 69,
+        "text": "Analog signals Digital signals\nAnalog signals are difficult to get analysed\nat first.\nDigital signals are easy to analyse.\nAnalog signals are more accurate than\ndigital signals.\nDigital signals are less accurate.\nAnalog signals take time to be stored. It has\ninfinite memory.\nDigital signals can be easily stored.\nTo record an analog signal, the technique\nused, preserves the original signals.\nIn recording digital signal, the sample signals\nare taken and preserved.\nThere is a continuous representation of\nsignals in analog signals.\nThere is a discontinuous representation of\nsignals in digital signals.\nAnalog signals produce too much noise. Digital signals do not produce noise.\nExamples of analog signals are Human voice,\nThermometer, Analog phones etc.\nExamples of digital signals are Computers,\nDigital Phones, Digital pens, etc."
+      },
+      {
+        "page": 70,
+        "text": "Bandwidth, Throughput and Latency;"
+      },
+      {
+        "page": 71,
+        "text": "Throughput refers to the amount of data able to be transmitted\nand received during a specific time period. This means the\nthroughput metric measures the average rate at which transmitted\nmessages successfully arrive at the relevant destination.\nRather than measuring theoretical delivery of packets, throughput\nprovides a practical measurement of the actual delivery of\npackets.\nThe unit of measurement for network throughput metric is bits per\nsecond (bps)."
+      },
+      {
+        "page": 72,
+        "text": "Bandwidth refers to the amount of data that can be transmitted and\nreceived during a specific period of time. For instance, if a network\nhas high bandwidth, this means a higher amount of data can be\ntransmitted and received.\nLike throughput, the unit of measurement for bandwidth is bits per\nsecond (bps). Bandwidth can also be measured in gigabits per second\n(Gbps) and megabits per second (Mbps)\nbbandwidth is confused with speed, but this is a widespread\nmisconception. Bandwidth measures capacity, not speed"
+      },
+      {
+        "page": 73,
+        "text": ""
+      },
+      {
+        "page": 74,
+        "text": "Latency measures delay. Delay is simply the time taken for a\ndata packet to reach its destination after being sent. We measure\nnetwork latency as round trips, although it may sometimes be\nmeasured in one-way trips. However, round-trip measurements\nare more common, because devices usually wait for an\nacknowledgment from the destination machine to be returned\nbefore transmitting the complete set of data. This\nacknowledgment verifies the connection to the destination device.\nIf your network is experiencing high levels of latency, this signals\npoor or slow"
+      },
+      {
+        "page": 75,
+        "text": ""
+      },
+      {
+        "page": 76,
+        "text": "Latency vs. Bandwidth\nThere is a close relationship between bandwidth and latency. Bandwidth\nessentially determines the amount of data that can be transmitted and received,\ntheoretically, at any given time. Latency also plays an important part in how data\nis transmitted and received, because it measures how quickly the data packets\nreach the destination.\nThe lower your bandwidth, the more time it will take for data packets to reach\ntheir destination, which can lead to higher latency. Similarly, the higher\nbandwidth, the quicker your packets will travel, which can result in lower\nlatency."
+      },
+      {
+        "page": 77,
+        "text": "Analog to Digital Conversion (ADC)\nConverts an analog signal into a digital signal.\nSteps\n1.Sampling \n2.Quantization \n3.Encoding \nTechniques\n•PCM (Pulse Code Modulation)\nApplications\n•Digital audio recording \n•Voice over IP (VoIP) \n•CD/DVD recording"
+      },
+      {
+        "page": 78,
+        "text": "Digital to Analog Conversion (DAC)\nConverts digital data into an analog signal for transmission through \nanalog channels.\nTechniques\n•ASK (Amplitude Shift Keying)\n•FSK (Frequency Shift Keying)\n•PSK (Phase Shift Keying)\nApplications\n•Modems \n•Mobile communication \n•Radio transmission"
+      },
+      {
+        "page": 79,
+        "text": "Analog to Analog Conversion\nConverts one analog signal into another analog\nsignal.\nTechniques\n•AM (Amplitude Modulation)\n•FM (Frequency Modulation)\n•PM (Phase Modulation)\nApplications\n•Radio broadcasting \n•Television broadcasting"
+      },
+      {
+        "page": 80,
+        "text": "A modem (modulator-demodulator) converts digital data to analog signal. There are 3 \nways to modulate a digital signal on an analog carrier signal.\nAmplitude shift keying (ASK): is a form of modulation which represents digital data as \nvariations in the amplitude of a carrier wave. Two different amplitudes of carrier frequency \nrepresent '0' , '1'."
+      },
+      {
+        "page": 81,
+        "text": "2. Frequency shift keying (FSK): In Frequency Shift Keying, the change in \nfrequency define different digits. Two different frequencies near carrier frequency \nrepresent '0' ,''1'"
+      },
+      {
+        "page": 82,
+        "text": "3. Phase shift keying (PSK): The phase of the carrier is discretely varied in relation \neither to a reference phase or to the phase of the immediately preceding signal \nelement, in accordance with data being transmitted. Phase of carrier signal is shifted \nto represent '0' , '1'."
+      },
+      {
+        "page": 83,
+        "text": "Transmission Impairments\nDuring transmission, signals lose quality.\nMain types\n1.Attenuation \n2.Noise \n3.Distortion"
+      },
+      {
+        "page": 84,
+        "text": "Attenuation\nSignal strength decreases while travelling.\nExample\nWiFi signal becomes weak when moving away \nfrom router.\nSolution\nUse repeaters or amplifiers."
+      },
+      {
+        "page": 85,
+        "text": "Noise\nNoise is unwanted electrical interference.\nTypes\nThermal Noise \nCrosstalk \nImpulse Noise \nExample\nRadio static\nTelephone disturbance"
+      },
+      {
+        "page": 86,
+        "text": "Distortion\nDifferent frequencies travel at different speeds.\nSignal shape changes.\nExample\nVoice becomes unclear."
+      },
+      {
+        "page": 87,
+        "text": "Data Encoding Techniques (Line Encoding)\nWhat is Data Encoding?\nData Encoding (also called Line Encoding) is the process of converting\ndigital data (0s and 1s) into digital signals that can be transmitted\nthrough a communication medium (copper cable, fiber optic cable,\netc.).\nWhy do we need Encoding?\nComputers understand binary data (0 and 1), but the transmission\nmedium carries electrical signals. Therefore, binary data must be\nconverted into electrical voltage levels."
+      },
+      {
+        "page": 88,
+        "text": "Computers store data as binary numbers, but network cables transmit \nelectrical signals.\nComputer A\n|\nBinary Data (10110010)\n|\nEncoding\n|\nElectrical Signals\n|\nTransmission Medium\n|\nDecoding\n|\nBinary Data\n|\nComputer B\nThe receiver decodes the received electrical signals back into binary data."
+      },
+      {
+        "page": 89,
+        "text": "Example:\nSuppose you want to send the binary data:\n10110010\nThis binary sequence is converted into electrical voltage \nsignals using an encoding technique such as NRZ, \nManchester, or Differential Manchester."
+      },
+      {
+        "page": 90,
+        "text": "1. NRZ (Non-Return-to-Zero)\nDefinition\nIn NRZ encoding, the signal remains at the same voltage level\nthroughout the bit duration. It does not return to zero after\ntransmitting each bit.\nHence the name:\nNRZ = Non Return to Zero\nWorking Principle\nOne voltage level represents 1, and \nanother voltage level represents 0.\nUsually,\n1 → High Voltage (+V)\n0 → Low Voltage (-V)"
+      },
+      {
+        "page": 91,
+        "text": "Characteristics\n•Simple implementation \n•Low bandwidth requirement \n•No transition between identical bits \n•Long sequence of 0s or 1s causes synchronization \nproblems"
+      },
+      {
+        "page": 92,
+        "text": "2. Manchester Encoding\nManchester encoding introduces one transition at \nthe middle of every bit.\nThis transition helps the receiver synchronize its \nclock.\nRule\nIEEE 802.3 Ethernet standard uses:\n1 = High → Low\n0 = Low → High\nEvery bit has one transition."
+      },
+      {
+        "page": 93,
+        "text": "Why is Manchester Better?\nBecause every bit has a transition.\nReceiver easily detects\n•Beginning of bit \n•End of bit \nNo synchronization problem.\nCharacteristics\n•One transition per bit \n•Self-clocking \n•Better synchronization \n•More reliable than NRZ \nBandwidth\nManchester requires almost double \nthe bandwidth of NRZ because each \nbit always contains a transition."
+      },
+      {
+        "page": 94,
+        "text": "Differential Manchester Encoding\nDifferential Manchester is an improved version of\nManchester encoding.\nThere is always a transition in the middle of every bit\n(for clock synchronization), but the bit value depends\non whether there is a transition at the beginning of the\nbit period. Middle transition → Always \npresent\nBeginning transition:\n0 → Transition at beginning\n1 → No transition at beginning"
+      },
+      {
+        "page": 95,
+        "text": ""
+      },
+      {
+        "page": 96,
+        "text": ""
+      },
+      {
+        "page": 97,
+        "text": "Switching\nSwitching is the process of transferring data from\nthe source to the destination through one or more\nintermediate devices (switches/routers).\nSwitching is the technique used to establish a path\nbetween the sender and the receiver for\ntransmitting data."
+      },
+      {
+        "page": 98,
+        "text": "Why Do We Need Switching?\nSuppose every computer is directly connected to every \nother computer.\nExample:\n5 computers require many cables.\nThis becomes very expensive and difficult.\nInstead,we connect computers through switches."
+      },
+      {
+        "page": 99,
+        "text": "Types of Switching\nThere are three major switching techniques.\nSwitching\n1. Circuit Switching\n2. Message Switching\n3. Packet Switching"
+      },
+      {
+        "page": 100,
+        "text": "Circuit Switching\nA dedicated communication path is established between \nthe sender and receiver before data transmission begins.\nOnce established, the entire path is reserved until \ncommunication ends.\nCharacteristics\n•Dedicated path \n•No congestion after setup \n•Fixed bandwidth \n•Delay only during setup \n•Suitable for voice communication"
+      },
+      {
+        "page": 101,
+        "text": "Message Switching\nIn message switching, the entire message is transmitted\nfrom one node to another.\nEach switch stores the complete message before\nforwarding it. This is called Store and Forward.\nCharacteristics\n•No dedicated path \n•Entire message stored \n•Store-and-forward technique \n•Large delay"
+      },
+      {
+        "page": 102,
+        "text": "Packet Switching\nInstead of sending one large message, the message is \ndivided into small packets.\nEach packet travels independently through the network.\nThe receiver combines the packets.\nWhy Packet Switching?\nInstead of occupying one path,\npackets share the network.\nBetter bandwidth utilization."
+      },
+      {
+        "page": 103,
+        "text": "Example\nMessage\nHELLO WORLD\nis divided into\nPacket 1\nHEL\nPacket 2\nLO\nPacket 3\nWOR\nPacket 4\nLD\nNote: Each packet may take a \ndifferent route: \nPacket 1 A → R1 → R2 → B\nPacket 2 A → R3 → R5 → B \nPacket 3 A → R1 → R4 → B\nAt destination,\npackets are reassembled."
+      },
+      {
+        "page": 104,
+        "text": "Network Topology\nIn Computer Network ,there are various ways through which different\ncomponents are connected to one another. Network Topology is the\nway that defines the structure, and how these components are\nconnected to each other.\nTypes of Network Topology: The various network topologies are:\nPoint to Point Topology\n• Mesh Topology\n• Star Topology\n• Bus Topology\n• Ring Topology\n• Tree Topology\n• Hybrid Topology"
+      },
+      {
+        "page": 105,
+        "text": "Point to Point Topology\nPoint-to-Point Topology is a type of topology that works on the\nfunctionality of the sender and receiver. It is the simplest\ncommunication between two nodes, in which one is the sender and\nthe other one is the receiver. Point-to-Point provides high bandwidth."
+      },
+      {
+        "page": 106,
+        "text": "Bus Topology\nBus Topology is a network type in which every computer and network device is\nconnected to a single cable. It is bi-directional. It is a multi-point connection and a\nnon-robust topology because if the backbone fails the topology crashes. In Bus\nTopology, various MAC (Media Access Control) protocols are followed by LAN\nethernet connections like TDMA, Pure Aloha, CDMA, Slotted Aloha, etc."
+      },
+      {
+        "page": 107,
+        "text": "Advantages of Bus Topology\n•If N devices are connected to each other in a bus topology, then\nthe number of cables required to connect them is 1, known as\nbackbone cable, and N drop lines are required.\n•Coaxial or twisted pair cables are mainly used in bus-based\nnetworks\n•The cost of the cable is less compared to other topologies, but it is\nused to build small networks.\n•Bus topology is familiar technology as installation and\ntroubleshooting techniques are well known."
+      },
+      {
+        "page": 108,
+        "text": "Drawbacks of Bus Topology\n•If the common cable fails, then the whole system will crash\ndown.\n•If the network traffic is heavy, it increases collisions in the\nnetwork. To avoid this, various protocols are used in the MAC\nlayer known as Pure Aloha, Slotted Aloha, CSMA/CD, etc.\n•Adding new devices to the network would slow down\nnetworks.\n•Security is very low."
+      },
+      {
+        "page": 109,
+        "text": "Mesh Topology\nIn a mesh topology, every device is connected to another device via a particular\nchannel. In Mesh Topology, the protocols used are AHCP (Ad Hoc Configuration\nProtocols), DHCP (Dynamic Host Configuration Protocol), etc.\nEvery device is connected to another via\ndedicated channels. These channels are\nknown as links.\n•Suppose, the N number of devices are\nconnected with each other in a mesh\ntopology, the total number of ports that are\nrequired by each device is N-1. In this\nFigure, there are 5 devices connected to each\nother, hence the total number of ports\nrequired by each device is 4. The total\nnumber of ports required = N * (N-1)."
+      },
+      {
+        "page": 110,
+        "text": "•Suppose, N number of devices are connected with each other in a mesh topology,\nthen the total number of dedicated links required to connect them is i.e. N(N-1)/2.\nIn the above Figure, there are 5 devices connected to each other, hence the total\nnumber of links required is 5*4/2 = 10.\nAdvantages of Mesh Topology\n•Communication is very fast between the nodes.\n•Mesh Topology is robust.\n•The fault is diagnosed easily. Data is reliable because data is transferred among\nthe devices through dedicated channels or links.\n•Provides security and privacy.\nDrawbacks of Mesh Topology\n•Installation and configuration are difficult.\n•The cost of cables is high as bulk wiring is required, hence suitable for less\nnumber of devices.\n•The cost of maintenance is high."
+      },
+      {
+        "page": 111,
+        "text": "Ring Topology\nIn a Ring Topology, it forms a ring connecting devices with exactly\ntwo neighbouring devices. A number of repeaters are used for Ring\ntopology with a large number of nodes, because if someone wants to\nsend some data to the last node in the ring topology with 100 nodes,\nthen the data will have to pass through 99 nodes to reach the 100th\nnode. Hence to prevent data loss repeaters are used in the network.\nThe data flows in one direction, i.e. it is unidirectional, but it can be\nmade bidirectional by having 2 connections between each Network\nNode, it is called Dual Ring Topology. In-Ring Topology, the Token\nRing Passing protocol is used by the workstations to transmit the data."
+      },
+      {
+        "page": 112,
+        "text": ""
+      },
+      {
+        "page": 113,
+        "text": "Operations of Ring Topology\n1.One station is known as a monitor station which takes all the\nresponsibility for performing the operations.\n2.To transmit the data, the station has to hold the token. After the\ntransmission is done, the token is to be released for other stations to\nuse.\n3.When no station is transmitting the data, then the token will\ncirculate in the ring.\n4.There are two types of token release techniques: Early token\nrelease releases the token just after transmitting the data\nand Delayed token release releases the token after the\nacknowledgment is received from the receiver."
+      },
+      {
+        "page": 114,
+        "text": "Advantages of Ring Topology\n•The data transmission is high-speed.\n•The possibility of collision is minimum in this type of topology.\n•Cheap to install and expand.\n•It is less costly than a star topology.\nDrawbacks of Ring Topology\n•The failure of a single node in the network can cause the entire\nnetwork to fail.\n•Troubleshooting is difficult in this topology.\n•The addition of stations in between or the removal of stations can\ndisturb the whole topology.\n•Less secure."
+      },
+      {
+        "page": 115,
+        "text": "Star topology\n•Star Topology A star may be a topology for a Local Area\nNetwork (LAN) during which all nodes are individually\nconnected to a central connection point, sort of a hub or a\nswitch.\n• A star takes more cable than e.g. a bus, but the benefit is that\nif a cable fails, just one node is going to be brought down. Each\ndevice within the network is connected to a central device\ncalled a hub.\n• If one device wants to send data to another device, it’s to first\nsend the info to the hub then the hub transmits that data to the\ndesignated device. The number of links required to connect\nnodes in the star topology is N where N is the number of nodes."
+      },
+      {
+        "page": 116,
+        "text": "Star Topology"
+      },
+      {
+        "page": 117,
+        "text": "Advantages of Star Topology\n•It is high-performing as no data collisions can occur\n•Less expensive because each device only need one I/O port and\nwishes to be connected with hub with one link.\n•Easier to put in\n•Easy fault detection because the link are often easily identified.\n•No disruptions to the network when connecting or removing\ndevices.\n•Each device requires just one port i.e. to attach to the hub.\n•If N devices are connected to every other in star, then the\namount of cables required to attach them is N. So, it’s easy to\nline up."
+      },
+      {
+        "page": 118,
+        "text": "Disadvantages of Star Topology\n•Requires more cable than a linear bus .\n•If the connecting network device (network switch) fails, nodes\nattached are disabled and can’t participate in network communication.\n•More expensive than linear bus topology due to the value of the\nconnecting devices (network switches)\n•If hub goes down everything goes down, none of the devices can work\nwithout hub.\n•Hub requires more resources and regular maintenance because it’s the\ncentral system of star .\n•Extra hardware is required (hubs or switches) which adds to cost"
+      },
+      {
+        "page": 119,
+        "text": "Tree Topology\nThis topology is the variation of the Star topology. This topology has a\nhierarchical flow of data\nIn this, the various secondary hubs are\nconnected to the central hub which\ncontains the repeater. This data flow\nfrom top to bottom i.e. from the\ncentral hub to the secondary and then\nto the devices or from bottom to top\ni.e. devices to the secondary hub and\nthen to the central hub.\nIt is a multi-point connection and a\nnon-robust topology because if the\nbackbone fails the topology crashes."
+      },
+      {
+        "page": 120,
+        "text": "Advantages of Tree Topology\n•It allows more devices to be attached to a single central hub thus it\ndecreases the distance that is traveled by the signal to come to the\ndevices.\n•It allows the network to get isolated and also prioritize from\ndifferent computers.\n•Error detection and error correction are very easy in a tree\ntopology.\nDrawbacks of Tree Topology\n•If the central hub gets fails the entire system fails.\n•The cost is high because of the cabling.\n•If new devices are added, it becomes difficult to reconfigure."
+      },
+      {
+        "page": 121,
+        "text": "Hybrid Topology\nThis topological technology is the combination of all\nthe various types of topologies we have studied above.\nHybrid Topology is used when the nodes are free to\ntake any form. It means these can be individuals such\nas Ring or Star topology or can be a combination of\nvarious types of topologies seen in the following figure."
+      },
+      {
+        "page": 122,
+        "text": ""
+      },
+      {
+        "page": 123,
+        "text": "Advantages of Hybrid Topology\n•This topology is very flexible.\n•The size of the network can be easily expanded by adding new\ndevices.\nDrawbacks of Hybrid Topology\n•It is challenging to design the architecture of the Hybrid\nNetwork.\n•The infrastructure cost is very high as a hybrid\nnetwork requires a lot of cabling and network devices."
+      },
+      {
+        "page": 124,
+        "text": ""
+      },
+      {
+        "page": 125,
+        "text": "Data-link Layer and Protocols"
+      },
+      {
+        "page": 126,
+        "text": "Introduction to Framing\nFraming is one of the most important functions performed by the\nData Link Layer (Layer 2) of the OSI Model.\nWhen data is transmitted from one computer to another, it is\nsent as a continuous stream of bits. The receiver must know:\n•Where the data starts.\n•Where the data ends.\n•Which bits belong to one message.\nTo solve this problem, the Data Link Layer divides the continuous\nbit stream into smaller units called frames."
+      },
+      {
+        "page": 127,
+        "text": "Why is Framing Needed?\nImagine that a sender transmits the following bit stream:\n101010101111000111100001010101010100111010101\nThe receiver sees only a long sequence of bits.\nWithout framing, the receiver cannot determine:\n•Where one message begins. \n•Where it ends. \n•Which bits belong together. \nFraming provides boundaries to each message.\nExample:\nFrame 1\n|------------------|\n101010111001010101\nFrame 2\n|----------------------|\n111100001010100011110"
+      },
+      {
+        "page": 128,
+        "text": "1. Character-Oriented (Byte-Oriented) Framing\nCharacter-oriented framing is a framing technique in\nwhich special characters (bytes) are used to indicate the\nbeginning and end of a frame.\nInstead of looking at individual bits, the protocol examines\ncomplete bytes."
+      },
+      {
+        "page": 129,
+        "text": "Frame Format\n+------+-----------------------+------+\n| STX  |        DATA           | ETX  |\n+------+-----------------------+------+\nWhere\n•STX = Start of Text \n•ETX = End of Text \nSometimes additional fields are \nadded.\n+------+---------+-----------+------+\n| STX  | Header  |   Data    | ETX  \n|\n+------+---------+-----------+------+\nWorking Principle\nSuppose we want to send:\nHELLO\nThe sender actually transmits\nSTX HELLO ETX\nReceiver reads\nSTX\n↓\nStart reading data\nHELLO\nETX\n↓\nStop reading"
+      },
+      {
+        "page": 130,
+        "text": "Problem in Character-Oriented Framing\nSuppose the actual data is\nHELLO ETX WORLD\nThe transmitted frame becomes\nSTX HELLO ETX WORLD ETX\nReceiver interprets\nSTX HELLO ETX\nas the complete frame.\nRemaining\nWORLD ETX\nappears as another frame.\nThis creates an error."
+      },
+      {
+        "page": 131,
+        "text": "Solution: Character Stuffing\nAn extra character called ESC (Escape) is inserted before every \ncontrol character that appears inside the data.\nExample\nOriginal Data\nHELLO ETX WORLD\nAfter Character Stuffing\nHELLO ESC ETX WORLD\nSender transmits\nSTX HELLO ESC ETX WORLD ETX\nReceiver ignores the escaped ETX and treats it as ordinary \ndata."
+      },
+      {
+        "page": 132,
+        "text": "Advantages\n•Very easy to implement. \n•Suitable for text communication. \n•Simple error detection. \nDisadvantages\n•Works mainly for character-based data. \n•Inefficient for binary files. \n•Extra bytes increase overhead. \n•Depends on character encoding (ASCII, Unicode)."
+      },
+      {
+        "page": 133,
+        "text": "Bit-Oriented Framing\nDefinition\nBit-oriented framing uses a special bit pattern\nto identify the beginning and end of each frame.\nInstead of characters, it works directly with bits.\nFlag Pattern\nEvery frame begins and ends with\n01111110\nThis pattern is called the Flag.\nFrame Format\n+-----------+-------------------+-\n----------+\n| 01111110  |   DATA   |01111110   \n|\n+-----------+-------------------+-\n----------+"
+      },
+      {
+        "page": 134,
+        "text": "Example\nSuppose data is\n110010101010\nSender transmits\n01111110\n110010101010\n01111110\nReceiver searches for the flag\n01111110\nEverything between two flags belongs to one frame."
+      },
+      {
+        "page": 135,
+        "text": "Problem in Bit-Oriented Framing\nSuppose the data itself contains\n01111110\nReceiver cannot distinguish whether this is\n•actual data \n•or frame boundary"
+      },
+      {
+        "page": 136,
+        "text": "Rule\nFive consecutive 1s\n↓\nInsert one 0\nExample 1\nOriginal Data\n01111110\nAfter Stuffing\n011111010\nThe inserted 0 prevents the flag pattern from \nappearing in the data."
+      },
+      {
+        "page": 137,
+        "text": "FRAMING\nFRAMING:\nThe packet received from the Network layer is known as a \nframe in the Data link layer. At the sender’s side, DLL receives \npackets from the Network layer and divides them into small frames, \nthen, sends each frame bit-by-bit to the physical layer.\nAt the receiver’s end, DLL takes bits from the Physical layer \norganizes them into the frame, and sends them to the Network layer."
+      },
+      {
+        "page": 138,
+        "text": "Frames are the units of digital transmission, particularly in \ncomputer networks and telecommunications.\nEthernet, token ring, frame relay, and other data link layer \ntechnologies have their own frame structures.\nFrames have headers that contain information such as error-\nchecking codes."
+      },
+      {
+        "page": 139,
+        "text": "ADDRESSING:\nThe data link layer encapsulates the source and destination’s MAC\naddress/ physical address in the header of each frame to ensure node-to-\nnode delivery.\nERROR CONTROL:\nData can get corrupted due to various reasons like noise,\nattenuation, etc. So, it is the responsibility of the data link layer, to detect\nthe error in the transmitted data and correct it using error detection and\ncorrection"
+      },
+      {
+        "page": 140,
+        "text": "FLOW CONTROL:\nIf the receiver’s receiving speed is lower than the sender’s sending speed, then this\ncan lead to an overflow in the receiver’s buffer and some frames may get lost. So, it’s\nthe responsibility of DLL to synchronize the sender’s and receiver’s speeds and\nestablish flow control between them.\nACCESS CONTROL:\nWhen multiple devices share the same communication channel there is a high\nprobability of collision, so it’s the responsibility of DLL to check which device has\ncontrol over the channel and CSMA/CD and CSMA/CA can be used to avoid\ncollisions and loss of frames in the channel."
+      },
+      {
+        "page": 141,
+        "text": "TYPES OF ERRORS\nThere may be three types of errors:\nSingle bit error\nIn a frame, there is only one bit, anywhere though, which is corrupt.\nMultiple bits error\nFrame is received with more than one bits in corrupted state.\nBurst error\nFrame contains more than1 consecutive bits corrupted."
+      },
+      {
+        "page": 142,
+        "text": "ERROR CONTROL\nError control mechanism may involve two possible ways:\n1.Error detection\n2.Error correction\nERROR DETECTION:\n1.Simple Parity Check\n2.Checksum\n3.Cyclic Redundancy Check (CRC)\nERROR CORRECTION:\n1.Backward Error Correction  \n2.Forward Error Correction"
+      },
+      {
+        "page": 143,
+        "text": "ERROR CONTROL\nError control mechanism may involve two possible ways:\n1.Error detection\n2.Error correction\nERROR DETECTION:\n1.Simple Parity Check\n2.Checksum\n3.Cyclic Redundancy Check (CRC)\nERROR CORRECTION:\n1.Backward Error Correction  \n2.Forward Error Correction"
+      },
+      {
+        "page": 144,
+        "text": "PARITY CHECK\n• One extra bit is sent along with the original bits to make number of 1s either even in \ncase of even parity, or odd in case of odd parity.\n• The sender while creating a frame counts the number of 1s in it. For example, if \neven parity is used and number of 1s is even then one bit with value 0 is added. \nThis way number of 1s remains even. If the number of 1s is odd, to make it even a \nbit with value 1 is added.\n• The receiver simply counts the number of 1s in a frame. If the count of 1s is even \nand even parity is used, the frame is considered to be not-corrupted and is accepted. \nIf the count of 1s is odd and odd parity is used, the frame is still not corrupted.\n• If a single bit flips in transit, the receiver can detect it by counting the number of 1s. \nBut when more than one bits are erroneous, then it is very hard for the receiver to \ndetect the error."
+      },
+      {
+        "page": 145,
+        "text": "MCQ\nGiven code word 1110001010 is to be \ntransmitted with even parity check bit. The \nencoded word to be transmitted for this code is\n(A)11100010101\n(B) 11100010100\n(C) 1110001010\n(D) 111000101"
+      },
+      {
+        "page": 146,
+        "text": "Solution\nBecause even parity will make it even no of 1`s , it \nmean see in the transmitted data 1110001010 \nthere are five 1 which is odd .\nTo make it even it will add extra 1 as parity . \nso it will be 11100010101 .\nAnswer: option A"
+      },
+      {
+        "page": 147,
+        "text": "Checksum\nChecksum error detection is a method used to identify errors in \ntransmitted data. This method makes the use of Checksum Generator \non Sender side and Checksum Checker on Receiver side.\nAt the Sender side, the data is divided into equal subunits of n bit \nlength by the checksum generator. This bit is generally of 16-bit \nlength. These subunits are then added together using one’s \ncomplement method. This sum is of n bits. The resultant bit is then \ncomplemented. This complemented sum which is called checksum is \nappended to the end of original data unit and is then transmitted to \nReceiver."
+      },
+      {
+        "page": 148,
+        "text": ""
+      },
+      {
+        "page": 149,
+        "text": "The Receiver after receiving data + checksum passes it to\nchecksum checker. Checksum checker divides this data unit into\nvarious subunits of equal length and adds all these subunits.\nThese subunits also contain checksum as one of the subunits. The\nresultant bit is then complemented.\nIf the complemented result is zero, it means the data is error-free.\nIf the result is non-zero it means the data contains an error and\nReceiver rejects it."
+      },
+      {
+        "page": 150,
+        "text": ""
+      },
+      {
+        "page": 151,
+        "text": ""
+      },
+      {
+        "page": 152,
+        "text": "Example –\nIf the data unit to be transmitted is 10101001 00111001, the following procedure is \nused at Sender site and Receiver site.\nSender Site :\n10101001 subunit 1\n00111001 subunit 2 \n11100010 sum (using 1s complement) \n00011101 checksum (complement of sum)\nData transmitted to Receiver is –\nReceiver Site :\n10101001 subunit 1\n00111001 subunit 2 \n00011101 checksum \n11111111 sum \n00000000\nsum's complement Result is zero, it means no error."
+      },
+      {
+        "page": 153,
+        "text": "Advantage :\nThe checksum detects all the errors involving an odd number of bits \nas well as the error involving an even number of bits.\nDisadvantage :\nThe main problem is that the error goes undetected if one or more \nbits of a subunit is damaged and the corresponding bit or bits of a \nsubunit are damaged and the corresponding bit or bits of opposite \nvalue in second subunit are also damaged. This is because the sum of \nthose columns remains unchanged."
+      },
+      {
+        "page": 154,
+        "text": "Example –\nIf the data transmitted along with checksum is 10101001 00111001 \n00011101. But the data received at destination is 00101001 10111001 \n00011101.\nReceiver Site :\n00101001 1st bit of subunit 1 is damaged \n10111001 1st bit of subunit 2 is damaged \n00011101 checksum \n11111111 sum \n00000000 Ok 1's complement\nAlthough data is corrupted, the error is \nundetected."
+      },
+      {
+        "page": 155,
+        "text": "Cyclic Redundancy Check and Modulo-2 Division\nCRC or Cyclic Redundancy Check is a method of detecting \naccidental changes/errors in the communication channel.\nCRC uses Generator Polynomial which is available on both \nsender and receiver side. An example generator polynomial is of \nthe form like x3 + x + 1. This generator polynomial represents key \n1011. Another example is x2 + 1 that represents key 101.\nn : Number of bits in data to be sent from sender side. \nk : Number of bits in the key obtained from generator \npolynomial."
+      },
+      {
+        "page": 156,
+        "text": "Sender Side (Generation of Encoded Data from Data and Generator \nPolynomial (or Key)):\n1.The binary data is first augmented by adding k-1 zeros in the end of the \ndata\n2.Use modulo-2 binary division to divide binary data by the key and store \nremainder of division.\n3.Append the remainder at the end of the data to form the encoded data \nand send the same\nReceiver Side (Check if there are errors introduced in transmission)\nPerform modulo-2 division again and if the remainder is 0, then there are \nno errors."
+      },
+      {
+        "page": 157,
+        "text": "Modulo 2 Division:\nThe process of modulo-2 binary division is the same as the familiar \ndivision process we use for decimal numbers. Just that instead of \nsubtraction, we use XOR here.\n•In each step, a copy of the divisor (or data) is XORed with the k bits of\nthe dividend (or key).\n•The result of the XOR operation (remainder) is (n-1) bits, which is used\nfor the next step after 1 extra bit is pulled down to make it n bits long.\n•When there are no bits left to pull down, we have a result. The (n-1)-bit\nremainder which is appended at the sender side."
+      },
+      {
+        "page": 158,
+        "text": "Illustration:\nExample 1 (No error in transmission):\nData word to be sent - 100100 and generator polynomial x3 + x2 + 1]\nSender \nSide:\nTherefore, the remainder is \n001 and hence the encoded \ndata sent is 100100001."
+      },
+      {
+        "page": 159,
+        "text": "Receiver Side: Code word received at the receiver side 100100001\nTherefore, the \nremainder is all zeros. \nHence, the data \nreceived has no error."
+      },
+      {
+        "page": 160,
+        "text": "Example 2: (Error in transmission)\nData word to be sent - 100100 Key - 1101\nSender Side:\nTherefore, the \nremainder is 001 and \nhence the \ncode word sent is \n100100001.\nReceiver Side Let there be an error in \ntransmission media Code word received at \nthe receiver side - 100000001\nSince the remainder is \nnot all zeroes, the \nerror\nis detected at the \nreceiver side."
+      },
+      {
+        "page": 161,
+        "text": ""
+      },
+      {
+        "page": 162,
+        "text": "Why Hamming Code is Needed?\nDuring transmission, data may be corrupted due to\n•Electrical noise \n•Signal attenuation \n•Interference \n•Hardware faults \nExample\nOriginal Data\n1011\nReceived Data\n1001"
+      },
+      {
+        "page": 163,
+        "text": "Number of Parity Bits\nFormula\n2𝑟 ≥ 𝑚 + 𝑟 + 1\nWhere\n•r = parity bits \n•m = data bits \nExample\nSuppose data bits = 4\nNeed to find parity bits.\nr = 2\n2² = 4\n4 < 4+2+1 =7 Not sufficient\nTry r=3\n2³ =8\n8 ≥4+3+1=8\nCorrect\nTherefore\nData bits =4\nParity bits =3\nTotal bits\n7 bits"
+      },
+      {
+        "page": 164,
+        "text": "Error Correction(Hamming Distance code)\n• The Hamming distance between two words is the \nnumber of differences between corresponding bits.\nLet us find the Hamming distance between two pairs of  \nwords.\n1. The Hamming distance d(000, 011) is 2 because\n2.The Hamming distance d(10101, 11110) is 3  \nbecause"
+      },
+      {
+        "page": 165,
+        "text": "UGC NET QUESTIONS\nHamming distance between 100101000110 and \n110111101101 is\n(A)3\n(B) 4\n(C) 5\n(D) 6"
+      },
+      {
+        "page": 166,
+        "text": "Solutions\nGiven 100101000110 and 110111101101\nHamming distance:\n100101000110\n110111101101\nSo 6 bits changed\nAnswer : Option D"
+      },
+      {
+        "page": 167,
+        "text": "Data-link Control & Protocols\nData-link layer is responsible for implementation of point-to-\npoint flow and error control mechanism.\nFlow Control\nWhen a data frame (Layer-2 data) is sent from one host to\nanother over a single medium, it is required that the sender and\nreceiver should work at the same speed.\nThat is, sender sends at a speed on which the receiver can\nprocess and accept the data. What if the speed\n(hardware/software) of the sender or receiver differs? If sender is\nsending too fast the receiver may be overloaded, (swamped) and\ndata may be lost."
+      },
+      {
+        "page": 168,
+        "text": "PURPOSE OF FLOW CONTROL\nThe device on the receiving end has a limited amount of memory (to store \nincoming data) and limited speed (to process incoming data). The receiver \nmight get overwhelmed if the rate at which the sender sends data is faster or \nthe amount of data sent is more than its capacity.\nBuffers are blocks in the memory that store data until it is processed. If the \nbuffer is overloaded and there is more incoming data, then the receiver will \nstart losing frames.\nThe flow control mechanism was devised to avoid the loss and wastage of \nframes. Following this mechanism, the receiver, as per its capacity, sends an \nacknowledgment to send fewer frames or temporarily halt the transmission \nuntil it can receive again."
+      },
+      {
+        "page": 169,
+        "text": "Methods of Flow Control\n1. Stop-and-wait\n2. Sliding window."
+      },
+      {
+        "page": 170,
+        "text": "Simple Stop and Wait Protocol\nSender:\nRule 1) Send one data packet at a time.\nRule 2) Send next packet only after receiving acknowledgement for \nprevious.\nReceiver:\nRule 1) Send acknowledgement after receiving and consuming of \ndata  packet.\nRule 2) After consuming packet acknowledgement need to be sent \n(Flow Control)"
+      },
+      {
+        "page": 171,
+        "text": "Stop and Wait"
+      },
+      {
+        "page": 172,
+        "text": ""
+      },
+      {
+        "page": 173,
+        "text": "Two types of mechanisms can be deployed to control the flow\nStop and Wait\nThis flow control mechanism forces the sender after transmitting\na data frame to stop and wait until the acknowledgement of the\ndata-frame sent is received.\nSliding Window\nThe Sliding Window is a method of flow control in which a\nsender can transmit the several frames before getting an\nacknowledgement.\nA single ACK acknowledge multiple frames. The size of the\nwindow is represented as n-1. Therefore, maximum n-1 frames\ncan be sent before acknowledgement."
+      },
+      {
+        "page": 174,
+        "text": "Problems :1\nLost Data:"
+      },
+      {
+        "page": 175,
+        "text": "Problems :2\nLost Acknowledgement:"
+      },
+      {
+        "page": 176,
+        "text": "Problem 3. Delayed Acknowledgement/Data: After\ntimeout on sender side, a long delayed\nacknowledgement might be wrongly considered as\nacknowledgement of some other recent packet"
+      },
+      {
+        "page": 177,
+        "text": "Solution\nStop and Wait ARQ (Automatic Repeat Request)\nAbove 3 problems are resolved by Stop and Wait ARQ \n(Automatic Repeat Request) that does both error control \nand flow control."
+      },
+      {
+        "page": 178,
+        "text": "Time out-\nSolution for lose \nof data"
+      },
+      {
+        "page": 179,
+        "text": "2. Sequence Number (Data)\n3. Delayed Acknowledgement:\nThis is resolved by introducing sequence number for acknowledgement \nalso."
+      },
+      {
+        "page": 180,
+        "text": "Error Control\n•When data-frame is transmitted, there is a probability that data-\nframe may be lost in the transit or it is received corrupted. \n•In both cases, the receiver does not receive the correct data-\nframe and sender does not know anything about any loss.\n•In such case, both sender and receiver are equipped with some \nprotocols which helps them to detect transit errors such as loss \nof data-frame.\n• Hence, either the sender retransmits the data-frame or the \nreceiver may request to resend the previous data-frame"
+      },
+      {
+        "page": 181,
+        "text": ""
+      },
+      {
+        "page": 182,
+        "text": "Stop-and-wait\nThe sender maintains a timeout counter.\nWhen a frame is sent, the sender starts the \ntimeout counter.\nIf acknowledgement of frame comes in time, the \nsender transmits the next frame in queue.\nIf acknowledgement does not come in time, the \nsender assumes that either the frame or its \nacknowledgement is lost in transit. Sender \nretransmits the frame and starts the timeout \ncounter.\nIf a negative acknowledgement is received, the \nsender retransmits the frame."
+      },
+      {
+        "page": 183,
+        "text": "Problem in Stop and Wait ARQ\n• The Stop and Wait ARQ solves main three problems, but \nmay cause big performance issues as sender always waits \nfor acknowledgement even if it has next packet ready to \nsend. Consider a situation where you have a high \nbandwidth connection and propagation delay is also high \n(you are connected to some server in some other country \nthough a high speed connection). \n• To solve this problem, we can send more than one packet at \na time with a larger sequence numbers."
+      },
+      {
+        "page": 184,
+        "text": "Sliding window protocol\n•Sliding window protocols are data link layer protocols for \nreliable and sequential delivery of data frames.\n• The sliding window is also used in Transmission Control \nProtocol.\n•In this protocol, multiple frames can be sent by a sender at a \ntime before receiving an acknowledgment from the receiver.\n• The term sliding window refers to the imaginary boxes to \nhold frames. Sliding window method is also known as \nwindowing."
+      },
+      {
+        "page": 185,
+        "text": "SLIDING WINDOW PROTOCOL\nThe sliding window is a technique for sending multiple frames at a \ntime. It controls the data packets between the two devices where \nreliable and gradual delivery of data frames is needed. It is also used \nin TCP (Transmission Control Protocol).\nIn this technique, each frame has sent from the sequence number. \nThe sequence numbers are used to find the missing data in the \nreceiver end. The purpose of the sliding window technique is to \navoid duplicate data, so it uses the sequence number.\n1. Go-Back-N ARQ\n2. Selective Repeat ARQ"
+      },
+      {
+        "page": 186,
+        "text": "Go-Back-N ARQ\nStop and wait ARQ mechanism does not utilize the \nresources at their best.When the acknowledgement is \nreceived, the sender sits idle and does nothing. In Go-\nBack-N ARQ method, both sender and receiver \nmaintain a window.\nThe sending-window size enables the sender to send \nmultiple frames without receiving the \nacknowledgement of the previous ones. The \nreceiving-window enables the receiver to receive \nmultiple frames and acknowledge them. The receiver \nkeeps track of incoming frame’s sequence number.\nIf all frames are positively acknowledged, the sender \nsends next set of frames. If sender finds that it has \nreceived NACK or has not receive any ACK for a \nparticular frame, it retransmits all the frames after \nwhich it does not receive any positive ACK."
+      },
+      {
+        "page": 187,
+        "text": "Selective Repeat ARQ\nIn Go-back-N ARQ, it is assumed that the \nreceiver does not have any buffer space for \nits window size and has to process each \nframe as it comes. This enforces the sender \nto retransmit all the frames which are not \nacknowledged.\nIn Selective-Repeat ARQ, the receiver while \nkeeping track of sequence numbers, buffers \nthe frames in memory and sends NACK for \nonly frame which is missing or damaged.\nThe sender in this case, sends only packet \nfor which NACK is received."
+      },
+      {
+        "page": 188,
+        "text": "HDLC Protocol (High-Level Data Link Control)\nHDLC (High-Level Data Link Control) is a bit-oriented data\nlink layer protocol developed by ISO for reliable\ncommunication over point-to-point and multipoint links. It\nworks at the Data Link Layer (Layer 2) of the OSI model.\nHDLC provides:\n• Framing\n• Error detection\n• Flow control\n• Reliable data transfer\n• Link management"
+      },
+      {
+        "page": 189,
+        "text": "HDLC is a bit-oriented synchronous data link layer protocol that\norganizes data into frames and ensures reliable transmission between\ntwo nodes using error detection and control mechanisms.\nPurpose of an HDLC Frame\nAn HDLC frame enables the receiver to:\n• Identify the start and end of a frame\n• Recognize the intended destination\n• Control communication flow\n• Detect transmission errors\n• Ensure reliable data delivery"
+      },
+      {
+        "page": 190,
+        "text": ""
+      },
+      {
+        "page": 191,
+        "text": "Field Name Size (bits)\nFlag Field 8 bits\nAddress Field 8 bits\nControl Field 8 or 16 bits\nInformation Field Variable (not used in some type of \nHDLC frames)\nFCS (Frame Check Sequence) Field 16 or 32 bits\nClosing Flag Field 8 bits"
+      },
+      {
+        "page": 192,
+        "text": "1. Flag Field\n• Marks the beginning and end of a frame\n• Uses an 8-bit pattern 01111110 (0x7E)\n• Provides synchronization\n2. Address Field\n• Identifies the secondary station\n• Supports individual, group, and broadcast addressing\n• Length may vary based on network requirements"
+      },
+      {
+        "page": 193,
+        "text": "3. Control Field\n• Controls communication and frame type\n• Supports three frame types: Information (I-Frame): Data transfer, \nSupervisory (S-Frame): Flow and error control , Unnumbered (U-\nFrame): Link management\n4. Information Field\n• Contains user data or management information\n• Optional and variable in length"
+      },
+      {
+        "page": 194,
+        "text": "5. Frame Check Sequence (FCS)\n• Used for error detection\n• Uses CRC-16 or CRC-32\n• Ensures frame integrity\n6. Ending Flag Field\nIndicates the end of the frame\nMay serve as the starting flag for the next frame"
+      },
+      {
+        "page": 195,
+        "text": "HDLC Operating Modes\na) Normal Response Mode (NRM)\n• Secondary transmits only when permitted by\nprimary.\n• Used in multipoint networks.\nb) Asynchronous Response Mode (ARM)\n• Secondary may transmit without explicit\npermission.\n• Rarely used.\nc) Asynchronous Balanced Mode (ABM)\n• Both stations can transmit anytime.\n• Most commonly used."
+      },
+      {
+        "page": 196,
+        "text": "Type of frame is basically determined by control field of \nframe. Each type of frame generally serves as an envelope \nfor transmission of various types of messages. These three \ndifferent classes of frames used in HDLC are given below."
+      },
+      {
+        "page": 197,
+        "text": "I-frame : I-frame stands for Information frames.\nThis frame is generally used for transporting user data from\nnetwork layer.\nThese frames actually carry actual data or information of upper\nlayer and some control information.\nThis frame carries data along with both send sequence number and\nan acknowledgment number. It can also be used to piggyback\nacknowledgement\ninformation in case of ABM (Asynchronous Balanced Mode). The\nfirst bit of this frame of control field is 0."
+      },
+      {
+        "page": 198,
+        "text": "S-frame : S-frame stands for Supervisory frames. These\nframes are basically required and essential for error\ncontrol and flow control.\nThey also provide control information. It contains or\nincludes only an Acknowledgment number. First two bit\nof this frame of control field is 10.\nS-frame does not have any information fields. This frame\ncontains send and receive sequence numbers."
+      },
+      {
+        "page": 199,
+        "text": "Example -\n• Receive Ready (RR)\n• Receive Not Ready (RNR)\n• Reject on frame N(R) (REJ)\n• Selective reject on N(R) (SREJ), etc."
+      },
+      {
+        "page": 200,
+        "text": "U-frame : U-frame stands for Unnumbered frames.\nThese frames are also required in various functions like link setup\nand disconnections. These frames basically support control purposes\nand are not sequenced. First, two-bit of this frame of control field is\n11.\nSome U-frame contains an information field depending on the type.\nThese frames are also used for different miscellaneous purposes\nalong with link management. U-frame is required for managing link\nitself.\nThis frame does not include any type of acknowledgment\ninformation i.e. in turn it includes or is contained in sequence\nnumber. These frames are generally reserved for system\nmanagement."
+      },
+      {
+        "page": 201,
+        "text": "Example -\n• Set Normal Response Mode \n(SNRM)\n• Set Asynchronous Response Mode \n(SARM)\n• Set Asynchronous Balanced Mode \n(SABM)\n• Unnumbered Polling (UP)"
+      },
+      {
+        "page": 202,
+        "text": ""
+      },
+      {
+        "page": 203,
+        "text": "Types of HDLC Frames\nHDLC defines three frame \ntypes.\n1. Information Frame (I-frame)\nUsed for carrying user data.\nControl Field Format\n0 | N(S) | P/F | N(R)\n• N(S) → Send sequence \nnumber\n• N(R) → Next expected frame \nnumber\n• P/F → Poll/Final bit\nExample\nIf:\n• Sending frame number = 3\n• Expecting next frame = 5\nThen:\n• N(S) = 3\n• N(R) = 5\nThe receiver knows which frame \narrived and which frame is \nexpected next."
+      },
+      {
+        "page": 204,
+        "text": "Code Meaning\nRR Receive Ready\nRNR Receive Not Ready\nREJ Reject\nSREJ Selective Reject\nSupervisory Frame (S-frame)\nUsed for flow and error control.\nTypes\nExample\nReceiver sends RR(4) meaning:\n\"Frames up to 3 received correctly; send frame 4 next.\""
+      },
+      {
+        "page": 205,
+        "text": "Multiple Access Protocols in Computer Network\n• Multiple Access Protocols are methods used in computer\nnetworks to control how data is transmitted when multiple\ndevices are trying to communicate over the same network.\n• These protocols ensure that data packets are sent and\nreceived efficiently, without collisions or interference.\n• They help manage the network traffic so that all devices can\nshare the communication channel smoothly and effectively."
+      },
+      {
+        "page": 206,
+        "text": "Multiple Access Control\nIf there is a dedicated link between the sender and the receiver then\ndata link control layer is sufficient, however if there is no dedicated\nlink present then multiple stations can access the channel\nsimultaneously.\nHence multiple access protocols are required to decrease collision\nand avoid crosstalk.\nFor example, in a classroom full of students, when a teacher asks a\nquestion and all the students (or stations) start answering\nsimultaneously (send data at same time) then a lot of chaos is\ncreated( data overlap or data lost) then it is the job of the teacher\n(multiple access protocols) to manage the students and make them\nanswer one at a time."
+      },
+      {
+        "page": 207,
+        "text": ""
+      },
+      {
+        "page": 208,
+        "text": ""
+      },
+      {
+        "page": 209,
+        "text": "1. Random Access Protocol\nIn this, all stations have same superiority that is no station\nhas more priority than another station. Any station can send\ndata depending on medium's state( idle or busy). It has two\nfeatures:\n•There is no fixed time for sending data\n•There is no fixed sequence of stations sending data\nThe Random access protocols are further subdivided as:"
+      },
+      {
+        "page": 210,
+        "text": ""
+      },
+      {
+        "page": 211,
+        "text": "Pure ALOHA\nWhen a station sends data it waits for an acknowledgement. If\nthe acknowledgement doesn't come within the allotted time\nthen the station waits for a random amount of time called\nback-off time (Tb) and re-sends the data. Since different\nstations wait for different amount of time, the probability of\nfurther collision decreases.\nSlotted ALOHA\nIt is similar to pure aloha, except that we divide time into slots\nand sending of data is allowed only at the beginning of these\nslots. If a station misses out the allowed time, it must wait for\nthe next slot. This reduces the probability of collision."
+      },
+      {
+        "page": 212,
+        "text": ""
+      },
+      {
+        "page": 213,
+        "text": "CSMA\nCarrier Sense Multiple Access ensures fewer collisions as the station is\nrequired to first sense the medium (for idle or busy) before transmitting\ndata. If it is idle then it sends data, otherwise it waits till the channel\nbecomes idle. However there is still chance of collision in CSMA due to\npropagation delay.\nFor example, if station A wants to send data, it will first sense the\nmedium. If it finds the channel idle, it will start sending data. However, by\nthe time the first bit of data is transmitted (delayed due to propagation\ndelay) from station A, if station B requests to send data and senses the\nmedium it will also find it idle and will also send data. This will result in\ncollision of data from station A and B."
+      },
+      {
+        "page": 214,
+        "text": ""
+      },
+      {
+        "page": 215,
+        "text": "•1-Persistent: The node senses the channel, if idle it sends the data, otherwise it\ncontinuously keeps on checking the medium for being idle and transmits\nunconditionally(with 1 probability) as soon as the channel gets idle.\n•Non-Persistent: The node senses the channel, if idle it sends the data, otherwise it\nchecks the medium after a random amount of time (not continuously) and transmits\nwhen found idle.\n•P-Persistent: The node senses the medium, if idle it sends the data with p\nprobability. If the data is not transmitted ((1-p) probability) then it waits for some\ntime and checks the medium again, now if it is found idle then it send with p\nprobability. This repeat continues until the frame is sent. It is used in Wifi and packet\nradio systems.\n•O-Persistent: Superiority of nodes is decided beforehand and transmission occurs in\nthat order. If the medium is idle, node waits for its time slot to send data."
+      },
+      {
+        "page": 216,
+        "text": "CSMA/CD\nCarrier sense multiple access with collision detection. Stations\ncan terminate transmission of data if collision is detected. For\nmore details refer - Efficiency of CSMA/CD .\nCSMA/CA\nCarrier sense multiple access with collision avoidance. The\nprocess of collisions detection involves sender receiving\nacknowledgement signals. If there is just one signal(its own) then\nthe data is successfully sent but if there are two signals(its own\nand the one with which it has collided) then it means a collision\nhas occurred. To distinguish between these two cases, collision\nmust have a lot of impact on received signal. However it is not so\nin wired networks, so CSMA/CA is used in this case."
+      },
+      {
+        "page": 217,
+        "text": "2. Controlled Access\nControlled access protocols ensure that only one device\nuses the network at a time. Think of it like taking turns in a\nconversation so everyone can speak without talking over\neach other.\nIn this, the data is sent by that station which is approved by\nall other stations. For further details refer - Controlled\nAccess Protocols"
+      },
+      {
+        "page": 218,
+        "text": "Controlled Access\nIn controlled access, the stations seek data from one\nanother to find which station has the right to send. It\nallows only one node to send at a time, to avoid the\ncollision of messages on a shared medium. The three\ncontrolled-access methods are:\n•Reservation\n•Polling\n•Token Passing"
+      },
+      {
+        "page": 219,
+        "text": "1. Reservation\n•In the reservation method, a station needs to make a reservation \nbefore sending data.\n•The timeline has two kinds of periods:\n• Reservation interval of fixed time length\n• Data transmission period of variable frames.\n•If there are M stations, the reservation interval is divided into M slots, \nand each station has one slot.\n•Suppose if station 1 has a frame to send, it transmits 1 bit during the \nslot 1. No other station is allowed to transmit during this slot."
+      },
+      {
+        "page": 220,
+        "text": "2. Polling\n•Polling process is similar to the roll-call performed in class. Just \nlike the teacher, a controller sends a message to each node in turn.\n•In this, one acts as a primary station(controller) and the others are \nsecondary stations. All data exchanges must be made through the \ncontroller.\n•The message sent by the controller contains the address of the \nnode being selected for granting access."
+      },
+      {
+        "page": 221,
+        "text": "3. Token Passing\n•In token passing scheme, the stations are connected logically to\neach other in form of ring and access to stations is governed by\ntokens.\n•A token is a special bit pattern or a small message, which circulate\nfrom one station to the next in some predefined order.\n•In Token ring, token is passed from one station to another adjacent\nstation in the ring whereas incase of Token bus, each station uses\nthe bus to send the token to the next station in some predefined\norder."
+      },
+      {
+        "page": 222,
+        "text": "3. Channelization\nIn this, the available bandwidth of the link is shared in time, frequency and\ncode to multiple stations to access channel simultaneously.\nFrequency Division Multiple Access (FDMA) - The available bandwidth is\ndivided into equal bands so that each station can be allocated its own band.\nGuard bands are also added so that no two bands overlap to avoid crosstalk\nand noise.\nTime Division Multiple Access (TDMA) - In this, the bandwidth is shared\nbetween multiple stations. To avoid collision time is divided into slots and\nstations are allotted these slots to transmit data. However there is a overhead\nof synchronization as each station needs to know its time slot. This is\nresolved by adding synchronization bits to each slot. Another issue with\nTDMA is propagation delay which is resolved by addition of guard bands."
+      },
+      {
+        "page": 223,
+        "text": "•Code Division Multiple Access (CDMA) - One channel carries all\ntransmissions simultaneously. There is neither division of bandwidth nor\ndivision of time. For example, if there are many people in a room all\nspeaking at the same time, then also perfect reception of data is possible\nif only two person speak the same language. Similarly, data from\ndifferent stations can be transmitted simultaneously in different code\nlanguages."
+      },
+      {
+        "page": 224,
+        "text": ""
+      }
+    ],
+    "summary": "• Switch has memory it stores MAC addresses\n• It has intelligent to forward the correct \ndestination(unicast)\n• The switch  can perform error checking before \nforwarding data, that makes it very efficient\nAspect Hub Switch\nFunctionality\nBasic networking device that \noperates at the physical layer \n(Layer 1) and broadcasts data to all \nconnected devices\nAdvanced networking device \nthat operates at the data link \nlayer (Layer 2) and forwards data \nselectively to the intended \nrecipient\nOperation\nOperates as a broadcast medium; it \nsends data to all devices connected \nto it\nOperates as a selective \nforwarding device; it forwards \ndata only to the intended \nrecipient based on MAC \naddresses\nCollision \nDomain\nShares a single collision domain, \nmeaning all devices connected to \nthe hub share the same bandwidth \nand may experience collisions\nProvides separate collision \ndomains for each port, thereby \nreducing collisions and \nimproving network performance\nMAC Address \nLearning\nDoes not have the capability to learn \nMAC addresses; it simply forwards \nincoming data to all connected \ndevices\nLearns MAC addresses by \nexamining source addresses of \nincoming frames, maintains a \nMAC address table, and uses it to \nforward frames intelligently\nEfficiency\nLess efficient due to broadcast \ntransmissions and potential collisions, \nleading to network congestion and \nslower performance\nMore efficient as it selectively \nforwards data only to the intended \nrecipient, reducing unnecessary \ntraffic and improving network \nperformance\nBandwidth\nShares the total available bandwidth \namong connected devices, leading to \npotential congestion and slower \nnetwork speeds\nOffers dedicated bandwidth for \neach port, allowing simultaneous \ncommunication between devices at \nfull speed\nRouters\n• Router is mainly a Network Layer device\n• A router is a device like a switch that routes data\npackets based on their IP addresses. Functionality\nConnect and divide network segments, forward \ndata frames based on MAC addresses, filter traffic \nwithin a single network\nProvide interconnection between \nnetworks with different protocols, \ntranslate data formats, enable \ncommunication between \nheterogeneous networks\nLayer of \nOperation Data Link Layer (Layer 2) Network Layer (Layer 3) or above\nScope of \nOperation Typically used within a single network or LAN Used to connect networks with \ndifferent protocols or architectures\nData Handling\nForward data frames between network segments \nbased on MAC addresses, learn MAC addresses \ndynamically, maintain forwarding table\nHandle routing of data packets \nbetween different networks based \non IP addresses, perform protocol \ntranslation, packet filtering, routing \nfunctions\nExample Ethernet bridge Router\nBridge Gateway\n\nTransmission Modes in Computer Networks (Simplex, Half-Duplex\nand Full-Duplex)\nTransmission mode means transferring data between two devices. Types of Network Topology: The various network topologies are:\nPoint to Point Topology\n• Mesh Topology\n• Star Topology\n• Bus Topology\n• Ring Topology\n• Tree Topology\n• Hybrid Topology\nPoint to Point Topology\nPoint-to-Point Topology is a type of topology that works on the\nfunctionality of the sender and receiver. • frame contains the hardware destination and source \naddress\nFunctions of the Data-link layer\nPhysical Addressing: After creating frames, Data link layer \nadds physical addresses (MAC address) of sender and/or \nreceiver in the header of each frame\n•Flow Control: It is the technique through which the constant \ndata rate is maintained on both the sides so that no data get \ncorrupted. • Access Control: When two or more devices are connected to the \nsame communication channel, then the data link layer protocols are \nused to determine which device has control over the link at a given \ntime\n3.Network Layer\n• Network layer works for the transmission of \ndata(Packets) from one host to the other located in \ndifferent networks.",
+    "topics": [
+      {
+        "name": "Data",
+        "confidence": 70,
+        "page": 23
+      },
+      {
+        "name": "Network",
+        "confidence": 70,
+        "page": 32
+      },
+      {
+        "name": "Layer",
+        "confidence": 70,
+        "page": 58
+      },
+      {
+        "name": "Frame",
+        "confidence": 70,
+        "page": 200
+      },
+      {
+        "name": "Topology",
+        "confidence": 70,
+        "page": 104
+      },
+      {
+        "name": "Receiver",
+        "confidence": 70,
+        "page": 167
+      },
+      {
+        "name": "Devices",
+        "confidence": 70,
+        "page": 25
+      },
+      {
+        "name": "Control",
+        "confidence": 70,
+        "page": 45
+      },
+      {
+        "name": "Error",
+        "confidence": 70,
+        "page": 142
+      },
+      {
+        "name": "Sender",
+        "confidence": 70,
+        "page": 182
+      }
+    ],
+    "word_count": 12087,
+    "character_count": 75412
   }
 ]

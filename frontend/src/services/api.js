@@ -111,15 +111,22 @@ export const getFileUrl = (
 export const chatWithDocument = async (
   documentId,
   question,
-  history = []
+  history = [],
+  options = {}
 ) => {
+
+  const body = {
+    question,
+    history,
+  };
+
+  if (options.voiceResponse) {
+    body.voice_response = true;
+  }
 
   const response = await API.post(
     `/documents/${documentId}/chat`,
-    {
-      question,
-      history,
-    }
+    body
   );
 
   return response.data;

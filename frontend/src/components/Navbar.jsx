@@ -5,6 +5,7 @@ import {
   FaSignInAlt,
   FaUserPlus,
   FaChartPie,
+  FaMicrophone,
   FaBars,
   FaTimes,
   FaUserCircle,
@@ -62,6 +63,13 @@ function Navbar() {
           <FaChartPie />
           <span>Dashboard</span>
         </Link>
+
+        {isAuthenticated && (
+          <Link to="/voice-assistant" className="nav-link">
+            <FaMicrophone />
+            <span>Voice Assistant</span>
+          </Link>
+        )}
 
         {!isAuthenticated ? (
           <>
@@ -179,6 +187,17 @@ function Navbar() {
           <FaChartPie />
           <span>Dashboard</span>
         </Link>
+
+        {isAuthenticated && (
+          <Link
+            to="/voice-assistant"
+            className="mobile-menu-link"
+            onClick={closeMenu}
+          >
+            <FaMicrophone />
+            <span>Voice Assistant</span>
+          </Link>
+        )}
 
         {!isAuthenticated ? (
           <>

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import "./Home.css";
 import {
   FaArrowRight,
   FaBrain,
@@ -148,7 +149,11 @@ function Home() {
           </div>
 
 
-          <div className="feature-card">
+          <Link
+            to="/voice-assistant"
+            className="feature-card"
+            style={{ textDecoration: "none" }}
+          >
 
             <div className="feature-icon">
               <FaMicrophone />
@@ -163,7 +168,7 @@ function Home() {
               your voice and get instant answers.
             </p>
 
-          </div>
+          </Link>
 
 
           <div className="feature-card">
