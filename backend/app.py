@@ -20,7 +20,7 @@ from pptx import Presentation
 from PIL import Image
 import pytesseract
 from google import genai
-from models import db, User
+from models import db, User, LearningProgress
 from flask_jwt_extended import (
     JWTManager,
     create_access_token,
@@ -119,6 +119,11 @@ CORS(
         }
     }
 )
+def get_current_user_id():
+    return int(get_jwt_identity())
+
+# All JSON-backed learning data must carry user_id and must be filtered
+# through the authenticated JWT identity before it is returned or changed.
 UPLOAD_FOLDER = os.path.join(
     BASE_DIR,
     "uploads"
@@ -227,7 +232,57 @@ STOP_WORDS = {
     "document",
     "topic",
 }
+def save_documents(
+    documents
+):
+    with open(
+        DOCUMENTS_FILE,
+        "w",
+        encoding="utf-8"
+    ) as file:
+        json.dump(
+            documents,
+            file,
+            indent=2,
+            ensure_ascii=False
+        )
+def get_legacy_owner_user_id():
+    try:
+        with app.app_context():
+            user = User.query.order_by(User.id.asc()).first()
+            if not user:
+                return None
+            return int(user.id)
+    except Exception:
+        return None
+def migrate_legacy_json_records(file_path, collection_name):
+    if not os.path.exists(file_path):
+        return False
+    try:
+        with open(file_path, "r", encoding="utf-8") as file:
+            data = json.load(file)
+        if not isinstance(data, list):
+            return False
+    except Exception:
+        return False
+    legacy_user_id = get_legacy_owner_user_id()
+    if legacy_user_id is None:
+        return False
+    changed = False
+    for item in data:
+        if not isinstance(item, dict):
+            continue
+        if item.get("user_id") is None:
+            item["user_id"] = legacy_user_id
+            changed = True
+    if not changed:
+        return False
+    with open(file_path, "w", encoding="utf-8") as file:
+        json.dump(data, file, indent=2, ensure_ascii=False)
+    print(f"Migrated legacy {collection_name} records to user_id={legacy_user_id}.")
+    return True
 def load_documents():
+    migrate_legacy_json_records(DOCUMENTS_FILE, "documents")
     if not os.path.exists(
         DOCUMENTS_FILE
     ):
@@ -253,20 +308,41 @@ def load_documents():
             error
         )
         return []
-def save_documents(
-    documents
-):
-    with open(
-        DOCUMENTS_FILE,
-        "w",
-        encoding="utf-8"
-    ) as file:
-        json.dump(
-            documents,
-            file,
-            indent=2,
-            ensure_ascii=False
-        )
+def _same_user(record_user_id, user_id):
+    try:
+        return int(record_user_id) == int(user_id)
+    except (TypeError, ValueError):
+        return False
+
+def filter_documents_for_user(documents, user_id):
+    if user_id is None:
+        return []
+    return [
+        document
+        for document in documents
+        if isinstance(document, dict)
+        and _same_user(document.get("user_id"), user_id)
+    ]
+
+def filter_subjects_for_user(subjects, user_id):
+    if user_id is None:
+        return []
+    return [
+        subject
+        for subject in subjects
+        if isinstance(subject, dict)
+        and _same_user(subject.get("user_id"), user_id)
+    ]
+
+def filter_quizzes_for_user(quizzes, user_id):
+    if user_id is None:
+        return []
+    return [
+        quiz
+        for quiz in quizzes
+        if isinstance(quiz, dict)
+        and _same_user(quiz.get("user_id"), user_id)
+    ]
 def allowed_file(
     filename
 ):
@@ -1016,6 +1092,98 @@ Answer the student's question now.
         "high demand. Please try again in a "
         "few moments."
     )
+def get_learning_progress_for_user(user_id):
+    return (
+        LearningProgress.query
+        .filter_by(user_id=user_id)
+        .order_by(LearningProgress.updated_at.desc())
+        .all()
+    )
+
+def calculate_learning_streak(progress_rows):
+    from datetime import date, timedelta
+    studied_dates = {
+        row.last_studied.date()
+        for row in progress_rows
+        if row.last_studied
+    }
+    if not studied_dates:
+        return 0
+    current = date.today()
+    if current not in studied_dates:
+        return 0
+    streak = 0
+    while current in studied_dates:
+        streak += 1
+        current -= timedelta(days=1)
+    return streak
+
+def calculate_knowledge_dna(progress_rows, quiz_accuracy=0):
+    scores = [
+        float(row.mastery_score or 0)
+        for row in progress_rows
+        if row.questions_attempted or row.study_minutes or row.last_studied
+    ]
+    mastery = sum(scores) / len(scores) if scores else 0
+    return round((mastery * 0.7) + (float(quiz_accuracy) * 0.3), 1) if scores else 0
+
+def update_learning_progress(
+    user_id,
+    topic,
+    study_minutes=0,
+    questions_attempted=0,
+    questions_correct=0,
+):
+    from datetime import datetime
+
+    topic = str(topic or "General").strip()[:255] or "General"
+    progress = (
+        LearningProgress.query
+        .filter_by(user_id=user_id, topic=topic)
+        .first()
+    )
+
+    if not progress:
+        progress = LearningProgress(
+            user_id=user_id,
+            topic=topic,
+            mastery_score=0,
+            questions_attempted=0,
+            questions_correct=0,
+            study_minutes=0,
+        )
+        db.session.add(progress)
+
+    progress.study_minutes = (
+        int(progress.study_minutes or 0) + max(0, int(study_minutes or 0))
+    )
+    progress.questions_attempted = (
+        int(progress.questions_attempted or 0)
+        + max(0, int(questions_attempted or 0))
+    )
+    progress.questions_correct = (
+        int(progress.questions_correct or 0)
+        + max(0, int(questions_correct or 0))
+    )
+
+    quiz_mastery = (
+        progress.questions_correct / progress.questions_attempted * 100
+        if progress.questions_attempted
+        else 0
+    )
+    study_mastery = min(100, float(progress.study_minutes or 0) * 2)
+
+    if progress.questions_attempted:
+        progress.mastery_score = round(
+            (study_mastery * 0.4) + (quiz_mastery * 0.6),
+            1,
+        )
+    else:
+        progress.mastery_score = round(study_mastery, 1)
+
+    progress.last_studied = datetime.utcnow()
+    return progress
+
 @app.route(
     "/",
     methods=["GET"]
@@ -1231,6 +1399,7 @@ def get_current_user():
     "/api/upload",
     methods=["POST"]
 )
+@jwt_required()
 def upload_file():
     if "file" not in request.files:
         return jsonify({
@@ -1321,6 +1490,8 @@ def upload_file():
                 str(error)
         }), 500
     document = {
+        "user_id":
+            get_current_user_id(),
         "id":
             document_id,
         "name":
@@ -1371,8 +1542,10 @@ def upload_file():
     "/api/documents",
     methods=["GET"]
 )
+@jwt_required()
 def get_documents():
-    documents = load_documents()
+    current_user_id = get_current_user_id()
+    documents = filter_documents_for_user(load_documents(), current_user_id)
     result = []
     for document in documents:
         result.append({
@@ -1429,10 +1602,11 @@ def get_documents():
     "/api/documents/<document_id>",
     methods=["GET"]
 )
+@jwt_required()
 def get_document(
     document_id
 ):
-    documents = load_documents()
+    documents = filter_documents_for_user(load_documents(), get_current_user_id())
     document = next(
         (
             item
@@ -1449,7 +1623,7 @@ def get_document(
             "success":
                 False,
             "message":
-                "Document not found."
+                "Document not found or access denied."
         }), 404
     return jsonify({
         "success":
@@ -1481,7 +1655,8 @@ def process_document_chat(
         raise ValueError(
             "Question is required."
         )
-    documents = load_documents()
+    current_user_id = get_current_user_id()
+    documents = filter_documents_for_user(load_documents(), current_user_id)
     document = next(
         (
             item
@@ -1494,8 +1669,8 @@ def process_document_chat(
         None
     )
     if not document:
-        raise FileNotFoundError(
-            "Document not found."
+        raise PermissionError(
+            "Document not found or access denied."
         )
     answer, sources = (
         generate_document_answer(
@@ -1520,6 +1695,7 @@ def process_document_chat(
     "/api/chat",
     methods=["POST"]
 )
+@jwt_required()
 def chat():
     try:
         data = (
@@ -1547,6 +1723,13 @@ def chat():
         return jsonify(
             result
         )
+    except PermissionError as error:
+        return jsonify({
+            "success":
+                False,
+            "message":
+                str(error)
+        }), 403
     except FileNotFoundError as error:
         return jsonify({
             "success":
@@ -1603,6 +1786,7 @@ def chat():
     "/api/documents/<document_id>/chat",
     methods=["POST"]
 )
+@jwt_required()
 def chat_with_document(
     document_id
 ):
@@ -1622,6 +1806,13 @@ def chat_with_document(
         return jsonify(
             result
         )
+    except PermissionError as error:
+        return jsonify({
+            "success":
+                False,
+            "message":
+                str(error)
+        }), 403
     except FileNotFoundError as error:
         return jsonify({
             "success":
@@ -1678,9 +1869,26 @@ def chat_with_document(
     "/api/files/<filename>",
     methods=["GET"]
 )
+@jwt_required()
 def serve_file(
     filename
 ):
+    current_user_id = get_current_user_id()
+    documents = load_documents()
+    owned_document = next(
+        (
+            item
+            for item in documents
+            if item.get("stored_name") == filename
+            and int(item.get("user_id") or -1) == current_user_id
+        ),
+        None
+    )
+    if not owned_document:
+        return jsonify({
+            "success": False,
+            "message": "File not found or access denied."
+        }), 403
     return send_from_directory(
         UPLOAD_FOLDER,
         filename
@@ -1689,10 +1897,12 @@ def serve_file(
     "/api/documents/<document_id>",
     methods=["DELETE"]
 )
+@jwt_required()
 def delete_document(
     document_id
 ):
-    documents = load_documents()
+    current_user_id = get_current_user_id()
+    documents = filter_documents_for_user(load_documents(), current_user_id)
     document = next(
         (
             item
@@ -1709,7 +1919,7 @@ def delete_document(
             "success":
                 False,
             "message":
-                "Document not found."
+                "Document not found or access denied."
         }), 404
     stored_name = document.get(
         "stored_name"
@@ -1731,13 +1941,14 @@ def delete_document(
                     "FILE DELETE ERROR:",
                     error
                 )
+    all_documents = load_documents()
     documents = [
         item
-        for item
-        in documents
-        if item.get(
-            "id"
-        ) != document_id
+        for item in all_documents
+        if not (
+            item.get("id") == document_id
+            and _same_user(item.get("user_id"), current_user_id)
+        )
     ]
     save_documents(
         documents
@@ -1794,6 +2005,7 @@ QUIZZES_FILE = os.path.join(
     "quizzes.json"
 )
 def load_subjects():
+    migrate_legacy_json_records(SUBJECTS_FILE, "subjects")
     if not os.path.exists(
         SUBJECTS_FILE
     ):
@@ -1831,6 +2043,7 @@ def save_subjects(
             ensure_ascii=False
         )
 def load_quizzes():
+    migrate_legacy_json_records(QUIZZES_FILE, "quizzes")
     if not os.path.exists(
         QUIZZES_FILE
     ):
@@ -1871,6 +2084,7 @@ def save_quizzes(
     "/api/subjects",
     methods=["POST"]
 )
+@jwt_required()
 def create_subject():
     try:
         data = (
@@ -1900,16 +2114,14 @@ def create_subject():
                 "message":
                     "Subject name is required."
             }), 400
-        subjects = load_subjects()
+        current_user_id = get_current_user_id()
+        subjects = filter_subjects_for_user(load_subjects(), current_user_id)
         existing = next(
             (
                 subject
                 for subject
                 in subjects
-                if subject[
-                    "name"
-                ].lower()
-                == name.lower()
+                if subject.get("name", "").lower() == name.lower()
             ),
             None
         )
@@ -1927,17 +2139,16 @@ def create_subject():
                 name,
             "description":
                 description,
+            "user_id":
+                current_user_id,
             "created_at":
                 time.strftime(
                     "%Y-%m-%d %H:%M:%S"
                 )
         }
-        subjects.append(
-            subject
-        )
-        save_subjects(
-            subjects
-        )
+        all_subjects = load_subjects()
+        all_subjects.append(subject)
+        save_subjects(all_subjects)
         return jsonify({
             "success":
                 True,
@@ -1963,9 +2174,11 @@ def create_subject():
     "/api/subjects",
     methods=["GET"]
 )
+@jwt_required()
 def get_subjects():
-    subjects = load_subjects()
-    documents = load_documents()
+    current_user_id = get_current_user_id()
+    subjects = filter_subjects_for_user(load_subjects(), current_user_id)
+    documents = filter_documents_for_user(load_documents(), current_user_id)
     result = []
     for subject in subjects:
         subject_id = subject[
@@ -2013,10 +2226,12 @@ def get_subjects():
     "/api/subjects/<subject_id>",
     methods=["GET"]
 )
+@jwt_required()
 def get_subject(
     subject_id
 ):
-    subjects = load_subjects()
+    current_user_id = get_current_user_id()
+    subjects = filter_subjects_for_user(load_subjects(), current_user_id)
     subject = next(
         (
             item
@@ -2033,9 +2248,9 @@ def get_subject(
             "success":
                 False,
             "message":
-                "Subject not found."
+                "Subject not found or access denied."
         }), 404
-    documents = load_documents()
+    documents = filter_documents_for_user(load_documents(), current_user_id)
     subject_documents = [
         document
         for document
@@ -2056,10 +2271,12 @@ def get_subject(
     "/api/subjects/<subject_id>",
     methods=["DELETE"]
 )
+@jwt_required()
 def delete_subject(
     subject_id
 ):
-    subjects = load_subjects()
+    current_user_id = get_current_user_id()
+    subjects = filter_subjects_for_user(load_subjects(), current_user_id)
     subject = next(
         (
             item
@@ -2076,32 +2293,37 @@ def delete_subject(
             "success":
                 False,
             "message":
-                "Subject not found."
+                "Subject not found or access denied."
         }), 404
-    subjects = [
+    all_subjects = [
         item
-        for item
-        in subjects
-        if item.get(
-            "id"
-        ) != subject_id
+        for item in load_subjects()
+        if not (
+            item.get("id") == subject_id
+            and _same_user(item.get("user_id"), current_user_id)
+        )
     ]
-    save_subjects(
-        subjects
-    )
-    # Remove subject association
-    # from existing documents.
+    save_subjects(all_subjects)
+
     documents = load_documents()
     for document in documents:
-        if document.get(
-            "subject_id"
-        ) == subject_id:
-            document[
-                "subject_id"
-            ] = None
-    save_documents(
-        documents
-    )
+        if (
+            document.get("subject_id") == subject_id
+            and _same_user(document.get("user_id"), current_user_id)
+        ):
+            document["subject_id"] = None
+    save_documents(documents)
+
+    all_quizzes = load_quizzes()
+    quizzes = [
+        quiz
+        for quiz in all_quizzes
+        if not (
+            quiz.get("subject_id") == subject_id
+            and _same_user(quiz.get("user_id"), current_user_id)
+        )
+    ]
+    save_quizzes(quizzes)
     return jsonify({
         "success":
             True,
@@ -2112,6 +2334,7 @@ def delete_subject(
     "/api/upload-multiple",
     methods=["POST"]
 )
+@jwt_required()
 def upload_multiple():
     subject_id = (
         request.form.get(
@@ -2125,7 +2348,8 @@ def upload_multiple():
             "message":
                 "subject_id is required."
         }), 400
-    subjects = load_subjects()
+    current_user_id = get_current_user_id()
+    subjects = filter_subjects_for_user(load_subjects(), current_user_id)
     subject = next(
         (
             item
@@ -2142,7 +2366,7 @@ def upload_multiple():
             "success":
                 False,
             "message":
-                "Subject not found."
+                "Subject not found or access denied."
         }), 404
     files = request.files.getlist(
         "files"
@@ -2211,6 +2435,8 @@ def upload_multiple():
                     stored_name,
                 "type":
                     extension,
+                "user_id":
+                    current_user_id,
                 "subject_id":
                     subject_id,
                 "subject_name":
@@ -2286,10 +2512,12 @@ def upload_multiple():
     "/api/subjects/<subject_id>/documents",
     methods=["GET"]
 )
+@jwt_required()
 def get_subject_documents(
     subject_id
 ):
-    subjects = load_subjects()
+    current_user_id = get_current_user_id()
+    subjects = filter_subjects_for_user(load_subjects(), current_user_id)
     subject = next(
         (
             item
@@ -2306,9 +2534,9 @@ def get_subject_documents(
             "success":
                 False,
             "message":
-                "Subject not found."
+                "Subject not found or access denied."
         }), 404
-    documents = load_documents()
+    documents = filter_documents_for_user(load_documents(), current_user_id)
     subject_documents = [
         document
         for document
@@ -2326,9 +2554,104 @@ def get_subject_documents(
             subject_documents
     })
 @app.route(
+    "/api/learning/session",
+    methods=["POST"]
+)
+@jwt_required()
+def record_learning_session():
+    try:
+        data = request.get_json(silent=True) or {}
+        user_id = get_current_user_id()
+        topic = str(data.get("topic") or "General").strip() or "General"
+        try:
+            study_minutes = int(data.get("study_minutes", 0))
+        except (TypeError, ValueError):
+            study_minutes = 0
+
+        if study_minutes < 1 or study_minutes > 720:
+            return jsonify({
+                "success": False,
+                "message": "study_minutes must be between 1 and 720."
+            }), 400
+
+        progress = update_learning_progress(
+            user_id=user_id,
+            topic=topic,
+            study_minutes=study_minutes,
+        )
+        db.session.commit()
+
+        rows = get_learning_progress_for_user(user_id)
+        total_minutes = sum(int(row.study_minutes or 0) for row in rows)
+
+        return jsonify({
+            "success": True,
+            "message": "Learning session recorded.",
+            "progress": {
+                "topic": progress.topic,
+                "mastery_score": progress.mastery_score,
+                "study_minutes": progress.study_minutes,
+                "last_studied": (
+                    progress.last_studied.isoformat()
+                    if progress.last_studied else None
+                ),
+            },
+            "study_hours": round(total_minutes / 60, 1),
+            "learning_streak": calculate_learning_streak(rows),
+        }), 201
+    except Exception as error:
+        db.session.rollback()
+        print("LEARNING SESSION ERROR:", repr(error))
+        return jsonify({
+            "success": False,
+            "message": "Unable to record learning session.",
+            "error": str(error)
+        }), 500
+
+@app.route(
+    "/api/learning/progress",
+    methods=["GET"]
+)
+@jwt_required()
+def get_learning_progress():
+    try:
+        user_id = get_current_user_id()
+        rows = get_learning_progress_for_user(user_id)
+        progress = [{
+            "id": row.id,
+            "topic": row.topic,
+            "mastery_score": round(float(row.mastery_score or 0), 1),
+            "questions_attempted": int(row.questions_attempted or 0),
+            "questions_correct": int(row.questions_correct or 0),
+            "study_minutes": int(row.study_minutes or 0),
+            "last_studied": (
+                row.last_studied.isoformat()
+                if row.last_studied else None
+            ),
+        } for row in rows]
+
+        return jsonify({
+            "success": True,
+            "progress": progress,
+            "learning_streak": calculate_learning_streak(rows),
+            "study_hours": round(
+                sum(int(row.study_minutes or 0) for row in rows) / 60,
+                1,
+            ),
+        }), 200
+    except Exception as error:
+        print("LEARNING PROGRESS ERROR:", repr(error))
+        return jsonify({
+            "success": False,
+            "message": "Unable to get learning progress.",
+            "error": str(error)
+        }), 500
+
+@app.route(
     "/api/quiz/generate",
     methods=["POST"]
 )
+@jwt_required()
 def generate_quiz():
     try:
         if not is_gemini_configured():
@@ -2344,6 +2667,7 @@ def generate_quiz():
             )
             or {}
         )
+        current_user_id = get_current_user_id()
         subject_id = data.get(
             "subject_id"
         )
@@ -2378,7 +2702,7 @@ def generate_quiz():
                 20
             )
         )
-        subjects = load_subjects()
+        subjects = filter_subjects_for_user(load_subjects(), current_user_id)
         subject = next(
             (
                 item
@@ -2395,9 +2719,9 @@ def generate_quiz():
                 "success":
                     False,
                 "message":
-                    "Subject not found."
+                    "Subject not found or access denied."
             }), 404
-        documents = load_documents()
+        documents = filter_documents_for_user(load_documents(), current_user_id)
         subject_documents = [
             document
             for document
@@ -2559,7 +2883,6 @@ STUDY MATERIAL:
             response.text
             or ""
         ).strip()
-        # Remove accidental code fences.
         raw = re.sub(
             r"^```json\s*",
             "",
@@ -2660,6 +2983,8 @@ STUDY MATERIAL:
         quiz = {
             "id":
                 uuid4().hex,
+            "user_id":
+                current_user_id,
             "subject_id":
                 subject_id,
             "subject_name":
@@ -2698,8 +3023,6 @@ STUDY MATERIAL:
         save_quizzes(
             quizzes
         )
-        # Do not expose correct answers
-        # to the frontend before submission.
         client_quiz = {
             **quiz,
             "questions": [
@@ -2746,6 +3069,7 @@ STUDY MATERIAL:
     "/api/quiz/<quiz_id>/submit",
     methods=["POST"]
 )
+@jwt_required()
 def submit_quiz(
     quiz_id
 ):
@@ -2756,11 +3080,12 @@ def submit_quiz(
             )
             or {}
         )
+        current_user_id = get_current_user_id()
         answers = data.get(
             "answers",
             {}
         )
-        quizzes = load_quizzes()
+        quizzes = filter_quizzes_for_user(load_quizzes(), current_user_id)
         quiz = next(
             (
                 item
@@ -2777,7 +3102,7 @@ def submit_quiz(
                 "success":
                     False,
                 "message":
-                    "Quiz not found."
+                    "Quiz not found or access denied."
             }), 404
         score = 0
         results = []
@@ -2858,9 +3183,36 @@ def submit_quiz(
         ] = time.strftime(
             "%Y-%m-%d %H:%M:%S"
         )
+        all_quizzes = load_quizzes()
+        for index, item in enumerate(all_quizzes):
+            if item.get("id") == quiz_id:
+                all_quizzes[index] = quiz
+                break
         save_quizzes(
-            quizzes
+            all_quizzes
         )
+
+        # Update the authenticated user's topic mastery from this quiz.
+        topic_totals = {}
+        for result in results:
+            topic = str(
+                result.get("topic") or "General"
+            ).strip()[:255] or "General"
+            if topic not in topic_totals:
+                topic_totals[topic] = [0, 0]
+            topic_totals[topic][0] += 1
+            if result.get("correct"):
+                topic_totals[topic][1] += 1
+
+        for topic, values in topic_totals.items():
+            update_learning_progress(
+                user_id=current_user_id,
+                topic=topic,
+                questions_attempted=values[0],
+                questions_correct=values[1],
+            )
+
+        db.session.commit()
         return jsonify({
             "success":
                 True,
@@ -2890,8 +3242,10 @@ def submit_quiz(
     "/api/quizzes",
     methods=["GET"]
 )
+@jwt_required()
 def get_quizzes():
-    quizzes = load_quizzes()
+    current_user_id = get_current_user_id()
+    quizzes = filter_quizzes_for_user(load_quizzes(), current_user_id)
     result = []
     for quiz in quizzes:
         result.append({
@@ -2943,102 +3297,85 @@ def get_quizzes():
     "/api/dashboard/stats",
     methods=["GET"]
 )
+@jwt_required()
 def dashboard_stats():
-    documents = load_documents()
-    quizzes = load_quizzes()
-    topic_names = set()
-    for document in documents:
-        for topic in document.get(
-            "topics",
-            []
-        ):
-            name = topic.get(
-                "name"
-            )
-            if name:
-                topic_names.add(
-                    name.lower()
-                )
-    attempted_quizzes = [
-        quiz
-        for quiz
-        in quizzes
-        if quiz.get(
-            "attempted"
+    try:
+        current_user_id = get_current_user_id()
+        documents = filter_documents_for_user(
+            load_documents(),
+            current_user_id,
         )
-    ]
-    if attempted_quizzes:
-        total_questions = sum(
-            quiz.get(
-                "question_count",
-                0
-            )
-            for quiz
-            in attempted_quizzes
+        quizzes = filter_quizzes_for_user(
+            load_quizzes(),
+            current_user_id,
         )
-        total_correct = sum(
-            quiz.get(
-                "score",
-                0
+        progress_rows = get_learning_progress_for_user(current_user_id)
+
+        topic_names = set()
+        for document in documents:
+            for topic in document.get("topics", []):
+                name = topic.get("name")
+                if name:
+                    topic_names.add(name.lower())
+        for row in progress_rows:
+            if row.topic:
+                topic_names.add(row.topic.lower())
+
+        attempted_quizzes = [
+            quiz for quiz in quizzes if quiz.get("attempted")
+        ]
+        if attempted_quizzes:
+            total_questions = sum(
+                quiz.get("question_count", 0)
+                for quiz in attempted_quizzes
             )
-            for quiz
-            in attempted_quizzes
-        )
-        quiz_accuracy = round(
-            (
-                total_correct
-                /
-                total_questions
+            total_correct = sum(
+                quiz.get("score", 0)
+                for quiz in attempted_quizzes
             )
-            * 100,
-            1
-        ) if total_questions else 0
-    else:
-        quiz_accuracy = 0
-    # Basic Knowledge DNA score.
-    # As the project grows, this will be
-    # replaced by the complete mastery model.
-    if topic_names:
-        knowledge_dna = round(
-            min(
-                100,
-                (
-                    len(topic_names)
-                    * 5
-                )
-            ),
-            1
+            quiz_accuracy = round(
+                (total_correct / total_questions) * 100,
+                1,
+            ) if total_questions else 0
+        else:
+            quiz_accuracy = 0
+
+        study_minutes = sum(
+            int(row.study_minutes or 0)
+            for row in progress_rows
         )
-    else:
-        knowledge_dna = 0
-    # Current document-based
-    # topic count.
-    topics_learned = len(
-        topic_names
-    )
-    # Learning streak will be
-    # connected to activity tracking
-    # in the next phase.
-    learning_streak = 0
-    # Study hours will be connected
-    # to study-session tracking.
-    study_hours = 0
-    return jsonify({
-        "success":
-            True,
-        "stats": {
-            "knowledge_dna":
-                knowledge_dna,
-            "topics_learned":
-                topics_learned,
-            "quiz_accuracy":
-                quiz_accuracy,
-            "learning_streak":
-                learning_streak,
-            "study_hours":
-                study_hours
-        }
-    })
+        study_hours = round(study_minutes / 60, 1)
+        learning_streak = calculate_learning_streak(progress_rows)
+        knowledge_dna = calculate_knowledge_dna(
+            progress_rows,
+            quiz_accuracy,
+        )
+
+        if not progress_rows and topic_names:
+            knowledge_dna = round(
+                min(100, len(topic_names) * 5),
+                1,
+            )
+
+        return jsonify({
+            "success": True,
+            "stats": {
+                "knowledge_dna": knowledge_dna,
+                "topics_learned": len(topic_names),
+                "quiz_accuracy": quiz_accuracy,
+                "learning_streak": learning_streak,
+                "study_hours": study_hours,
+                "study_minutes": study_minutes,
+            }
+        })
+    except Exception as error:
+        print("DASHBOARD STATS ERROR:", repr(error))
+        return jsonify({
+            "success": False,
+            "message": "Unable to get dashboard statistics.",
+            "error": str(error)
+        }), 500
+
 if __name__ == "__main__":
     print()
     print(

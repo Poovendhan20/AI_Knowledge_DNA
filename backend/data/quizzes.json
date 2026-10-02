@@ -155,6 +155,516 @@
     "attempted": true,
     "score": 2,
     "accuracy": 20.0,
-    "completed_at": "2026-08-17 17:38:16"
+    "completed_at": "2026-08-17 17:38:16",
+    "user_id": 1
+  },
+  {
+    "id": "b80fc1b560c34fcdab418e7f399053ad",
+    "user_id": 30001,
+    "subject_id": "2c0ff8602f434a9690a8a65245688580",
+    "subject_name": "DCN",
+    "document_ids": [
+      "e6c720d7154d42eab748d3340b96d6d3"
+    ],
+    "question_count": 5,
+    "difficulty": "easy",
+    "questions": [
+      {
+        "id": "52959bf511454408abc30cc685db25e1",
+        "question": "Which layer of the OSI model is responsible for transmitting raw bit streams over a physical medium?",
+        "options": [
+          "Physical Layer",
+          "Data Link Layer",
+          "Network Layer",
+          "Transport Layer"
+        ],
+        "correct_answer": 0,
+        "explanation": "The physical layer is the lowest layer of the OSI model. It is responsible for the actual physical connection between devices and the transmission of raw bits over the medium.",
+        "page": 12,
+        "topic": "OSI Model"
+      },
+      {
+        "id": "ec201df2e3b14b7d8d81a197cf0f72da",
+        "question": "In a star network topology, what happens if one client computer's connection cable is damaged?",
+        "options": [
+          "The entire network fails and no computer can communicate.",
+          "Only that specific computer loses its connection to the network.",
+          "Data is automatically rerouted through neighboring client computers.",
+          "The central switch shuts down immediately to prevent damage."
+        ],
+        "correct_answer": 1,
+        "explanation": "In a star topology, each device has its own dedicated cable to a central hub or switch. If a cable fails, only that specific device is affected while the rest of the network operates normally.",
+        "page": 25,
+        "topic": "Network Topologies"
+      },
+      {
+        "id": "a468bd75068249b8b870d557dd8ced1b",
+        "question": "Why is fiber-optic cable preferred over copper coaxial cable for high-speed, long-distance data transmission?",
+        "options": [
+          "It uses light pulses which are immune to electromagnetic interference.",
+          "It is much cheaper to purchase and easier to install.",
+          "It relies on electrical currents that travel faster than light.",
+          "It can bend easily at sharp angles without any signal loss."
+        ],
+        "correct_answer": 0,
+        "explanation": "Fiber-optic cables use light waves to transmit data, making them completely immune to electromagnetic interference (EMI) and radio frequency interference (RFI), allowing longer and faster transmission.",
+        "page": 45,
+        "topic": "Transmission Media"
+      },
+      {
+        "id": "8fb1ea4b03f74a35a7f5a00ac4898949",
+        "question": "What is the primary reason the global internet is transitioning from IPv4 to IPv6 addresses?",
+        "options": [
+          "IPv4 addresses are too long for modern high-speed routers to handle.",
+          "The rapid growth of internet devices has depleted the available pool of unique IPv4 addresses.",
+          "IPv6 is the only internet protocol that supports wireless Wi-Fi connections.",
+          "IPv4 has been proven insecure and cannot encrypt any network traffic."
+        ],
+        "correct_answer": 1,
+        "explanation": "IPv4 uses a 32-bit addressing system, limiting it to about 4.3 billion addresses. Because of the explosion of internet-connected devices, IPv6 (with 128-bit addresses) is required to provide enough unique addresses.",
+        "page": 60,
+        "topic": "IP Addressing"
+      },
+      {
+        "id": "8cd525d6c9e74c6da8a09a164ce96ab3",
+        "question": "How does a network switch improve network efficiency compared to a simple network hub?",
+        "options": [
+          "A switch broadcasts incoming data to every connected device on the network.",
+          "A switch forwards data only to the specific device it is addressed to, reducing traffic.",
+          "A switch converts weak analog signals into stronger digital signals.",
+          "A switch allows devices to connect without needing physical network cables."
+        ],
+        "correct_answer": 1,
+        "explanation": "Unlike a hub, which blindly broadcasts data to all connected ports, a switch keeps track of MAC addresses and forwards data frames only to the specific port where the destination device is connected.",
+        "page": 38,
+        "topic": "Network Devices"
+      }
+    ],
+    "created_at": "2026-10-02 23:13:38",
+    "attempted": true,
+    "score": 3,
+    "accuracy": 60.0,
+    "completed_at": "2026-10-02 23:13:55"
+  },
+  {
+    "id": "7c79852d51e54f4fbcabfdeef32d76fe",
+    "user_id": 30001,
+    "subject_id": "2c0ff8602f434a9690a8a65245688580",
+    "subject_name": "DCN",
+    "document_ids": [
+      "e6c720d7154d42eab748d3340b96d6d3"
+    ],
+    "question_count": 5,
+    "difficulty": "easy",
+    "questions": [
+      {
+        "id": "88042e6d71934521b1690eeb8c58175b",
+        "question": "What type of network connects computers and devices within a limited geographical area, such as a single office or home?",
+        "options": [
+          "Local Area Network (LAN)",
+          "Wide Area Network (WAN)",
+          "Metropolitan Area Network (MAN)",
+          "Personal Area Network (PAN)"
+        ],
+        "correct_answer": 0,
+        "explanation": "A Local Area Network (LAN) is used to connect devices within a small, localized physical area like a home, school, or office.",
+        "page": 5,
+        "topic": "Network Types"
+      },
+      {
+        "id": "e3a9f06d70e748b4a97cc757534ac985",
+        "question": "Which transmission mode allows data to flow in both directions, but only one direction at a time?",
+        "options": [
+          "Simplex",
+          "Half-Duplex",
+          "Full-Duplex",
+          "Multiplex"
+        ],
+        "correct_answer": 1,
+        "explanation": "In half-duplex mode, both stations can transmit and receive data, but not at the exact same time. One must wait for the other to finish.",
+        "page": 8,
+        "topic": "Transmission Modes"
+      },
+      {
+        "id": "3dce4d4af2654abe9c9a2d126035e7f2",
+        "question": "Which layer of the OSI model is responsible for routing packets across multiple networks?",
+        "options": [
+          "Physical Layer",
+          "Data Link Layer",
+          "Network Layer",
+          "Transport Layer"
+        ],
+        "correct_answer": 2,
+        "explanation": "The Network layer handles the routing of packets from the source host to the destination host across different networks.",
+        "page": 12,
+        "topic": "OSI Model"
+      },
+      {
+        "id": "022dcdbd751040089ed767fc18cd5443",
+        "question": "In which network topology are all devices connected to a single central cable called the backbone?",
+        "options": [
+          "Star Topology",
+          "Bus Topology",
+          "Ring Topology",
+          "Mesh Topology"
+        ],
+        "correct_answer": 1,
+        "explanation": "A bus topology uses one main central cable, known as the bus or backbone, to which all other devices are linked.",
+        "page": 18,
+        "topic": "Network Topologies"
+      },
+      {
+        "id": "7175a7988e044b2692c3519306950be0",
+        "question": "Which type of guided transmission media uses light signals to transmit data at extremely high speeds?",
+        "options": [
+          "Coaxial Cable",
+          "Twisted-pair Cable",
+          "Fiber-optic Cable",
+          "Satellite Link"
+        ],
+        "correct_answer": 2,
+        "explanation": "Fiber-optic cables use glass or plastic fibers to transmit data as pulses of light, offering high speed and bandwidth.",
+        "page": 25,
+        "topic": "Transmission Media"
+      }
+    ],
+    "created_at": "2026-10-02 23:35:19",
+    "attempted": false,
+    "score": null,
+    "accuracy": null
+  },
+  {
+    "id": "75f059268b3e44729344009a62911657",
+    "user_id": 30001,
+    "subject_id": "2c0ff8602f434a9690a8a65245688580",
+    "subject_name": "DCN",
+    "document_ids": [
+      "e6c720d7154d42eab748d3340b96d6d3"
+    ],
+    "question_count": 5,
+    "difficulty": "easy",
+    "questions": [
+      {
+        "id": "aeea0bac2bb34b15a49af8f011c3c59c",
+        "question": "If a company wants a network topology where every device has a dedicated point-to-point link to every other device to ensure high reliability, which topology should they choose?",
+        "options": [
+          "Star Topology",
+          "Bus Topology",
+          "Ring Topology",
+          "Mesh Topology"
+        ],
+        "correct_answer": 3,
+        "explanation": "In a mesh topology, every device is connected to every other device. This provides redundancy, meaning if one cable fails, the network can still function through other paths.",
+        "page": 12,
+        "topic": "Network Topologies"
+      },
+      {
+        "id": "8866bb8cf95b460284358ea900f75d29",
+        "question": "Walkie-talkies allow two people to communicate, but only one person can speak at a time while the other listens. What type of transmission mode is this?",
+        "options": [
+          "Simplex Mode",
+          "Half-Duplex Mode",
+          "Full-Duplex Mode",
+          "Multi-Duplex Mode"
+        ],
+        "correct_answer": 1,
+        "explanation": "In half-duplex mode, both devices can transmit and receive data, but not at the same time. One must wait for the other to finish.",
+        "page": 8,
+        "topic": "Transmission Modes"
+      },
+      {
+        "id": "b3c6409953ce447b9ebf99683934c7e6",
+        "question": "Which layer of the OSI model is responsible for transmitting raw bits over a physical communication medium like a copper cable or fiber optic?",
+        "options": [
+          "Physical Layer",
+          "Data Link Layer",
+          "Network Layer",
+          "Transport Layer"
+        ],
+        "correct_answer": 0,
+        "explanation": "The Physical Layer is the lowest layer of the OSI model and is responsible for the actual electrical, optical, or radio transmission of raw data bits.",
+        "page": 25,
+        "topic": "OSI Model"
+      },
+      {
+        "id": "fdc5c94ca7dd49bfb32b5408b43bbff3",
+        "question": "A university campus wants to connect computers across several buildings located close to each other in a single geographical area. What type of network is most suitable for this?",
+        "options": [
+          "Wide Area Network (WAN)",
+          "Local Area Network (LAN)",
+          "Metropolitan Area Network (MAN)",
+          "Personal Area Network (PAN)"
+        ],
+        "correct_answer": 1,
+        "explanation": "A Local Area Network (LAN) is designed to connect network devices over a short physical distance, such as an office, home, or school campus.",
+        "page": 15,
+        "topic": "Network Types"
+      },
+      {
+        "id": "b4614cbd7cad4f498d0d490c6b76442a",
+        "question": "Why is a switch generally preferred over a hub in a local network?",
+        "options": [
+          "A switch sends data only to the specific destination device instead of broadcasting it to everyone.",
+          "A switch is much cheaper and simpler to install than a hub.",
+          "A switch connects a local network directly to the global Internet without a router.",
+          "A switch does not require any physical cables to connect devices."
+        ],
+        "correct_answer": 0,
+        "explanation": "Unlike a hub, which blindly broadcasts data to all connected devices, a switch learns device addresses and sends data packets only to the specific device they are intended for, reducing network traffic.",
+        "page": 32,
+        "topic": "Network Devices"
+      }
+    ],
+    "created_at": "2026-10-02 23:35:33",
+    "attempted": true,
+    "score": 2,
+    "accuracy": 40.0,
+    "completed_at": "2026-10-02 23:35:50"
+  },
+  {
+    "id": "fe880f1ac4134bc1be0a39cf8340dfe2",
+    "user_id": 30001,
+    "subject_id": "d7c01729e1004be686c3b3d9d795acf5",
+    "subject_name": "CQC",
+    "document_ids": [
+      "a2154fd333af4ec4bc3ff6318b3972a8"
+    ],
+    "question_count": 5,
+    "difficulty": "hard",
+    "questions": [
+      {
+        "id": "49dbea98fad7416c80616d9f0b331df0",
+        "question": "An online retail store experiences a temporary, massive 24-hour surge in website traffic during a flash sale, after which traffic returns to normal. Which cloud concept is best suited to handle this specific workload, and why?",
+        "options": [
+          "Cloud elasticity, because it automatically provisions resources during the spike and withdraws them once the event ends to minimize costs.",
+          "Cloud scalability, because it provides persistent deployment and permanent hardware upgrades for steady database growth.",
+          "Vertical scaling, because it adds new nodes in a horizontal row to distribute the traffic across different locations.",
+          "Cloud carrier support, because it is the intermediary that manages software deployment and orchestrates multi-tenant databases."
+        ],
+        "correct_answer": 0,
+        "explanation": "According to the study material, cloud elasticity is best for sudden, temporary fluctuations in demand because it dynamically and automatically expands or compresses resources, withdrawing them when the traffic drops to maximize cost efficiency.",
+        "page": 3,
+        "topic": "Cloud Elasticity and Scalability"
+      },
+      {
+        "id": "c5f1fd92f6de489db8894aace7e6579b",
+        "question": "Why are Type 1 hypervisors preferred over Type 2 hypervisors in enterprise cloud data center environments?",
+        "options": [
+          "They run as an application within a host operating system, making them much easier for non-technical users to manage.",
+          "They do not need to negotiate resource allocation through a host operating system layer, providing higher performance and better isolation.",
+          "They allow users to run multiple operating systems on a desktop environment without requiring system administrator-level knowledge.",
+          "They rely on the host operating system to handle security and patch virtual machine operating systems automatically."
+        ],
+        "correct_answer": 1,
+        "explanation": "Type 1 hypervisors (bare metal) access machine resources directly and do not need to negotiate resource allocation with a host operating system. This makes them more performant, efficient, and secure due to a greater degree of isolation.",
+        "page": 19,
+        "topic": "Virtualization Technologies"
+      },
+      {
+        "id": "fbeac29baae942eabb9583babd3042a2",
+        "question": "What primary limitation of Cluster Computing led to the introduction of Grid Computing, and what new challenge did Grid Computing subsequently introduce?",
+        "options": [
+          "High cost was the limitation; the new challenge was the inability to run multiple instances simultaneously on hardware.",
+          "Lack of dynamic adjustment was the limitation; the new challenge was the requirement for dedicated mainframe systems.",
+          "Geographical restriction was the limitation; the new challenge was the low availability of high bandwidth connectivity between distant nodes.",
+          "Low availability of networks was the limitation; the new challenge was the requirement for highly expensive mainframe nodes."
+        ],
+        "correct_answer": 2,
+        "explanation": "Cluster computing solved cost issues but suffered from geographical restrictions. Grid computing resolved this by connecting geographically distributed nodes over the internet, but introduced low availability of high bandwidth connectivity and other network issues.",
+        "page": 2,
+        "topic": "Evolution of Computing"
+      },
+      {
+        "id": "3182720f847447dcbe6fcdc7e51c081d",
+        "question": "Why is a Community Cloud deployment model described as being 'rigid in customization'?",
+        "options": [
+          "Because it operates entirely on a public pay-per-use model managed exclusively by a single third-party vendor.",
+          "Because resources are shared among multiple organizations with mutual interests, meaning changes requested by one organization could impact others.",
+          "Because it relies on a combination of public and private clouds, causing severe latency during data transmission.",
+          "Because it uses proprietary software that prevents the IT department from supervising security firewalls."
+        ],
+        "correct_answer": 1,
+        "explanation": "Since data and resources in a community cloud are shared among different organizations based on collaborative interests, a single organization cannot make changes according to their individual needs because those changes will impact other organizations.",
+        "page": 15,
+        "topic": "Cloud Deployment Models"
+      },
+      {
+        "id": "19efb72e6f0745be81948ec20b00b944",
+        "question": "How does the layered architecture of a Docker Image contribute to both build efficiency and storage savings?",
+        "options": [
+          "It creates a temporary read-write layer that deletes itself and the underlying base image to free up space when a container stops.",
+          "It converts all Dockerfile instructions into a single monolithic file that executes faster on local hard drives.",
+          "It automatically runs multiple instances on bare metal hardware, bypassing the need for a hypervisor.",
+          "It only rebuilds changed layers and those after them during a build, and allows multiple images to share identical base layers so they are stored only once."
+        ],
+        "correct_answer": 3,
+        "explanation": "Docker images consist of read-only layers. For efficiency, Docker only rebuilds the modified layer and subsequent layers when a Dockerfile changes. For sharing, if multiple images use the same base layers, those layers are only stored once on the system.",
+        "page": 29,
+        "topic": "Containerization and Docker Basics"
+      }
+    ],
+    "created_at": "2026-10-02 23:48:08",
+    "attempted": true,
+    "score": 2,
+    "accuracy": 40.0,
+    "completed_at": "2026-10-02 23:48:27"
+  },
+  {
+    "id": "b347c2d25203445e903395e1de23caa5",
+    "user_id": 30001,
+    "subject_id": "d7c01729e1004be686c3b3d9d795acf5",
+    "subject_name": "CQC",
+    "document_ids": [
+      "50a77f271ceb44519276b8ffbb65106b"
+    ],
+    "question_count": 10,
+    "difficulty": "easy",
+    "questions": [
+      {
+        "id": "9c9df536f4f74e86858ee4eacea4594c",
+        "question": "What is the basic unit of information used by a classical computer?",
+        "options": [
+          "Bit",
+          "Qubit",
+          "Photon",
+          "Quantum Gate"
+        ],
+        "correct_answer": 0,
+        "explanation": "The text states that a classical computer works with bits, which can have only one of two values: 0 or 1.",
+        "page": 1,
+        "topic": "Classical Computing"
+      },
+      {
+        "id": "cef3cdce52254c0da791ac8fd5c90be8",
+        "question": "How many values can a classical bit represent at any single moment?",
+        "options": [
+          "Multiple values at the same time",
+          "Only one of two values (0 or 1)",
+          "Three values (0, 1, or both)",
+          "Any complex number"
+        ],
+        "correct_answer": 1,
+        "explanation": "According to the study material, a classical bit can have only one of two values: 0 or 1.",
+        "page": 1,
+        "topic": "Classical Computing"
+      },
+      {
+        "id": "0ff889423bc149778f594f6adcf899c0",
+        "question": "Which classical logic gate reverses its input, changing a 0 to a 1 and a 1 to a 0?",
+        "options": [
+          "AND gate",
+          "OR gate",
+          "NOT gate",
+          "XOR gate"
+        ],
+        "correct_answer": 2,
+        "explanation": "The text explains that the NOT gate reverses the input: NOT 0 = 1 and NOT 1 = 0.",
+        "page": 1,
+        "topic": "Classical Computing"
+      },
+      {
+        "id": "b72fd23c91814790ab9fe272bf2a72e0",
+        "question": "What are the two basic states of a qubit?",
+        "options": [
+          "|0⟩ and |1⟩",
+          "AND and OR",
+          "True and False",
+          "Alpha and Beta"
+        ],
+        "correct_answer": 0,
+        "explanation": "The text states that a qubit has two basic states: |0⟩ and |1⟩.",
+        "page": 1,
+        "topic": "Quantum Computing"
+      },
+      {
+        "id": "833f13f4638c4af08821fd7111fc42be",
+        "question": "Which quantum property allows a qubit to exist in a combination of both |0⟩ and |1⟩ states before it is measured?",
+        "options": [
+          "Coherence",
+          "Entanglement",
+          "Superposition",
+          "Interference"
+        ],
+        "correct_answer": 2,
+        "explanation": "Superposition is defined in the text as the quantum property that allows a qubit to exist in a combination of the states |0⟩ and |1⟩ before measurement.",
+        "page": 1,
+        "topic": "Quantum Computing"
+      },
+      {
+        "id": "cb19c2fab52b406191a254872685a2e1",
+        "question": "What is the name of the mathematical notation used in quantum mechanics to represent a quantum state like |ψ⟩?",
+        "options": [
+          "Boolean notation",
+          "Ket notation",
+          "Binary notation",
+          "Logic notation"
+        ],
+        "correct_answer": 1,
+        "explanation": "The symbols | ⟩ are called ket notation, which is part of Dirac notation used in quantum mechanics.",
+        "page": 1,
+        "topic": "Quantum Computing"
+      },
+      {
+        "id": "8a0b2851387e448e9aede339d7f78ca9",
+        "question": "While classical logic is Boolean and distributive, what is the structure of quantum logic?",
+        "options": [
+          "Non-Boolean and generally non-distributive",
+          "Exactly the same as classical logic",
+          "Purely distributive but not Boolean",
+          "It does not use any mathematical framework"
+        ],
+        "correct_answer": 0,
+        "explanation": "The text explicitly states: 'Classical logic → Boolean and distributive' and 'Quantum logic → non-Boolean and generally non-distributive'.",
+        "page": 1,
+        "topic": "Classic Logic vs Quantum Logic"
+      },
+      {
+        "id": "53ce0d1f9c544fe285db8ada32ef8231",
+        "question": "Which physical implementation of qubits is used by companies like IBM and Google?",
+        "options": [
+          "Trapped ions",
+          "Photons",
+          "Topological qubits",
+          "Superconducting circuits"
+        ],
+        "correct_answer": 3,
+        "explanation": "According to the text, superconducting circuits are used by IBM and Google.",
+        "page": 1,
+        "topic": "Physical implementations of qubits"
+      },
+      {
+        "id": "8a9cc793781d43df8b35536385a9fe52",
+        "question": "According to the rules of superposition, the sum of the probabilities (|α|² + |β|²) must always equal what percentage?",
+        "options": [
+          "0%",
+          "50%",
+          "100%",
+          "200%"
+        ],
+        "correct_answer": 2,
+        "explanation": "The text states the rule: |α|² + |β|² = 1, meaning that probabilities must add up to 100%.",
+        "page": 1,
+        "topic": "Qubits and Superposition"
+      },
+      {
+        "id": "97961ec9539e4f948a1e13ea39483219",
+        "question": "Which quantum concept is defined as linking particles so that the state of one instantly dictates the state of another?",
+        "options": [
+          "Superposition",
+          "Entanglement",
+          "Coherence",
+          "Measurement"
+        ],
+        "correct_answer": 1,
+        "explanation": "The text defines entanglement as: 'Linking particles so the state of one instantly dictates the state of another.'",
+        "page": 1,
+        "topic": "Quantum Computing"
+      }
+    ],
+    "created_at": "2026-10-03 00:05:20",
+    "attempted": true,
+    "score": 3,
+    "accuracy": 30.0,
+    "completed_at": "2026-10-03 00:06:14"
   }
 ]

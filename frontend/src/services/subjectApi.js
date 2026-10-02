@@ -1,9 +1,6 @@
-import axios from "axios";
+import API from "./api";
 
-const SUBJECT_API = axios.create({
-  baseURL: "http://127.0.0.1:5000/api",
-  timeout: 120000,
-});
+const SUBJECT_API = API;
 
 export const createSubject = async (
   name,

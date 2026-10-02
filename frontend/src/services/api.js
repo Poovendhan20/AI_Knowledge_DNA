@@ -1,10 +1,26 @@
 import axios from "axios";
 
+export const AUTH_TOKEN_KEY = "ai_knowledge_dna_token";
+
+export const storeAuthToken = (token) => {
+  localStorage.setItem(AUTH_TOKEN_KEY, token);
+};
+
+export const clearAuthToken = () => {
+  localStorage.removeItem(AUTH_TOKEN_KEY);
+};
+
 const API = axios.create({
   baseURL: "http://127.0.0.1:5000/api",
   timeout: 120000,
 });
-
+API.interceptors.request.use((config) => {
+  const token = localStorage.getItem(AUTH_TOKEN_KEY);
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 // =====================================================
 // UPLOAD STUDY MATERIAL
