@@ -4408,3 +4408,604 @@ a {
     box-shadow: 0 10px 28px rgba(99, 102, 241, 0.28);
   }
 }
+/* =========================================================
+   AI KNOWLEDGE DNA
+   DOCUMENT VIEWER - FINAL LAYOUT FIX
+========================================================= */
+
+/* Main viewer must have a real viewport height */
+.viewer-page {
+  width: 100%;
+  height: calc(100vh - 80px);
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 50% 20%,
+      rgba(70, 80, 180, 0.08),
+      transparent 45%
+    ),
+    #080812;
+}
+
+
+/* =========================================================
+   DOCUMENT HEADER
+========================================================= */
+
+.viewer-header {
+  width: 100%;
+  height: 64px;
+  min-height: 64px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 24px;
+  gap: 20px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+
+  background:
+    rgba(6, 6, 22, 0.96);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+
+/* =========================================================
+   THREE COLUMN WORKSPACE
+========================================================= */
+
+.viewer-workspace {
+  width: 100%;
+  height: calc(100% - 64px);
+
+  min-height: 0;
+
+  flex: 1 1 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    270px
+    minmax(0, 1fr)
+    360px;
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   LEFT SOURCE PANEL
+========================================================= */
+
+.source-panel {
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+
+  height: 100%;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  border-right:
+    1px solid rgba(255, 255, 255, 0.07);
+
+  background:
+    linear-gradient(
+      180deg,
+      #0b0b16,
+      #080812
+    );
+}
+
+
+/* =========================================================
+   CENTER PDF AREA
+========================================================= */
+
+.pdf-area {
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  background:
+    #17171f;
+}
+
+
+/* =========================================================
+   PDF TOOLBAR
+========================================================= */
+
+.pdf-toolbar {
+  width: 100%;
+  height: 52px;
+  min-height: 52px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 18px;
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.07);
+
+  background:
+    #111119;
+
+  z-index: 5;
+}
+
+
+.pdf-toolbar button {
+  width: 34px;
+  height: 34px;
+
+  display: grid;
+  place-items: center;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.1);
+
+  border-radius: 8px;
+
+  color: #c4c4cc;
+
+  background:
+    rgba(255, 255, 255, 0.05);
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.pdf-toolbar button:hover:not(:disabled) {
+  color: #ffffff;
+
+  background:
+    rgba(99, 102, 241, 0.18);
+
+  border-color:
+    rgba(139, 92, 246, 0.45);
+
+  transform: translateY(-1px);
+}
+
+
+.pdf-toolbar button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+
+.pdf-toolbar span {
+  color: #8f8f99;
+  font-size: 13px;
+}
+
+
+.pdf-toolbar strong {
+  color: #eeeeF2;
+}
+
+
+/* =========================================================
+   PDF CONTAINER
+========================================================= */
+
+.pdf-container {
+  width: 100%;
+  height: calc(100% - 52px);
+
+  min-height: 0;
+
+  flex: 1 1 auto;
+
+  display: flex;
+
+  padding: 14px;
+
+  overflow: hidden;
+
+  background:
+    #191921;
+}
+
+
+/* =========================================================
+   PDF FRAME
+========================================================= */
+
+.pdf-frame {
+  width: 100%;
+  height: 100%;
+
+  min-width: 0;
+  min-height: 0;
+
+  flex: 1 1 auto;
+
+  display: block;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background:
+    #27272a;
+
+  box-shadow:
+    0 10px 35px rgba(0, 0, 0, 0.22);
+}
+
+
+/* =========================================================
+   RIGHT AI CHAT
+========================================================= */
+
+.document-chat-main {
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+
+  height: 100%;
+
+  overflow: hidden;
+
+  border-left:
+    1px solid rgba(255, 255, 255, 0.07);
+
+  background:
+    #0c0c17;
+}
+
+
+/* Make the existing DocumentChat fill the column */
+.document-chat-main > * {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+
+/* =========================================================
+   SCROLLBARS
+========================================================= */
+
+.source-panel::-webkit-scrollbar {
+  width: 5px;
+}
+
+.source-panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.source-panel::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: rgba(139, 92, 246, 0.25);
+}
+
+.source-panel::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.45);
+}
+
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width: 1200px) {
+
+  .viewer-workspace {
+    grid-template-columns:
+      285px
+      minmax(0, 1fr)
+      380px;
+  }
+
+}
+
+
+/* =========================================================
+   LAPTOP
+========================================================= */
+
+@media (max-width: 1199px) {
+
+  .viewer-workspace {
+    grid-template-columns:
+      240px
+      minmax(0, 1fr)
+      330px;
+  }
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .viewer-page {
+    height: calc(100vh - 70px);
+  }
+
+  .viewer-workspace {
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .source-panel {
+    width: 100%;
+
+    height: 230px;
+    min-height: 230px;
+
+    flex-shrink: 0;
+
+    border-right: none;
+
+    border-bottom:
+      1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .pdf-area {
+    width: 100%;
+
+    height: 70vh;
+    min-height: 550px;
+
+    flex-shrink: 0;
+  }
+
+  .document-chat-main {
+    width: 100%;
+
+    height: 600px;
+    min-height: 600px;
+
+    flex-shrink: 0;
+
+    border-left: none;
+
+    border-top:
+      1px solid rgba(255, 255, 255, 0.07);
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .viewer-page {
+    height: calc(100vh - 65px);
+  }
+
+  .viewer-header {
+    height: 58px;
+    min-height: 58px;
+
+    padding: 0 12px;
+
+    gap: 10px;
+  }
+
+  .viewer-title {
+    min-width: 0;
+  }
+
+  .viewer-title strong {
+    max-width: 180px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+  }
+
+  .viewer-workspace {
+    height: auto;
+  }
+
+  .source-panel {
+    height: 190px;
+    min-height: 190px;
+  }
+
+  .pdf-area {
+    height: 70vh;
+    min-height: 480px;
+  }
+
+  .pdf-container {
+    padding: 8px;
+  }
+
+  .document-chat-main {
+    height: 520px;
+    min-height: 520px;
+  }
+
+  .viewer-open {
+    padding: 8px;
+  }
+
+  .viewer-open span {
+    display: none;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL SCREEN
+========================================================= */
+
+@media (max-width: 420px) {
+
+  .pdf-area {
+    height: 65vh;
+    min-height: 430px;
+  }
+
+  .source-panel {
+    height: 170px;
+    min-height: 170px;
+  }
+
+  .document-chat-main {
+    height: 480px;
+    min-height: 480px;
+  }
+
+}
+/* Hint below input */
+.chat-input-hint {
+  display: block !important;
+
+  width: 100% !important;
+
+  margin: 5px 0 0 !important;
+
+  text-align: center !important;
+
+  color: #5f5f70 !important;
+
+  font-size: 9px !important;
+}
+
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width: 1201px) {
+
+  .viewer-workspace {
+    grid-template-columns:
+      280px
+      minmax(0, 1fr)
+      380px !important;
+  }
+
+}
+
+
+/* =========================================================
+   LAPTOP
+========================================================= */
+
+@media (max-width: 1200px) and (min-width: 901px) {
+
+  .viewer-workspace {
+    grid-template-columns:
+      230px
+      minmax(0, 1fr)
+      320px !important;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .viewer-page {
+    height: calc(100vh - 70px) !important;
+  }
+
+  .viewer-workspace {
+    height: auto !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+
+    overflow-y: auto !important;
+  }
+
+  .source-panel {
+    height: 210px !important;
+    min-height: 210px !important;
+
+    flex-shrink: 0 !important;
+  }
+
+  .pdf-area {
+    height: 70vh !important;
+    min-height: 500px !important;
+
+    flex-shrink: 0 !important;
+  }
+
+  .document-chat-main {
+    height: 560px !important;
+    min-height: 560px !important;
+
+    flex-shrink: 0 !important;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .source-panel {
+    height: 180px !important;
+    min-height: 180px !important;
+  }
+
+  .pdf-area {
+    height: 65vh !important;
+    min-height: 450px !important;
+  }
+
+  .document-chat-main {
+    height: 520px !important;
+    min-height: 520px !important;
+  }
+
+}

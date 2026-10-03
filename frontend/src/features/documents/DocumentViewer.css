@@ -1,0 +1,534 @@
+/* =========================================================
+   DOCUMENT VIEWER
+========================================================= */
+
+.viewer-page {
+  min-height: calc(100vh - 72px);
+  height: calc(100vh - 72px);
+  background:
+    radial-gradient(circle at 20% 20%, rgba(91, 58, 180, 0.12), transparent 30%),
+    radial-gradient(circle at 80% 30%, rgba(126, 87, 255, 0.08), transparent 28%),
+    #080816;
+  color: #f5f3ff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.viewer-header {
+  height: 74px;
+  min-height: 74px;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr) 180px;
+  align-items: center;
+  gap: 20px;
+  padding: 0 28px;
+  background: rgba(8, 8, 22, 0.96);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.viewer-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #aaa6bd;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: 0.2s ease;
+}
+
+.viewer-back:hover {
+  color: #ffffff;
+}
+
+.viewer-title {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.viewer-title > svg {
+  flex-shrink: 0;
+  color: #a47cff;
+  font-size: 22px;
+}
+
+.viewer-title > div {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.viewer-title strong {
+  color: #f5f3ff;
+  font-size: 15px;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.viewer-title span {
+  color: #77738c;
+  font-size: 12px;
+}
+
+.viewer-open {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  height: 40px;
+  padding: 0 15px;
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  border-radius: 10px;
+  color: #d9d1f5;
+  background: rgba(20, 18, 40, 0.8);
+  text-decoration: none;
+  font-size: 13px;
+  transition: 0.2s ease;
+}
+
+.viewer-open:hover {
+  background: rgba(126, 87, 255, 0.14);
+  border-color: rgba(139, 92, 246, 0.65);
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   THREE COLUMN WORKSPACE
+========================================================= */
+
+.viewer-workspace {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr) 390px;
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   LEFT SOURCE PANEL
+========================================================= */
+
+.source-panel {
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: rgba(10, 10, 25, 0.96);
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 20px 16px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139, 92, 246, 0.35) transparent;
+}
+
+.source-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 4px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.source-heading-icon {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+  background: linear-gradient(135deg, #8b5cf6, #6d45e8);
+  box-shadow: 0 8px 25px rgba(124, 58, 237, 0.25);
+  font-size: 18px;
+}
+
+.source-heading > div:last-child {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.source-heading strong {
+  color: #f4f1ff;
+  font-size: 14px;
+}
+
+.source-heading span {
+  color: #77738b;
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+.source-summary {
+  padding: 18px 4px;
+}
+
+.source-summary h3,
+.source-topics h3 {
+  margin: 0 0 10px;
+  color: #e8e4f5;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.source-summary p {
+  margin: 0;
+  color: #aaa6ba;
+  font-size: 12px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+
+/* =========================================================
+   TOPICS
+========================================================= */
+
+.source-topics {
+  min-width: 0;
+}
+
+.source-item {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 7px;
+  padding: 10px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.source-item:hover {
+  background: rgba(139, 92, 246, 0.08);
+  border-color: rgba(139, 92, 246, 0.15);
+}
+
+.source-item.active {
+  background: rgba(139, 92, 246, 0.13);
+  border-color: rgba(139, 92, 246, 0.35);
+}
+
+.source-icon {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(139, 92, 246, 0.13);
+  font-size: 13px;
+}
+
+.source-info {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.source-info strong {
+  color: #ddd9eb;
+  font-size: 11px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.source-info span {
+  color: #77738a;
+  font-size: 10px;
+}
+
+.source-item > svg {
+  flex-shrink: 0;
+  color: #77718d;
+  font-size: 10px;
+}
+
+.source-empty {
+  padding: 14px 10px;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.025);
+  color: #77738a;
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   CENTER PDF AREA
+========================================================= */
+
+.pdf-area {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: #11111b;
+  overflow: hidden;
+}
+
+.pdf-toolbar {
+  height: 58px;
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background: #10101a;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.pdf-toolbar button {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.025);
+  color: #c7c3d4;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.pdf-toolbar button:hover:not(:disabled) {
+  background: rgba(139, 92, 246, 0.13);
+  border-color: rgba(139, 92, 246, 0.3);
+  color: #ffffff;
+}
+
+.pdf-toolbar button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.pdf-toolbar span {
+  min-width: 105px;
+  color: #9994a9;
+  text-align: center;
+  font-size: 12px;
+}
+
+.pdf-toolbar strong {
+  color: #ddd8ed;
+}
+
+.pdf-container {
+  flex: 1;
+  min-height: 0;
+  padding: 16px 18px 18px;
+  overflow: hidden;
+  display: flex;
+}
+
+.pdf-frame {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border: 0;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+
+/* =========================================================
+   RIGHT AI CHAT
+========================================================= */
+
+.document-chat-main {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: #0b0b19;
+  border-left: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.document-chat-main > * {
+  height: 100%;
+  min-height: 0;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.viewer-loading {
+  width: min(420px, calc(100% - 40px));
+  margin: auto;
+  padding: 40px;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 20px;
+  background: rgba(20, 18, 40, 0.7);
+  text-align: center;
+  color: #aaa6ba;
+}
+
+.viewer-loading-spinner {
+  width: 38px;
+  height: 38px;
+  margin: 0 auto 15px;
+  border: 3px solid rgba(139, 92, 246, 0.2);
+  border-top-color: #8b5cf6;
+  border-radius: 50%;
+  animation: viewer-spin 0.8s linear infinite;
+}
+
+@keyframes viewer-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.viewer-error {
+  width: min(500px, calc(100% - 40px));
+  margin: auto;
+  padding: 40px;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 20px;
+  background: rgba(18, 17, 34, 0.8);
+  text-align: center;
+}
+
+.viewer-error-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+
+.viewer-error h2 {
+  margin: 0 0 10px;
+  color: #f4f1ff;
+  font-size: 20px;
+}
+
+.viewer-error p {
+  margin: 0 0 22px;
+  color: #918ca2;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.viewer-error .primary-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 16px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #8b5cf6, #6d45e8);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1200px) {
+  .viewer-workspace {
+    grid-template-columns: 250px minmax(0, 1fr) 340px;
+  }
+
+  .viewer-header {
+    grid-template-columns: 180px minmax(0, 1fr) 160px;
+    padding: 0 18px;
+  }
+}
+
+@media (max-width: 950px) {
+  .viewer-workspace {
+    grid-template-columns: 220px minmax(0, 1fr);
+  }
+
+  .document-chat-main {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .viewer-page {
+    height: auto;
+    min-height: calc(100vh - 60px);
+    overflow: visible;
+  }
+
+  .viewer-header {
+    height: auto;
+    min-height: 70px;
+    grid-template-columns: 1fr auto;
+    padding: 12px 15px;
+  }
+
+  .viewer-title {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .viewer-back {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .viewer-open {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .viewer-workspace {
+    min-height: 700px;
+    grid-template-columns: 1fr;
+    overflow: visible;
+  }
+
+  .source-panel {
+    max-height: 280px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .pdf-area {
+    min-height: 600px;
+  }
+
+  .document-chat-main {
+    display: block;
+    min-height: 650px;
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+  }
+}

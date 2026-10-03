@@ -16,7 +16,7 @@ import {
 
 import {
   submitQuiz,
-} from "../services/subjectApi";
+} from "../../services/subjectApi";
 
 
 function Quiz() {

@@ -13,7 +13,7 @@ import {
   getSubjects,
   getSubjectDocuments,
   generateQuiz,
-} from "../services/subjectApi";
+} from "../../services/subjectApi";
 
 import { useNavigate } from "react-router-dom";
 

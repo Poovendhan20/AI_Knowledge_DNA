@@ -6,7 +6,6 @@ import {
   FaBookOpen,
   FaChartLine,
   FaMicrophone,
-  FaProjectDiagram,
   FaFilePdf,
 } from "react-icons/fa";
 
@@ -169,25 +168,6 @@ function Home() {
             </p>
 
           </Link>
-
-
-          <div className="feature-card">
-
-            <div className="feature-icon">
-              <FaProjectDiagram />
-            </div>
-
-            <h3>
-              Knowledge Graph
-            </h3>
-
-            <p>
-              Understand relationships between
-              concepts using intelligent knowledge maps.
-            </p>
-
-          </div>
-
 
           <div className="feature-card">
 

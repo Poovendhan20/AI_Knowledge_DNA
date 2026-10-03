@@ -14,11 +14,14 @@ const API = axios.create({
   baseURL: "http://127.0.0.1:5000/api",
   timeout: 120000,
 });
+
 API.interceptors.request.use((config) => {
   const token = localStorage.getItem(AUTH_TOKEN_KEY);
+
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+
   return config;
 });
 
@@ -36,15 +39,13 @@ export const uploadStudyMaterial = async (file) => {
     formData,
     {
       headers: {
-        "Content-Type":
-          "multipart/form-data",
+        "Content-Type": "multipart/form-data",
       },
     }
   );
 
   return response.data;
 };
-
 
 // =====================================================
 // GET ALL DOCUMENTS
@@ -58,14 +59,11 @@ export const getDocuments = async () => {
   return response.data;
 };
 
-
 // =====================================================
 // GET SINGLE DOCUMENT
 // =====================================================
 
-export const getDocument = async (
-  documentId
-) => {
+export const getDocument = async (documentId) => {
   const response = await API.get(
     `/documents/${documentId}`
   );
@@ -73,14 +71,11 @@ export const getDocument = async (
   return response.data;
 };
 
-
 // =====================================================
 // DELETE DOCUMENT
 // =====================================================
 
-export const deleteDocument = async (
-  documentId
-) => {
+export const deleteDocument = async (documentId) => {
   const response = await API.delete(
     `/documents/${documentId}`
   );
@@ -88,21 +83,34 @@ export const deleteDocument = async (
   return response.data;
 };
 
-
 // =====================================================
 // GET PDF FILE URL
 // =====================================================
 
-export const getFileUrl = (
-  storedName
-) => {
-
+export const getFileUrl = (storedName) => {
   return `http://127.0.0.1:5000/api/files/${encodeURIComponent(
     storedName
   )}`;
-
 };
 
+// =====================================================
+// GET PROTECTED PDF FILE AS BLOB
+// =====================================================
+// IMPORTANT:
+// The PDF endpoint requires JWT authentication.
+// Axios automatically adds the Authorization header
+// through the interceptor above.
+
+export const getFileBlob = async (storedName) => {
+  const response = await API.get(
+    `/files/${encodeURIComponent(storedName)}`,
+    {
+      responseType: "blob",
+    }
+  );
+
+  return response.data;
+};
 
 // =====================================================
 // AI CHAT WITH DOCUMENT
@@ -114,7 +122,6 @@ export const chatWithDocument = async (
   history = [],
   options = {}
 ) => {
-
   const body = {
     question,
     history,
@@ -131,7 +138,6 @@ export const chatWithDocument = async (
 
   return response.data;
 };
-
 
 // =====================================================
 // DEFAULT API

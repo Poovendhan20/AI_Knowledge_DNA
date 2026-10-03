@@ -1,22 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
+
 import {
-  FaArrowLeft,
   FaPaperPlane,
   FaRobot,
   FaUser,
   FaSpinner,
 } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
-const API = axios.create({
-  baseURL: "http://127.0.0.1:5000/api",
-  timeout: 120000,
-});
+import { chatWithDocument } from "../../services/api";
 
 function DocumentChat({ documentId, documentName, onPageChange }) {
-  const navigate = useNavigate();
-
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -35,9 +28,6 @@ function DocumentChat({ documentId, documentName, onPageChange }) {
   const messagesEndRef = useRef(null);
   const textareaRef = useRef(null);
 
-  /*
-   * Always keep the newest message visible.
-   */
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({
       behavior: "smooth",
@@ -45,13 +35,12 @@ function DocumentChat({ documentId, documentName, onPageChange }) {
     });
   }, [messages, loading]);
 
-  /*
-   * Automatically resize textarea.
-   */
   const resizeTextarea = () => {
     const textarea = textareaRef.current;
 
-    if (!textarea) return;
+    if (!textarea) {
+      return;
+    }
 
     textarea.style.height = "auto";
 
@@ -63,15 +52,12 @@ function DocumentChat({ documentId, documentName, onPageChange }) {
     textarea.style.height = `${newHeight}px`;
   };
 
-  /*
-   * Ask AI.
-   */
   const sendMessage = async (event) => {
     event?.preventDefault();
 
     const question = input.trim();
 
-    if (!question || loading) {
+    if (!question || loading || !documentId) {
       return;
     }
 
@@ -99,34 +85,26 @@ function DocumentChat({ documentId, documentName, onPageChange }) {
 
     try {
       /*
-       * Backend endpoint.
+       * Use the central API service.
        *
-       * Expected backend:
-       * POST /api/chat
-       *
-       * Body:
-       * {
-       *   document_id: documentId,
-       *   question: question
-       * }
+       * chatWithDocument() already uses the authenticated
+       * Axios instance, so the JWT token is automatically
+       * included in the request.
        */
-
-      const response = await API.post("/chat", {
-        document_id: documentId,
-        question: question,
-      });
-
-      const data = response.data;
+      const data = await chatWithDocument(
+        documentId,
+        question
+      );
 
       const answer =
-        data.answer ||
-        data.response ||
-        data.message ||
+        data?.answer ||
+        data?.response ||
+        data?.message ||
         "I couldn't generate an answer.";
 
       const sources =
-        data.sources ||
-        data.references ||
+        data?.sources ||
+        data?.references ||
         [];
 
       const assistantMessage = {
@@ -142,15 +120,20 @@ function DocumentChat({ documentId, documentName, onPageChange }) {
         ...previous,
         assistantMessage,
       ]);
-
     } catch (err) {
       console.error("Chat error:", err);
 
+      const backendMessage =
+        err?.response?.data?.message ||
+        err?.response?.data?.error;
+
       let errorMessage =
+        backendMessage ||
         "I couldn't connect to the AI service.";
 
-      if (err.response?.data?.error) {
-        errorMessage = err.response.data.error;
+      if (err?.response?.status === 401) {
+        errorMessage =
+          "Your session has expired. Please log in again.";
       }
 
       setError(errorMessage);
@@ -161,7 +144,7 @@ function DocumentChat({ documentId, documentName, onPageChange }) {
           id: Date.now() + 1,
           role: "assistant",
           content:
-            "Sorry, I couldn't process that question. Please check that the Flask backend and AI service are running.",
+            "Sorry, I couldn't process that question. Please try again.",
           sources: [],
           error: true,
         },
@@ -175,31 +158,25 @@ function DocumentChat({ documentId, documentName, onPageChange }) {
     }
   };
 
-  /*
-   * Enter = send
-   * Shift + Enter = new line
-   */
   const handleKeyDown = (event) => {
     if (
       event.key === "Enter" &&
       !event.shiftKey
     ) {
       event.preventDefault();
-
       sendMessage(event);
     }
   };
 
-  /*
-   * Click page source.
-   */
   const handleSourceClick = (source) => {
     const page =
-      source.page ||
-      source.page_number ||
-      source.pageNumber;
+      source?.page ||
+      source?.page_number ||
+      source?.pageNumber;
 
-    if (!page) return;
+    if (!page) {
+      return;
+    }
 
     if (onPageChange) {
       onPageChange(Number(page));
@@ -281,9 +258,9 @@ function DocumentChat({ documentId, documentName, onPageChange }) {
               </div>
 
 
-              {/* ==========================================
+              {/* ==================================================
                   SOURCES
-              ========================================== */}
+              ================================================== */}
 
               {message.role === "assistant" &&
                 message.sources &&
@@ -301,24 +278,22 @@ function DocumentChat({ documentId, documentName, onPageChange }) {
                         (source, index) => {
 
                           const page =
-                            source.page ||
-                            source.page_number ||
-                            source.pageNumber;
+                            source?.page ||
+                            source?.page_number ||
+                            source?.pageNumber;
 
                           const label =
-                            source.title ||
-                            source.name ||
+                            source?.title ||
+                            source?.name ||
                             `Page ${page || "?"}`;
 
                           return (
                             <button
-                              key={index}
+                              key={`${page || "source"}-${index}`}
                               type="button"
                               className="source-chip"
                               onClick={() =>
-                                handleSourceClick(
-                                  source
-                                )
+                                handleSourceClick(source)
                               }
                             >
                               📄 {label}
@@ -352,9 +327,9 @@ function DocumentChat({ documentId, documentName, onPageChange }) {
         ))}
 
 
-        {/* ================================================
+        {/* ==================================================
             THINKING
-        ================================================= */}
+        ================================================== */}
 
         {loading && (
 
@@ -401,8 +376,7 @@ function DocumentChat({ documentId, documentName, onPageChange }) {
 
 
       {/* ==================================================
-          INPUT AREA
-          THIS MUST STAY AT THE BOTTOM
+          INPUT
       ================================================== */}
 
       <div className="document-chat-input-area">
@@ -430,7 +404,8 @@ function DocumentChat({ documentId, documentName, onPageChange }) {
             className="document-chat-send"
             disabled={
               loading ||
-              !input.trim()
+              !input.trim() ||
+              !documentId
             }
             title="Send message"
           >

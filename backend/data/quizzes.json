@@ -159,512 +159,621 @@
     "user_id": 1
   },
   {
-    "id": "b80fc1b560c34fcdab418e7f399053ad",
+    "id": "bb2d795ecb674528842e1b3430edf965",
     "user_id": 30001,
-    "subject_id": "2c0ff8602f434a9690a8a65245688580",
+    "subject_id": "e3acfae9f5d4478d9162735ac5b49dc6",
     "subject_name": "DCN",
     "document_ids": [
-      "e6c720d7154d42eab748d3340b96d6d3"
-    ],
-    "question_count": 5,
-    "difficulty": "easy",
-    "questions": [
-      {
-        "id": "52959bf511454408abc30cc685db25e1",
-        "question": "Which layer of the OSI model is responsible for transmitting raw bit streams over a physical medium?",
-        "options": [
-          "Physical Layer",
-          "Data Link Layer",
-          "Network Layer",
-          "Transport Layer"
-        ],
-        "correct_answer": 0,
-        "explanation": "The physical layer is the lowest layer of the OSI model. It is responsible for the actual physical connection between devices and the transmission of raw bits over the medium.",
-        "page": 12,
-        "topic": "OSI Model"
-      },
-      {
-        "id": "ec201df2e3b14b7d8d81a197cf0f72da",
-        "question": "In a star network topology, what happens if one client computer's connection cable is damaged?",
-        "options": [
-          "The entire network fails and no computer can communicate.",
-          "Only that specific computer loses its connection to the network.",
-          "Data is automatically rerouted through neighboring client computers.",
-          "The central switch shuts down immediately to prevent damage."
-        ],
-        "correct_answer": 1,
-        "explanation": "In a star topology, each device has its own dedicated cable to a central hub or switch. If a cable fails, only that specific device is affected while the rest of the network operates normally.",
-        "page": 25,
-        "topic": "Network Topologies"
-      },
-      {
-        "id": "a468bd75068249b8b870d557dd8ced1b",
-        "question": "Why is fiber-optic cable preferred over copper coaxial cable for high-speed, long-distance data transmission?",
-        "options": [
-          "It uses light pulses which are immune to electromagnetic interference.",
-          "It is much cheaper to purchase and easier to install.",
-          "It relies on electrical currents that travel faster than light.",
-          "It can bend easily at sharp angles without any signal loss."
-        ],
-        "correct_answer": 0,
-        "explanation": "Fiber-optic cables use light waves to transmit data, making them completely immune to electromagnetic interference (EMI) and radio frequency interference (RFI), allowing longer and faster transmission.",
-        "page": 45,
-        "topic": "Transmission Media"
-      },
-      {
-        "id": "8fb1ea4b03f74a35a7f5a00ac4898949",
-        "question": "What is the primary reason the global internet is transitioning from IPv4 to IPv6 addresses?",
-        "options": [
-          "IPv4 addresses are too long for modern high-speed routers to handle.",
-          "The rapid growth of internet devices has depleted the available pool of unique IPv4 addresses.",
-          "IPv6 is the only internet protocol that supports wireless Wi-Fi connections.",
-          "IPv4 has been proven insecure and cannot encrypt any network traffic."
-        ],
-        "correct_answer": 1,
-        "explanation": "IPv4 uses a 32-bit addressing system, limiting it to about 4.3 billion addresses. Because of the explosion of internet-connected devices, IPv6 (with 128-bit addresses) is required to provide enough unique addresses.",
-        "page": 60,
-        "topic": "IP Addressing"
-      },
-      {
-        "id": "8cd525d6c9e74c6da8a09a164ce96ab3",
-        "question": "How does a network switch improve network efficiency compared to a simple network hub?",
-        "options": [
-          "A switch broadcasts incoming data to every connected device on the network.",
-          "A switch forwards data only to the specific device it is addressed to, reducing traffic.",
-          "A switch converts weak analog signals into stronger digital signals.",
-          "A switch allows devices to connect without needing physical network cables."
-        ],
-        "correct_answer": 1,
-        "explanation": "Unlike a hub, which blindly broadcasts data to all connected ports, a switch keeps track of MAC addresses and forwards data frames only to the specific port where the destination device is connected.",
-        "page": 38,
-        "topic": "Network Devices"
-      }
-    ],
-    "created_at": "2026-10-02 23:13:38",
-    "attempted": true,
-    "score": 3,
-    "accuracy": 60.0,
-    "completed_at": "2026-10-02 23:13:55"
-  },
-  {
-    "id": "7c79852d51e54f4fbcabfdeef32d76fe",
-    "user_id": 30001,
-    "subject_id": "2c0ff8602f434a9690a8a65245688580",
-    "subject_name": "DCN",
-    "document_ids": [
-      "e6c720d7154d42eab748d3340b96d6d3"
-    ],
-    "question_count": 5,
-    "difficulty": "easy",
-    "questions": [
-      {
-        "id": "88042e6d71934521b1690eeb8c58175b",
-        "question": "What type of network connects computers and devices within a limited geographical area, such as a single office or home?",
-        "options": [
-          "Local Area Network (LAN)",
-          "Wide Area Network (WAN)",
-          "Metropolitan Area Network (MAN)",
-          "Personal Area Network (PAN)"
-        ],
-        "correct_answer": 0,
-        "explanation": "A Local Area Network (LAN) is used to connect devices within a small, localized physical area like a home, school, or office.",
-        "page": 5,
-        "topic": "Network Types"
-      },
-      {
-        "id": "e3a9f06d70e748b4a97cc757534ac985",
-        "question": "Which transmission mode allows data to flow in both directions, but only one direction at a time?",
-        "options": [
-          "Simplex",
-          "Half-Duplex",
-          "Full-Duplex",
-          "Multiplex"
-        ],
-        "correct_answer": 1,
-        "explanation": "In half-duplex mode, both stations can transmit and receive data, but not at the exact same time. One must wait for the other to finish.",
-        "page": 8,
-        "topic": "Transmission Modes"
-      },
-      {
-        "id": "3dce4d4af2654abe9c9a2d126035e7f2",
-        "question": "Which layer of the OSI model is responsible for routing packets across multiple networks?",
-        "options": [
-          "Physical Layer",
-          "Data Link Layer",
-          "Network Layer",
-          "Transport Layer"
-        ],
-        "correct_answer": 2,
-        "explanation": "The Network layer handles the routing of packets from the source host to the destination host across different networks.",
-        "page": 12,
-        "topic": "OSI Model"
-      },
-      {
-        "id": "022dcdbd751040089ed767fc18cd5443",
-        "question": "In which network topology are all devices connected to a single central cable called the backbone?",
-        "options": [
-          "Star Topology",
-          "Bus Topology",
-          "Ring Topology",
-          "Mesh Topology"
-        ],
-        "correct_answer": 1,
-        "explanation": "A bus topology uses one main central cable, known as the bus or backbone, to which all other devices are linked.",
-        "page": 18,
-        "topic": "Network Topologies"
-      },
-      {
-        "id": "7175a7988e044b2692c3519306950be0",
-        "question": "Which type of guided transmission media uses light signals to transmit data at extremely high speeds?",
-        "options": [
-          "Coaxial Cable",
-          "Twisted-pair Cable",
-          "Fiber-optic Cable",
-          "Satellite Link"
-        ],
-        "correct_answer": 2,
-        "explanation": "Fiber-optic cables use glass or plastic fibers to transmit data as pulses of light, offering high speed and bandwidth.",
-        "page": 25,
-        "topic": "Transmission Media"
-      }
-    ],
-    "created_at": "2026-10-02 23:35:19",
-    "attempted": false,
-    "score": null,
-    "accuracy": null
-  },
-  {
-    "id": "75f059268b3e44729344009a62911657",
-    "user_id": 30001,
-    "subject_id": "2c0ff8602f434a9690a8a65245688580",
-    "subject_name": "DCN",
-    "document_ids": [
-      "e6c720d7154d42eab748d3340b96d6d3"
-    ],
-    "question_count": 5,
-    "difficulty": "easy",
-    "questions": [
-      {
-        "id": "aeea0bac2bb34b15a49af8f011c3c59c",
-        "question": "If a company wants a network topology where every device has a dedicated point-to-point link to every other device to ensure high reliability, which topology should they choose?",
-        "options": [
-          "Star Topology",
-          "Bus Topology",
-          "Ring Topology",
-          "Mesh Topology"
-        ],
-        "correct_answer": 3,
-        "explanation": "In a mesh topology, every device is connected to every other device. This provides redundancy, meaning if one cable fails, the network can still function through other paths.",
-        "page": 12,
-        "topic": "Network Topologies"
-      },
-      {
-        "id": "8866bb8cf95b460284358ea900f75d29",
-        "question": "Walkie-talkies allow two people to communicate, but only one person can speak at a time while the other listens. What type of transmission mode is this?",
-        "options": [
-          "Simplex Mode",
-          "Half-Duplex Mode",
-          "Full-Duplex Mode",
-          "Multi-Duplex Mode"
-        ],
-        "correct_answer": 1,
-        "explanation": "In half-duplex mode, both devices can transmit and receive data, but not at the same time. One must wait for the other to finish.",
-        "page": 8,
-        "topic": "Transmission Modes"
-      },
-      {
-        "id": "b3c6409953ce447b9ebf99683934c7e6",
-        "question": "Which layer of the OSI model is responsible for transmitting raw bits over a physical communication medium like a copper cable or fiber optic?",
-        "options": [
-          "Physical Layer",
-          "Data Link Layer",
-          "Network Layer",
-          "Transport Layer"
-        ],
-        "correct_answer": 0,
-        "explanation": "The Physical Layer is the lowest layer of the OSI model and is responsible for the actual electrical, optical, or radio transmission of raw data bits.",
-        "page": 25,
-        "topic": "OSI Model"
-      },
-      {
-        "id": "fdc5c94ca7dd49bfb32b5408b43bbff3",
-        "question": "A university campus wants to connect computers across several buildings located close to each other in a single geographical area. What type of network is most suitable for this?",
-        "options": [
-          "Wide Area Network (WAN)",
-          "Local Area Network (LAN)",
-          "Metropolitan Area Network (MAN)",
-          "Personal Area Network (PAN)"
-        ],
-        "correct_answer": 1,
-        "explanation": "A Local Area Network (LAN) is designed to connect network devices over a short physical distance, such as an office, home, or school campus.",
-        "page": 15,
-        "topic": "Network Types"
-      },
-      {
-        "id": "b4614cbd7cad4f498d0d490c6b76442a",
-        "question": "Why is a switch generally preferred over a hub in a local network?",
-        "options": [
-          "A switch sends data only to the specific destination device instead of broadcasting it to everyone.",
-          "A switch is much cheaper and simpler to install than a hub.",
-          "A switch connects a local network directly to the global Internet without a router.",
-          "A switch does not require any physical cables to connect devices."
-        ],
-        "correct_answer": 0,
-        "explanation": "Unlike a hub, which blindly broadcasts data to all connected devices, a switch learns device addresses and sends data packets only to the specific device they are intended for, reducing network traffic.",
-        "page": 32,
-        "topic": "Network Devices"
-      }
-    ],
-    "created_at": "2026-10-02 23:35:33",
-    "attempted": true,
-    "score": 2,
-    "accuracy": 40.0,
-    "completed_at": "2026-10-02 23:35:50"
-  },
-  {
-    "id": "fe880f1ac4134bc1be0a39cf8340dfe2",
-    "user_id": 30001,
-    "subject_id": "d7c01729e1004be686c3b3d9d795acf5",
-    "subject_name": "CQC",
-    "document_ids": [
-      "a2154fd333af4ec4bc3ff6318b3972a8"
+      "35d2c65ae2364848845e30ae84ff04c7"
     ],
     "question_count": 5,
     "difficulty": "hard",
     "questions": [
       {
-        "id": "49dbea98fad7416c80616d9f0b331df0",
-        "question": "An online retail store experiences a temporary, massive 24-hour surge in website traffic during a flash sale, after which traffic returns to normal. Which cloud concept is best suited to handle this specific workload, and why?",
+        "id": "b641a4e44e204352994dc789d5db7b80",
+        "question": "In cyclic redundancy check (CRC) error detection, if a generator polynomial G(x) has a degree of r, which of the following burst errors is guaranteed to be detected?",
         "options": [
-          "Cloud elasticity, because it automatically provisions resources during the spike and withdraws them once the event ends to minimize costs.",
-          "Cloud scalability, because it provides persistent deployment and permanent hardware upgrades for steady database growth.",
-          "Vertical scaling, because it adds new nodes in a horizontal row to distribute the traffic across different locations.",
-          "Cloud carrier support, because it is the intermediary that manages software deployment and orchestrates multi-tenant databases."
+          "Any burst error of length less than or equal to r",
+          "Only burst errors of length exactly equal to r + 1",
+          "Any burst error of length greater than r + 1",
+          "Only burst errors of length that are multiples of r"
         ],
         "correct_answer": 0,
-        "explanation": "According to the study material, cloud elasticity is best for sudden, temporary fluctuations in demand because it dynamically and automatically expands or compresses resources, withdrawing them when the traffic drops to maximize cost efficiency.",
-        "page": 3,
-        "topic": "Cloud Elasticity and Scalability"
+        "explanation": "A CRC generator polynomial of degree r can always detect all burst errors of length less than or equal to r, because any such error pattern cannot be a multiple of the generator polynomial.",
+        "page": 142,
+        "topic": "Error Detection"
       },
       {
-        "id": "c5f1fd92f6de489db8894aace7e6579b",
-        "question": "Why are Type 1 hypervisors preferred over Type 2 hypervisors in enterprise cloud data center environments?",
+        "id": "fe43c01b685044e18e7f61fc0bd4fdc3",
+        "question": "A network uses the Selective Repeat protocol over a 1 Mbps link with a one-way propagation delay of 50 ms. If the frame size is 1000 bytes, what is the minimum number of bits needed in the sequence number field to achieve maximum possible link utilization?",
         "options": [
-          "They run as an application within a host operating system, making them much easier for non-technical users to manage.",
-          "They do not need to negotiate resource allocation through a host operating system layer, providing higher performance and better isolation.",
-          "They allow users to run multiple operating systems on a desktop environment without requiring system administrator-level knowledge.",
-          "They rely on the host operating system to handle security and patch virtual machine operating systems automatically."
+          "4 bits",
+          "5 bits",
+          "6 bits",
+          "3 bits"
         ],
         "correct_answer": 1,
-        "explanation": "Type 1 hypervisors (bare metal) access machine resources directly and do not need to negotiate resource allocation with a host operating system. This makes them more performant, efficient, and secure due to a greater degree of isolation.",
-        "page": 19,
-        "topic": "Virtualization Technologies"
+        "explanation": "To achieve 100% utilization, the sender window size (Ws) must be at least (RTT / Transmission Time) = 108ms / 8ms = 13.5 frames, so Ws >= 14. In Selective Repeat, the sequence space must be at least 2 * Ws, meaning 2^n >= 2 * 14 = 28. Therefore, n must be at least 5 bits (since 2^5 = 32).",
+        "page": 215,
+        "topic": "Flow Control"
       },
       {
-        "id": "fbeac29baae942eabb9583babd3042a2",
-        "question": "What primary limitation of Cluster Computing led to the introduction of Grid Computing, and what new challenge did Grid Computing subsequently introduce?",
+        "id": "ce550ce7b11a4533b619fc70336b1b9b",
+        "question": "An ISP allocates the block 192.168.16.0/22 to an organization. The organization wants to create four subnets: Subnet A (400 hosts), Subnet B (200 hosts), Subnet C (100 hosts), and Subnet D (50 hosts). Which of the following allocations correctly and efficiently assigns these subnets without any overlap?",
         "options": [
-          "High cost was the limitation; the new challenge was the inability to run multiple instances simultaneously on hardware.",
-          "Lack of dynamic adjustment was the limitation; the new challenge was the requirement for dedicated mainframe systems.",
-          "Geographical restriction was the limitation; the new challenge was the low availability of high bandwidth connectivity between distant nodes.",
-          "Low availability of networks was the limitation; the new challenge was the requirement for highly expensive mainframe nodes."
+          "Subnet A: 192.168.16.0/23, Subnet B: 192.168.18.0/24, Subnet C: 192.168.19.0/25, Subnet D: 192.168.19.128/26",
+          "Subnet A: 192.168.16.0/24, Subnet B: 192.168.17.0/24, Subnet C: 192.168.18.0/25, Subnet D: 192.168.18.128/26",
+          "Subnet A: 192.168.16.0/23, Subnet B: 192.168.17.0/24, Subnet C: 192.168.18.0/25, Subnet D: 192.168.19.0/26",
+          "Subnet A: 192.168.16.0/22, Subnet B: 192.168.20.0/24, Subnet C: 192.168.21.0/25, Subnet D: 192.168.21.128/26"
+        ],
+        "correct_answer": 0,
+        "explanation": "Subnet A (400 hosts) needs a /23 block. Subnet B (200 hosts) needs a /24 block. Subnet C (100 hosts) needs a /25 block. Subnet D (50 hosts) needs a /26 block. Option A allocates these blocks sequentially within the 192.168.16.0/22 range without overlapping.",
+        "page": 340,
+        "topic": "IP Addressing"
+      },
+      {
+        "id": "47754272ca994081a33d113708f233c8",
+        "question": "In Distance Vector Routing, which of the following techniques is specifically designed to mitigate the Count-to-Infinity problem by preventing a router from advertising a route back to the neighbor from which it learned that route?",
+        "options": [
+          "Split Horizon",
+          "Link State Routing",
+          "Flooding",
+          "Reverse Path Forwarding"
+        ],
+        "correct_answer": 0,
+        "explanation": "Split Horizon is a method used by distance-vector routing protocols to prevent routing loops by prohibiting a router from advertising routing information back onto the interface from which it originally received it.",
+        "page": 288,
+        "topic": "Routing Protocols"
+      },
+      {
+        "id": "35cd5521b0b140aba660c825af2dc554",
+        "question": "In TCP Congestion Control, how do TCP Tahoe and TCP Reno differ when a packet loss is detected via a triple duplicate ACK?",
+        "options": [
+          "Tahoe sets cwnd to 1 MSS and enters Slow Start, while Reno halves cwnd and enters Fast Recovery.",
+          "Tahoe halves cwnd, while Reno sets cwnd to 1 MSS and enters Slow Start.",
+          "Both Tahoe and Reno set cwnd to 1 MSS, but Reno bypasses the Slow Start phase.",
+          "Both Tahoe and Reno halve their cwnd and immediately enter Congestion Avoidance."
+        ],
+        "correct_answer": 0,
+        "explanation": "When triple duplicate ACKs are received, TCP Tahoe handles it like a timeout by setting cwnd to 1 MSS and starting over with Slow Start. TCP Reno handles it with Fast Recovery, setting cwnd to roughly half its previous value and continuing with Congestion Avoidance.",
+        "page": 412,
+        "topic": "Transport Layer"
+      }
+    ],
+    "created_at": "2026-10-03 22:15:37",
+    "attempted": true,
+    "score": 2,
+    "accuracy": 40.0,
+    "completed_at": "2026-10-03 22:15:55"
+  },
+  {
+    "id": "4386357f9f7b482caad1dfad409dd449",
+    "user_id": 30001,
+    "subject_id": "e3acfae9f5d4478d9162735ac5b49dc6",
+    "subject_name": "DCN",
+    "document_ids": [
+      "9ad1acd37fd6408a8e7594a6cce3c65e"
+    ],
+    "question_count": 5,
+    "difficulty": "medium",
+    "questions": [
+      {
+        "id": "dfafdef3a92a42538b0fa8f237405f0a",
+        "question": "When the Transport layer receives data from the upper layer, what smaller units does it convert this data into?",
+        "options": [
+          "Packets",
+          "Frames",
+          "Segments",
+          "Bits"
         ],
         "correct_answer": 2,
-        "explanation": "Cluster computing solved cost issues but suffered from geographical restrictions. Grid computing resolved this by connecting geographically distributed nodes over the internet, but introduced low availability of high bandwidth connectivity and other network issues.",
+        "explanation": "According to page 48, the Transport layer receives data from the upper layer and converts them into smaller units known as segments.",
+        "page": 48,
+        "topic": "Transport Layer"
+      },
+      {
+        "id": "62bd07f29fe2478e8764662647513ce8",
+        "question": "What type of address is included in the Transport layer header to make sure that a message is delivered to the correct process?",
+        "options": [
+          "IP address",
+          "Service point address or port address",
+          "MAC address",
+          "Physical address"
+        ],
+        "correct_answer": 1,
+        "explanation": "According to page 49, in order to deliver the message to the correct process, the transport layer header includes a type of address called a service point address or port address.",
+        "page": 49,
+        "topic": "Transport Layer"
+      },
+      {
+        "id": "427d474664794be384f6c666d1364469",
+        "question": "Why is the Transport layer considered an end-to-end layer?",
+        "options": [
+          "Because it routes packets using logical transmission over the network.",
+          "Because it defines how host programs interface with high-level protocols.",
+          "Because it provides a point-to-point connection between source and destination to deliver data reliably.",
+          "Because it works directly with physical hardware to transmit bits."
+        ],
+        "correct_answer": 2,
+        "explanation": "Page 48 states that the Transport layer can be termed as an end-to-end layer as it provides a point-to-point connection between source and destination to deliver the data reliably.",
+        "page": 48,
+        "topic": "Transport Layer"
+      },
+      {
+        "id": "103fcd3597e741779756deff707497c4",
+        "question": "Which of the following protocols are defined at the Transport Layer?",
+        "options": [
+          "IP and ICMP",
+          "Telnet and DNS",
+          "ARP and RARP",
+          "TCP and UDP"
+        ],
+        "correct_answer": 3,
+        "explanation": "According to page 58, the Transport Layer is responsible for error-free end-to-end delivery of data, and the protocols defined here are Transmission Control Protocol (TCP) and User Datagram Protocol (UDP).",
+        "page": 58,
+        "topic": "Transport Layer"
+      },
+      {
+        "id": "68efb08c746447cf91d292e932722f72",
+        "question": "During segmentation and reassembly, what is associated with each segment produced by the Transport layer?",
+        "options": [
+          "A header",
+          "An IP address",
+          "A high-level program interface",
+          "An Internet Layer protocol"
+        ],
+        "correct_answer": 0,
+        "explanation": "According to page 49, during segmentation and reassembly, each of the segments produced has a header associated with it.",
+        "page": 49,
+        "topic": "Transport Layer"
+      }
+    ],
+    "created_at": "2026-10-03 22:19:50",
+    "attempted": true,
+    "score": 1,
+    "accuracy": 20.0,
+    "completed_at": "2026-10-03 22:20:03"
+  },
+  {
+    "id": "9175fde8249e4c9f9b720c4a88c4a1ba",
+    "user_id": 30001,
+    "subject_id": "fd2f044d7f36488692038c6e7956bfcb",
+    "subject_name": "CQC",
+    "document_ids": [
+      "5077c0ab7c254d1da174657e6843276f",
+      "90cc0ff5025444898efe1dad61066fba",
+      "db5aac9eea25455aab7294b09dbfb93e",
+      "57c89df65b944673992dada13e0987d9"
+    ],
+    "question_count": 5,
+    "difficulty": "medium",
+    "questions": [
+      {
+        "id": "e8eda7e2e4604e80a464c9579d6b4f53",
+        "question": "What was the primary limitation of Cluster Computing in the 1980s that eventually led to the development of Grid Computing?",
+        "options": [
+          "It was too expensive compared to mainframe computing.",
+          "It could not support high computations.",
+          "It suffered from geographical restrictions.",
+          "It did not allow new nodes to be added easily."
+        ],
+        "correct_answer": 2,
+        "explanation": "According to the study material, while cluster computing solved the cost problem, geographical restrictions still pertained. To solve this, grid computing was introduced to connect systems at entirely different geographical locations.",
         "page": 2,
         "topic": "Evolution of Computing"
       },
       {
-        "id": "3182720f847447dcbe6fcdc7e51c081d",
-        "question": "Why is a Community Cloud deployment model described as being 'rigid in customization'?",
+        "id": "98294b7599f5403c8a5ecf764580b250",
+        "question": "An online retail site experiences a sudden, temporary spike in traffic during a holiday sale and needs to dynamically add more instances, then automatically withdraw them when the sale ends. Which cloud concept and scaling method best fits this scenario?",
         "options": [
-          "Because it operates entirely on a public pay-per-use model managed exclusively by a single third-party vendor.",
-          "Because resources are shared among multiple organizations with mutual interests, meaning changes requested by one organization could impact others.",
-          "Because it relies on a combination of public and private clouds, causing severe latency during data transmission.",
-          "Because it uses proprietary software that prevents the IT department from supervising security firewalls."
+          "Cloud scalability with vertical scaling",
+          "Cloud elasticity with horizontal scaling",
+          "Cloud scalability with horizontal scaling",
+          "Cloud elasticity with vertical scaling"
         ],
         "correct_answer": 1,
-        "explanation": "Since data and resources in a community cloud are shared among different organizations based on collaborative interests, a single organization cannot make changes according to their individual needs because those changes will impact other organizations.",
+        "explanation": "Cloud elasticity is best for unpredictable or temporary workloads and sudden fluctuations, and it typically relies on scale-out (horizontal scaling) arrangements where instances are added or removed dynamically.",
+        "page": 3,
+        "topic": "Need for elasticity and scalability"
+      },
+      {
+        "id": "26f02e2b3d5b48be9ad0c9871ac057d7",
+        "question": "Why do Type 1 (bare metal) hypervisors generally offer better performance for virtual machines compared to Type 2 (hosted) hypervisors?",
+        "options": [
+          "Type 1 hypervisors run directly on the host machine's physical hardware without needing to negotiate resources through a host operating system.",
+          "Type 1 hypervisors use containerization to share the host operating system kernel directly with the VMs.",
+          "Type 1 hypervisors operate as a simple application within a host operating system to prioritize resource allocation.",
+          "Type 1 hypervisors completely eliminate the need for virtual machine configuration and maintenance."
+        ],
+        "correct_answer": 0,
+        "explanation": "Type 1 hypervisors sit directly on top of the physical hardware and do not need to negotiate resources with an operating system or travel through an operating system layer, resulting in greater performance.",
+        "page": 18,
+        "topic": "Virtualization Technologies"
+      },
+      {
+        "id": "b3c9db69be0f43a89f407eb736925309",
+        "question": "A group of healthcare organizations sharing a Community Cloud wants to make customized infrastructure changes to meet one specific member's unique needs. Why is this difficult to achieve in a Community Cloud model?",
+        "options": [
+          "Community clouds do not support any form of security or compliance standards.",
+          "Community clouds are managed only by public providers and cannot be customized at all.",
+          "Making custom changes for one organization can impact other participating organizations due to shared resources and mutual interests.",
+          "Community clouds require each organization to host their own physical hardware separately."
+        ],
+        "correct_answer": 2,
+        "explanation": "The study material explains that because data and resources are shared among different organizations according to mutual interests, if one organization wants changes according to their specific needs, they cannot do so because it will impact other organizations.",
         "page": 15,
         "topic": "Cloud Deployment Models"
       },
       {
-        "id": "19efb72e6f0745be81948ec20b00b944",
-        "question": "How does the layered architecture of a Docker Image contribute to both build efficiency and storage savings?",
+        "id": "4dcde2d0edaf46c6a9f9f8f9cb369323",
+        "question": "Why is it highly recommended to use Docker Volumes when running a database application inside a Docker container?",
         "options": [
-          "It creates a temporary read-write layer that deletes itself and the underlying base image to free up space when a container stops.",
-          "It converts all Dockerfile instructions into a single monolithic file that executes faster on local hard drives.",
-          "It automatically runs multiple instances on bare metal hardware, bypassing the need for a hypervisor.",
-          "It only rebuilds changed layers and those after them during a build, and allows multiple images to share identical base layers so they are stored only once."
+          "Because containers are ephemeral, and without a volume, the database data would be lost when the container is deleted or updated.",
+          "Because Docker volumes automatically convert the read-only layers of an image into read-write layers.",
+          "Because databases cannot start up in Docker unless a volume is created first.",
+          "Because volumes package the database application code and libraries into a portable image."
         ],
-        "correct_answer": 3,
-        "explanation": "Docker images consist of read-only layers. For efficiency, Docker only rebuilds the modified layer and subsequent layers when a Dockerfile changes. For sharing, if multiple images use the same base layers, those layers are only stored once on the system.",
-        "page": 29,
+        "correct_answer": 0,
+        "explanation": "Docker containers are ephemeral, meaning any data stored within their internal filesystem is lost once the container is removed. Docker Volumes decouple the data from the container's lifecycle to ensure durability.",
+        "page": 30,
         "topic": "Containerization and Docker Basics"
       }
     ],
-    "created_at": "2026-10-02 23:48:08",
+    "created_at": "2026-10-03 22:20:57",
     "attempted": true,
     "score": 2,
     "accuracy": 40.0,
-    "completed_at": "2026-10-02 23:48:27"
+    "completed_at": "2026-10-03 22:21:12"
   },
   {
-    "id": "b347c2d25203445e903395e1de23caa5",
+    "id": "a44dbc0bb03745cd80b0ff068aa2fed3",
     "user_id": 30001,
-    "subject_id": "d7c01729e1004be686c3b3d9d795acf5",
+    "subject_id": "fd2f044d7f36488692038c6e7956bfcb",
     "subject_name": "CQC",
     "document_ids": [
-      "50a77f271ceb44519276b8ffbb65106b"
+      "5077c0ab7c254d1da174657e6843276f"
     ],
-    "question_count": 10,
-    "difficulty": "easy",
+    "question_count": 5,
+    "difficulty": "medium",
     "questions": [
       {
-        "id": "9c9df536f4f74e86858ee4eacea4594c",
-        "question": "What is the basic unit of information used by a classical computer?",
+        "id": "b9cba60beb734e20b4e6d74db0ee208d",
+        "question": "According to the study material, what is the core definition of containerization?",
         "options": [
-          "Bit",
-          "Qubit",
-          "Photon",
-          "Quantum Gate"
+          "The process of packing an application as an image.",
+          "The development of physical hardware components.",
+          "The installation of a completely new host operating system.",
+          "The method of writing code without dependencies."
         ],
         "correct_answer": 0,
-        "explanation": "The text states that a classical computer works with bits, which can have only one of two values: 0 or 1.",
-        "page": 1,
-        "topic": "Classical Computing"
+        "explanation": "The text states that containerization is the process of packing an application as an image.",
+        "page": 28,
+        "topic": "Containerization and Docker Basics"
       },
       {
-        "id": "cef3cdce52254c0da791ac8fd5c90be8",
-        "question": "How many values can a classical bit represent at any single moment?",
+        "id": "deae118dc41e4af88a309e657ac3958c",
+        "question": "Containerization is classified as which form of virtualization?",
         "options": [
-          "Multiple values at the same time",
-          "Only one of two values (0 or 1)",
-          "Three values (0, 1, or both)",
-          "Any complex number"
+          "Hardware-based virtualization",
+          "OS-based virtualization",
+          "Hypervisor-based virtualization",
+          "Application-only virtualization"
         ],
         "correct_answer": 1,
-        "explanation": "According to the study material, a classical bit can have only one of two values: 0 or 1.",
-        "page": 1,
-        "topic": "Classical Computing"
+        "explanation": "The study material explicitly states that containerization is a form of OS-based virtualization.",
+        "page": 28,
+        "topic": "Containerization and Docker Basics"
       },
       {
-        "id": "0ff889423bc149778f594f6adcf899c0",
-        "question": "Which classical logic gate reverses its input, changing a 0 to a 1 and a 1 to a 0?",
+        "id": "c25285d224f3414c86d2249ad6fde1f8",
+        "question": "How do multiple containers interact with the host operating system?",
         "options": [
-          "AND gate",
-          "OR gate",
-          "NOT gate",
-          "XOR gate"
+          "Each container runs on its own separate operating system kernel.",
+          "Containers completely bypass the host operating system.",
+          "All containers share the same host operating system kernel.",
+          "Containers share hardware but do not interact with any kernel."
         ],
         "correct_answer": 2,
-        "explanation": "The text explains that the NOT gate reverses the input: NOT 0 = 1 and NOT 1 = 0.",
-        "page": 1,
-        "topic": "Classical Computing"
+        "explanation": "According to the document, all containers share the same host operating system kernel.",
+        "page": 28,
+        "topic": "Containerization and Docker Basics"
       },
       {
-        "id": "b72fd23c91814790ab9fe272bf2a72e0",
-        "question": "What are the two basic states of a qubit?",
+        "id": "bdd58ae406a44baabe13345505788456",
+        "question": "Which mechanism is used in containerization to achieve process, network, and filesystem isolation?",
         "options": [
-          "|0⟩ and |1⟩",
-          "AND and OR",
-          "True and False",
-          "Alpha and Beta"
-        ],
-        "correct_answer": 0,
-        "explanation": "The text states that a qubit has two basic states: |0⟩ and |1⟩.",
-        "page": 1,
-        "topic": "Quantum Computing"
-      },
-      {
-        "id": "833f13f4638c4af08821fd7111fc42be",
-        "question": "Which quantum property allows a qubit to exist in a combination of both |0⟩ and |1⟩ states before it is measured?",
-        "options": [
-          "Coherence",
-          "Entanglement",
-          "Superposition",
-          "Interference"
-        ],
-        "correct_answer": 2,
-        "explanation": "Superposition is defined in the text as the quantum property that allows a qubit to exist in a combination of the states |0⟩ and |1⟩ before measurement.",
-        "page": 1,
-        "topic": "Quantum Computing"
-      },
-      {
-        "id": "cb19c2fab52b406191a254872685a2e1",
-        "question": "What is the name of the mathematical notation used in quantum mechanics to represent a quantum state like |ψ⟩?",
-        "options": [
-          "Boolean notation",
-          "Ket notation",
-          "Binary notation",
-          "Logic notation"
-        ],
-        "correct_answer": 1,
-        "explanation": "The symbols | ⟩ are called ket notation, which is part of Dirac notation used in quantum mechanics.",
-        "page": 1,
-        "topic": "Quantum Computing"
-      },
-      {
-        "id": "8a0b2851387e448e9aede339d7f78ca9",
-        "question": "While classical logic is Boolean and distributive, what is the structure of quantum logic?",
-        "options": [
-          "Non-Boolean and generally non-distributive",
-          "Exactly the same as classical logic",
-          "Purely distributive but not Boolean",
-          "It does not use any mathematical framework"
-        ],
-        "correct_answer": 0,
-        "explanation": "The text explicitly states: 'Classical logic → Boolean and distributive' and 'Quantum logic → non-Boolean and generally non-distributive'.",
-        "page": 1,
-        "topic": "Classic Logic vs Quantum Logic"
-      },
-      {
-        "id": "53ce0d1f9c544fe285db8ada32ef8231",
-        "question": "Which physical implementation of qubits is used by companies like IBM and Google?",
-        "options": [
-          "Trapped ions",
-          "Photons",
-          "Topological qubits",
-          "Superconducting circuits"
+          "Resource control mechanisms",
+          "Docker deployment tools",
+          "Virtual units in the kernel space",
+          "Namespaces"
         ],
         "correct_answer": 3,
-        "explanation": "According to the text, superconducting circuits are used by IBM and Google.",
-        "page": 1,
-        "topic": "Physical implementations of qubits"
+        "explanation": "The text states that isolation between containers is achieved using Namespaces (process, network, filesystem isolation).",
+        "page": 28,
+        "topic": "Containerization and Docker Basics"
       },
       {
-        "id": "8a9cc793781d43df8b35536385a9fe52",
-        "question": "According to the rules of superposition, the sum of the probabilities (|α|² + |β|²) must always equal what percentage?",
+        "id": "dca6fbd39cab4630bbe4ea15bffd39a0",
+        "question": "What is the purpose of resource control mechanisms in containerization?",
         "options": [
-          "0%",
-          "50%",
-          "100%",
-          "200%"
+          "To manage CPU and memory limits",
+          "To isolate network and filesystem processes",
+          "To package the application into an image",
+          "To run applications without sharing a kernel"
         ],
-        "correct_answer": 2,
-        "explanation": "The text states the rule: |α|² + |β|² = 1, meaning that probabilities must add up to 100%.",
-        "page": 1,
-        "topic": "Qubits and Superposition"
-      },
-      {
-        "id": "97961ec9539e4f948a1e13ea39483219",
-        "question": "Which quantum concept is defined as linking particles so that the state of one instantly dictates the state of another?",
-        "options": [
-          "Superposition",
-          "Entanglement",
-          "Coherence",
-          "Measurement"
-        ],
-        "correct_answer": 1,
-        "explanation": "The text defines entanglement as: 'Linking particles so the state of one instantly dictates the state of another.'",
-        "page": 1,
-        "topic": "Quantum Computing"
+        "correct_answer": 0,
+        "explanation": "The material shows that resource control mechanisms are used for CPU and memory limits to help achieve isolation between containers.",
+        "page": 28,
+        "topic": "Containerization and Docker Basics"
       }
     ],
-    "created_at": "2026-10-03 00:05:20",
+    "created_at": "2026-10-03 22:21:53",
     "attempted": true,
-    "score": 3,
-    "accuracy": 30.0,
-    "completed_at": "2026-10-03 00:06:14"
+    "score": 0,
+    "accuracy": 0.0,
+    "completed_at": "2026-10-03 22:22:02"
+  },
+  {
+    "id": "017cb645eb9c4b3d80715f89fb2b5855",
+    "user_id": 30001,
+    "subject_id": "fd2f044d7f36488692038c6e7956bfcb",
+    "subject_name": "CQC",
+    "document_ids": [
+      "5077c0ab7c254d1da174657e6843276f"
+    ],
+    "question_count": 5,
+    "difficulty": "medium",
+    "questions": [
+      {
+        "id": "1de0d5d702194523a450492279676589",
+        "question": "What is a key difference in how Type 1 and Type 2 hypervisors access physical hardware resources?",
+        "options": [
+          "Type 1 hypervisors access hardware resources through a host operating system, while Type 2 hypervisors access them directly.",
+          "Type 1 hypervisors sit directly on the physical hardware to access resources, while Type 2 hypervisors run on top of a host operating system.",
+          "Type 1 hypervisors require a virtual operating system to access hardware, while Type 2 hypervisors are embedded in the firmware.",
+          "Type 1 hypervisors only share resources flexibly, whereas Type 2 hypervisors can only allocate dedicated resources."
+        ],
+        "correct_answer": 1,
+        "explanation": "According to the text, a Type 1 (bare metal) hypervisor is installed directly on the physical hardware and has direct access to resources, whereas a Type 2 (hosted) hypervisor runs on top of a host operating system.",
+        "page": 18,
+        "topic": "Virtualization Technologies"
+      },
+      {
+        "id": "4b5f638a8e9845a686a08bc77a31d9eb",
+        "question": "Based on the text, what is the primary role of a hypervisor in virtualization?",
+        "options": [
+          "To serve as the physical storage space for saving virtual machine data.",
+          "To act as the coordination layer that creates and runs multiple virtual machines at once.",
+          "To replace the need for physical hardware resources like memory and processing power.",
+          "To act as a physical server that does not require an operating system or software."
+        ],
+        "correct_answer": 1,
+        "explanation": "The text states that a hypervisor (or VMM) creates and coordinates virtual machines, acting as the coordination layer that supports multiple VMs running at once.",
+        "page": 18,
+        "topic": "Virtualization Technologies"
+      },
+      {
+        "id": "f16390c72f4e403ba441b36459b8a9a6",
+        "question": "Why are virtual machines (VMs) considered preferable to using real physical machines according to the study material?",
+        "options": [
+          "They can operate entirely without using any underlying physical hardware resources.",
+          "They do not require a hypervisor or coordination layer to run on host machines.",
+          "They offer better portability, scalability, cost, resource optimization, and reconfigurability.",
+          "They automatically convert Type 2 hypervisors into Type 1 bare metal hypervisors."
+        ],
+        "correct_answer": 2,
+        "explanation": "The text explicitly states that VMs are preferable to real machines due to 'their portability, scalability, cost, resource optimization, and reconfigurability.'",
+        "page": 18,
+        "topic": "Virtualization Technologies"
+      },
+      {
+        "id": "e849694076564468bbd689aeb3efd059",
+        "question": "Where is a Type 1 hypervisor installed on a host machine?",
+        "options": [
+          "It is installed on top of an already running host operating system.",
+          "It is installed only within the storage of an active virtual machine.",
+          "It is installed directly on the physical hardware or sometimes embedded in the machine's firmware.",
+          "It is installed as a software application inside a web browser."
+        ],
+        "correct_answer": 2,
+        "explanation": "The text mentions that a Type 1 (bare metal) hypervisor is installed directly on the host machine's physical hardware (not through an operating system) and in some cases is embedded in the machine's firmware.",
+        "page": 18,
+        "topic": "Virtualization Technologies"
+      },
+      {
+        "id": "be2fb2b95acc4557bf8a42802e5f1f31",
+        "question": "How does a virtual machine (VM) function as a software-based representation of a computer?",
+        "options": [
+          "It uses the underlying physical resource to operate as if it were a physical component, with elements like memory, processing power, storage, and an OS.",
+          "It creates physical hardware components out of software to run without physical resources.",
+          "It operates independently of any hypervisor or virtual machine monitor.",
+          "It bypasses the host hardware completely by generating its own power and memory."
+        ],
+        "correct_answer": 0,
+        "explanation": "The text defines a VM as a software-based instance of a computer with elements like memory, processing power, storage, and an operating system, which uses the underlying physical resource to operate as if it were a physical component.",
+        "page": 18,
+        "topic": "Virtualization Technologies"
+      }
+    ],
+    "created_at": "2026-10-03 22:23:20",
+    "attempted": true,
+    "score": 1,
+    "accuracy": 20.0,
+    "completed_at": "2026-10-03 22:23:37"
+  },
+  {
+    "id": "00177abc1a814b6190fec065bd13d2b4",
+    "user_id": 30001,
+    "subject_id": "e3acfae9f5d4478d9162735ac5b49dc6",
+    "subject_name": "DCN",
+    "document_ids": [
+      "9ad1acd37fd6408a8e7594a6cce3c65e"
+    ],
+    "question_count": 5,
+    "difficulty": "medium",
+    "questions": [
+      {
+        "id": "a798f397578e41a1b64edd0edd0d1f18",
+        "question": "When the Transport layer receives data from the upper layer, what does it convert this data into before transmission?",
+        "options": [
+          "Segments",
+          "Packets",
+          "Frames",
+          "Bits"
+        ],
+        "correct_answer": 0,
+        "explanation": "According to page 48, the Transport layer receives data from the upper layer and converts them into smaller units known as segments.",
+        "page": 48,
+        "topic": "Transport Layer"
+      },
+      {
+        "id": "3bcba87e3bc4498fa3a907bcf204e95c",
+        "question": "How does the Transport layer guarantee reliability during end-to-end data transmission?",
+        "options": [
+          "By converting electrical signals into logical IP addresses.",
+          "By ensuring messages are sent in order and there is no duplication of data.",
+          "By routing the data through the shortest physical path.",
+          "By translating high-level programming languages to machine code."
+        ],
+        "correct_answer": 1,
+        "explanation": "Page 48 states that the Transport layer ensures messages are transmitted in the order in which they are sent and there is no duplication of data.",
+        "page": 48,
+        "topic": "Transport Layer"
+      },
+      {
+        "id": "5083bb0efbf040759643e22c190d67d0",
+        "question": "Which address is included in the Transport layer header to ensure that a message is delivered to the correct process?",
+        "options": [
+          "MAC address",
+          "IP address",
+          "Physical address",
+          "Service point address"
+        ],
+        "correct_answer": 3,
+        "explanation": "According to page 49, to deliver the message to the correct process, the transport layer header includes a service point address (also called a port address).",
+        "page": 49,
+        "topic": "Transport Layer"
+      },
+      {
+        "id": "b6d1842fcdac482eb3f948da56a388d9",
+        "question": "According to the TCP/IP model, which protocols are defined at the Transport Layer?",
+        "options": [
+          "IP and ICMP",
+          "TCP and UDP",
+          "HTTP and DNS",
+          "ARP and RARP"
+        ],
+        "correct_answer": 1,
+        "explanation": "Page 58 explains that the protocols defined in the Transport Layer are Transmission Control Protocol (TCP) and User Datagram Protocol (UDP).",
+        "page": 58,
+        "topic": "Transport Layer"
+      },
+      {
+        "id": "30ea0be8a7b8446a8bd5a150b499c89e",
+        "question": "During the segmentation process on the Transport layer, what is associated with each newly produced segment?",
+        "options": [
+          "A physical token key",
+          "An IP address of the next router",
+          "A header associated with each segment",
+          "A trailer containing routing tables"
+        ],
+        "correct_answer": 2,
+        "explanation": "Page 49 states that during segmentation, each of the segments produced has a header associated with it.",
+        "page": 49,
+        "topic": "Transport Layer"
+      }
+    ],
+    "created_at": "2026-10-03 22:24:42",
+    "attempted": false,
+    "score": null,
+    "accuracy": null
+  },
+  {
+    "id": "1e7336f0496348ab9e70c1f40b06bd54",
+    "user_id": 30001,
+    "subject_id": "e3acfae9f5d4478d9162735ac5b49dc6",
+    "subject_name": "DCN",
+    "document_ids": [
+      "9ad1acd37fd6408a8e7594a6cce3c65e"
+    ],
+    "question_count": 5,
+    "difficulty": "medium",
+    "questions": [
+      {
+        "id": "91ba45a15ff94a369bcd4c3ac91f971a",
+        "question": "According to the provided material, which of the following is categorized specifically as an error detection method rather than an error correction method?",
+        "options": [
+          "Forward Error Correction",
+          "Backward Error Correction",
+          "Cyclic Redundancy Check (CRC)",
+          "Simple Complement Correction"
+        ],
+        "correct_answer": 2,
+        "explanation": "According to the text on pages 142 and 143, Simple Parity Check, Checksum, and Cyclic Redundancy Check (CRC) are listed under 'Error Detection', while Backward and Forward Error Correction are listed under 'Error Correction'.",
+        "page": 142,
+        "topic": "Error Detection"
+      },
+      {
+        "id": "05bad2c1a86c46aca738af5fa3486402",
+        "question": "On the sender side, what final step does the checksum generator perform on the sum of the subunits to produce the checksum?",
+        "options": [
+          "It subtracts the sum from the original data unit.",
+          "It complements the sum.",
+          "It divides the sum by 16 bits to get a remainder.",
+          "It appends the sum directly without any modifications."
+        ],
+        "correct_answer": 1,
+        "explanation": "The text states that at the sender side, subunits are added together using the one's complement method, and the 'resultant bit is then complemented.' This complemented sum is the checksum.",
+        "page": 147,
+        "topic": "Error Detection"
+      },
+      {
+        "id": "e620aff806d247c5b648c3a5d11691d1",
+        "question": "How does the Frame Check Sequence (FCS) in an HDLC frame facilitate error detection?",
+        "options": [
+          "By dividing the data into 16-bit subunits using one's complement.",
+          "By adding a simple parity bit to the end of the frame.",
+          "By using CRC-16 or CRC-32 to ensure frame integrity.",
+          "By converting character-based data to binary format."
+        ],
+        "correct_answer": 2,
+        "explanation": "According to page 194, the Frame Check Sequence (FCS) is used for error detection and specifically uses 'CRC-16 or CRC-32' to ensure frame integrity.",
+        "page": 194,
+        "topic": "Error Detection"
+      },
+      {
+        "id": "e24835003dde4a5aa9f6eea90879a64f",
+        "question": "Which layer is responsible for detecting and correcting data that has been corrupted due to noise or attenuation during transmission?",
+        "options": [
+          "The network layer using physical addressing.",
+          "The data link layer using error detection and correction.",
+          "The application layer using character-based encoding.",
+          "The physical layer using repeaters."
+        ],
+        "correct_answer": 1,
+        "explanation": "Page 139 states that data can get corrupted due to noise, attenuation, etc., and it is the responsibility of the data link layer to detect and correct it using error detection and correction.",
+        "page": 139,
+        "topic": "Error Detection"
+      },
+      {
+        "id": "9c230b28a93a400fb45af570b3c9cc6c",
+        "question": "Which of the following is a key error-handling advantage of using a Tree Topology?",
+        "options": [
+          "It prevents the entire system from failing if the central hub fails.",
+          "It eliminates the need for cabling, lowering overall cost.",
+          "It makes error detection and error correction very easy.",
+          "It automatically reconfigures when new devices are added."
+        ],
+        "correct_answer": 2,
+        "explanation": "According to the list of advantages on page 120, 'Error detection and error correction are very easy in a tree topology.'",
+        "page": 120,
+        "topic": "Error Detection"
+      }
+    ],
+    "created_at": "2026-10-04 01:17:39",
+    "attempted": true,
+    "score": 2,
+    "accuracy": 40.0,
+    "completed_at": "2026-10-04 01:18:02"
   }
 ]
