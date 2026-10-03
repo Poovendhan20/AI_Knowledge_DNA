@@ -1,56 +1,88 @@
-# =========================
-# Environment / Secrets
-# =========================
+# ================================
+# AI Knowledge DNA - Git Ignore
+# ================================
+
+# Environment variables / secrets
 .env
 .env.*
 !.env.example
 
-# =========================
 # Python
-# =========================
 __pycache__/
 *.py[cod]
 *.pyo
-.venv/
+*.pyd
+.Python
+*.so
+
+# Virtual environments
 venv/
 env/
+.venv/
+ENV/
 
-# =========================
-# Backend uploads
-# =========================
+# Flask
+instance/
+.pytest_cache/
+
+# Backend uploads / generated files
 backend/uploads/
-backend/instance/
-backend/*.db
-backend/*.sqlite
-backend/*.sqlite3
-
-# =========================
-# Generated data
-# =========================
-backend/data/*.json
-
-# =========================
-# Frontend
-# =========================
-frontend/node_modules/
-frontend/dist/
-frontend/.vite/
-
-# =========================
-# Logs
-# =========================
+backend/data/
+backend/*.log
 *.log
 
-# =========================
-# VS Code
-# =========================
-.vscode/
+# Database
+*.db
+*.sqlite
+*.sqlite3
 
-# =========================
-# OS
-# =========================
+# SSL / database certificates
+backend/certs/
+*.pem
+*.key
+*.crt
+
+# Node / React
+node_modules/
+frontend/node_modules/
+
+# Build output
+dist/
+build/
+frontend/dist/
+frontend/build/
+
+# Vite
+.vite/
+
+# Coverage
+coverage/
+.nyc_output/
+
+# IDE / editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
 .DS_Store
 Thumbs.db
+desktop.ini
 
-# Database certificates
-backend/certs/
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# Python tooling
+.mypy_cache/
+.ruff_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Local testing
+test_output/
+tmp/
+temp/
