@@ -2339,344 +2339,258 @@ def get_subject(
     methods=["DELETE"]
 )
 @jwt_required()
-def delete_subject(
-    subject_id
-):
-    current_user_id = get_current_user_id()
-    subjects = filter_subjects_for_user(load_subjects(), current_user_id)
-    subject = next(
-        (
-            item
-            for item
-            in subjects
-            if item.get(
-                "id"
-            ) == subject_id
-        ),
-        None
-    )
-    if not subject:
-        return jsonify({
-            "success":
-                False,
-            "message":
-                "Subject not found or access denied."
-        }), 404
-    all_subjects = [
-        item
-        for item in load_subjects()
-        if not (
-            item.get("id") == subject_id
-            and _same_user(item.get("user_id"), current_user_id)
-        )
-    ]
-    save_subjects(all_subjects)
-
-    documents = load_documents()
-    for document in documents:
-        if (
-            document.get("subject_id") == subject_id
-            and _same_user(document.get("user_id"), current_user_id)
-        ):
-            document["subject_id"] = None
-    save_documents(documents)
-
-    all_quizzes = load_quizzes()
-    quizzes = [
-        quiz
-        for quiz in all_quizzes
-        if not (
-            quiz.get("subject_id") == subject_id
-            and _same_user(quiz.get("user_id"), current_user_id)
-        )
-    ]
-    save_quizzes(quizzes)
-    return jsonify({
-        "success":
-            True,
-        "message":
-            "Subject deleted successfully."
-    })
-@app.route(
-    "/api/upload-multiple",
-    methods=["POST"]
-)
-@jwt_required()
-def upload_multiple():
-    subject_id = (
-        request.form.get(
-            "subject_id"
-        )
-    )
-    if not subject_id:
-        return jsonify({
-            "success":
-                False,
-            "message":
-                "subject_id is required."
-        }), 400
-    current_user_id = get_current_user_id()
-    subjects = filter_subjects_for_user(load_subjects(), current_user_id)
-    subject = next(
-        (
-            item
-            for item
-            in subjects
-            if item.get(
-                "id"
-            ) == subject_id
-        ),
-        None
-    )
-    if not subject:
-        return jsonify({
-            "success":
-                False,
-            "message":
-                "Subject not found or access denied."
-        }), 404
-    files = request.files.getlist(
-        "files"
-    )
-    if not files:
-        return jsonify({
-            "success":
-                False,
-            "message":
-                "No files were selected."
-        }), 400
-    documents = load_documents()
-    uploaded_documents = []
-    errors = []
-    for file in files:
-        if not file or not file.filename:
-            continue
-        if not allowed_file(
-            file.filename
-        ):
-            errors.append({
-                "filename":
-                    file.filename,
-                "message":
-                    "Unsupported file type."
-            })
-            continue
-        original_name = secure_filename(
-            file.filename
-        )
-        extension = (
-            original_name
-            .rsplit(
-                ".",
-                1
-            )[1]
-            .lower()
-        )
-        document_id = uuid4().hex
-        stored_name = (
-            f"{document_id}.{extension}"
-        )
-        file_path = os.path.join(
-            UPLOAD_FOLDER,
-            stored_name
-        )
-        try:
-            file.save(
-                file_path
-            )
-            pages = extract_pages(
-                file_path,
-                extension
-            )
-            analysis = analyze_document(
-                pages
-            )
-            document = {
-                "id":
-                    document_id,
-                "name":
-                    original_name,
-                "original_name":
-                    original_name,
-                "stored_name":
-                    stored_name,
-                "type":
-                    extension,
-                "user_id":
-                    current_user_id,
-                "subject_id":
-                    subject_id,
-                "subject_name":
-                    subject[
-                        "name"
-                    ],
-                "page_count":
-                    len(pages),
-                "pages":
-                    pages,
-                "summary":
-                    analysis[
-                        "summary"
-                    ],
-                "topics":
-                    analysis[
-                        "topics"
-                    ],
-                "word_count":
-                    analysis[
-                        "word_count"
-                    ],
-                "character_count":
-                    analysis[
-                        "character_count"
-                    ]
-            }
-            documents.append(
-                document
-            )
-            uploaded_documents.append(
-                document
-            )
-        except Exception as error:
-            print(
-                "MULTIPLE UPLOAD ERROR:",
-                repr(error)
-            )
-            if os.path.exists(
-                file_path
-            ):
-                try:
-                    os.remove(
-                        file_path
-                    )
-                except Exception:
-                    pass
-            errors.append({
-                "filename":
-                    original_name,
-                "message":
-                    str(error)
-            })
-    save_documents(
-        documents
-    )
-    return jsonify({
-        "success":
-            len(
-                uploaded_documents
-            ) > 0,
-        "message":
-            (
-                f"{len(uploaded_documents)} "
-                f"document(s) uploaded."
-            ),
-        "documents":
-            uploaded_documents,
-        "errors":
-            errors
-    })
-@app.route(
-    "/api/subjects/<subject_id>/documents",
-    methods=["GET"]
-)
-@jwt_required()
-def get_subject_documents(
-    subject_id
-):
-    current_user_id = get_current_user_id()
-    subjects = filter_subjects_for_user(load_subjects(), current_user_id)
-    subject = next(
-        (
-            item
-            for item
-            in subjects
-            if item.get(
-                "id"
-            ) == subject_id
-        ),
-        None
-    )
-    if not subject:
-        return jsonify({
-            "success":
-                False,
-            "message":
-                "Subject not found or access denied."
-        }), 404
-    documents = filter_documents_for_user(load_documents(), current_user_id)
-    subject_documents = [
-        document
-        for document
-        in documents
-        if document.get(
-            "subject_id"
-        ) == subject_id
-    ]
-    return jsonify({
-        "success":
-            True,
-        "subject":
-            subject,
-        "documents":
-            subject_documents
-    })
-@app.route(
-    "/api/learning/session",
-    methods=["POST"]
-)
-@jwt_required()
-def record_learning_session():
+def delete_subject(subject_id):
     try:
-        data = request.get_json(silent=True) or {}
-        user_id = get_current_user_id()
-        topic = str(data.get("topic") or "General").strip() or "General"
-        try:
-            study_minutes = int(data.get("study_minutes", 0))
-        except (TypeError, ValueError):
-            study_minutes = 0
+        current_user_id = get_current_user_id()
 
-        if study_minutes < 1 or study_minutes > 720:
+        subjects = filter_subjects_for_user(
+            load_subjects(),
+            current_user_id
+        )
+
+        subject = next(
+            (
+                item
+                for item in subjects
+                if item.get("id") == subject_id
+            ),
+            None
+        )
+
+        if not subject:
             return jsonify({
                 "success": False,
-                "message": "study_minutes must be between 1 and 720."
-            }), 400
+                "message": "Subject not found or access denied."
+            }), 404
 
-        progress = update_learning_progress(
-            user_id=user_id,
-            topic=topic,
-            study_minutes=study_minutes,
+        documents = load_documents()
+
+        subject_documents = [
+            document
+            for document in documents
+            if (
+                document.get("subject_id") == subject_id
+                and _same_user(
+                    document.get("user_id"),
+                    current_user_id
+                )
+            )
+        ]
+
+        subject_topics = set()
+
+        for document in subject_documents:
+            for topic in document.get("topics", []):
+                if isinstance(topic, dict):
+                    topic_name = str(
+                        topic.get("name") or ""
+                    ).strip()
+                else:
+                    topic_name = str(topic or "").strip()
+
+                if topic_name:
+                    subject_topics.add(
+                        _normalized_learning_topic(topic_name)
+                    )
+
+        all_quizzes = load_quizzes()
+
+        subject_quizzes = [
+            quiz
+            for quiz in all_quizzes
+            if (
+                quiz.get("subject_id") == subject_id
+                and _same_user(
+                    quiz.get("user_id"),
+                    current_user_id
+                )
+            )
+        ]
+
+        for quiz in subject_quizzes:
+            for question in quiz.get("questions", []):
+                if not isinstance(question, dict):
+                    continue
+
+                topic_name = str(
+                    question.get("topic") or ""
+                ).strip()
+
+                if topic_name:
+                    subject_topics.add(
+                        _normalized_learning_topic(topic_name)
+                    )
+
+        remaining_documents = []
+
+        for document in documents:
+            is_subject_document = (
+                document.get("subject_id") == subject_id
+                and _same_user(
+                    document.get("user_id"),
+                    current_user_id
+                )
+            )
+
+            if is_subject_document:
+                stored_name = document.get("stored_name")
+
+                if stored_name:
+                    file_path = os.path.join(
+                        UPLOAD_FOLDER,
+                        stored_name
+                    )
+
+                    if os.path.exists(file_path):
+                        try:
+                            os.remove(file_path)
+                        except Exception as error:
+                            print(
+                                "SUBJECT FILE DELETE ERROR:",
+                                error
+                            )
+
+                continue
+
+            remaining_documents.append(document)
+
+        save_documents(remaining_documents)
+
+        remaining_quizzes = [
+            quiz
+            for quiz in all_quizzes
+            if not (
+                quiz.get("subject_id") == subject_id
+                and _same_user(
+                    quiz.get("user_id"),
+                    current_user_id
+                )
+            )
+        ]
+
+        save_quizzes(remaining_quizzes)
+
+        remaining_subject_topics = set()
+
+        for document in remaining_documents:
+            if not _same_user(
+                document.get("user_id"),
+                current_user_id
+            ):
+                continue
+
+            for topic in document.get("topics", []):
+                if isinstance(topic, dict):
+                    topic_name = str(
+                        topic.get("name") or ""
+                    ).strip()
+                else:
+                    topic_name = str(topic or "").strip()
+
+                if topic_name:
+                    remaining_subject_topics.add(
+                        _normalized_learning_topic(topic_name)
+                    )
+
+        for quiz in remaining_quizzes:
+            if not _same_user(
+                quiz.get("user_id"),
+                current_user_id
+            ):
+                continue
+
+            for question in quiz.get("questions", []):
+                if not isinstance(question, dict):
+                    continue
+
+                topic_name = str(
+                    question.get("topic") or ""
+                ).strip()
+
+                if topic_name:
+                    remaining_subject_topics.add(
+                        _normalized_learning_topic(topic_name)
+                    )
+
+        topics_to_delete = (
+            subject_topics - remaining_subject_topics
         )
-        db.session.commit()
-        study_sessions = increment_study_session_count(user_id, topic)
 
-        rows = get_learning_progress_for_user(user_id)
-        total_minutes = sum(int(row.study_minutes or 0) for row in rows)
+        if topics_to_delete:
+            progress_rows = get_learning_progress_for_user(
+                current_user_id
+            )
+
+            for row in progress_rows:
+                row_topic = _normalized_learning_topic(
+                    row.topic
+                )
+
+                if row_topic in topics_to_delete:
+                    db.session.delete(row)
+
+            db.session.commit()
+
+        try:
+            study_sessions = load_study_session_counts()
+
+            user_sessions = study_sessions.get(
+                str(current_user_id),
+                {}
+            )
+
+            if isinstance(user_sessions, dict):
+                for topic in list(user_sessions.keys()):
+                    normalized_topic = _normalized_learning_topic(
+                        topic
+                    )
+
+                    if normalized_topic in topics_to_delete:
+                        del user_sessions[topic]
+
+                study_sessions[str(current_user_id)] = user_sessions
+                save_study_session_counts(study_sessions)
+
+        except Exception as error:
+            print(
+                "SUBJECT STUDY SESSION DELETE ERROR:",
+                repr(error)
+            )
+
+        all_subjects = load_subjects()
+
+        remaining_subjects = [
+            item
+            for item in all_subjects
+            if not (
+                item.get("id") == subject_id
+                and _same_user(
+                    item.get("user_id"),
+                    current_user_id
+                )
+            )
+        ]
+
+        save_subjects(remaining_subjects)
 
         return jsonify({
             "success": True,
-            "message": "Learning session recorded.",
-            "progress": {
-                "topic": progress.topic,
-                "mastery_score": progress.mastery_score,
-                "study_minutes": progress.study_minutes,
-                "study_sessions": study_sessions,
-                "last_studied": (
-                    progress.last_studied.isoformat()
-                    if progress.last_studied else None
-                ),
-            },
-            "study_hours": round(total_minutes / 60, 1),
-            "learning_streak": calculate_learning_streak(rows),
-        }), 201
+            "message": "Subject and all related learning data deleted successfully."
+        }), 200
+
     except Exception as error:
         db.session.rollback()
-        print("LEARNING SESSION ERROR:", repr(error))
+
+        print(
+            "SUBJECT DELETE ERROR:",
+            repr(error)
+        )
+
         return jsonify({
             "success": False,
-            "message": "Unable to record learning session.",
+            "message": "Unable to delete subject.",
             "error": str(error)
         }), 500
-
 @app.route(
     "/api/learning/progress",
     methods=["GET"]
