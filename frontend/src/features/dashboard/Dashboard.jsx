@@ -1118,7 +1118,7 @@ function Dashboard() {
 
                 document.querySelector(
 
-                  ".subject-manager"
+                  ".sdna-subject-manager"
 
                 );
 
