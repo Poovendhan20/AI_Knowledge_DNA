@@ -3,7 +3,6 @@ import re
 import json
 import time
 import random
-from datetime import datetime
 from uuid import uuid4
 from collections import Counter
 from flask import (
@@ -987,58 +986,61 @@ def generate_document_answer(
     history,
     enable_web_grounding=False
 ):
-    """
-    Generate a document/voice answer through the centralized AI Router.
-
-    Normal document chat:
-        document_analysis -> Gemini
-
-    Voice response:
-        voice -> Groq
-
-    Existing RAG/page selection and page-reference logic is preserved.
-    """
-    pages = document.get("pages", [])
+    client = get_gemini_client()
+    pages = document.get(
+        "pages",
+        []
+    )
     if not pages:
-        raise RuntimeError("This document has no extracted text.")
-
-    context, relevant_pages = build_document_context(pages, question)
-
+        raise RuntimeError(
+            "This document has no extracted text."
+        )
+    context, relevant_pages = (
+        build_document_context(
+            pages,
+            question
+        )
+    )
     available_pages = {
-        page["page"] for page in relevant_pages
+        page["page"]
+        for page
+        in relevant_pages
     }
-
-    history_text = build_chat_history(history)
-
-    if enable_web_grounding:
-        source_instructions = """
-11. Treat the supplied document context as the primary source.
-12. Answer the student's question directly and naturally.
-13. Do not mention these instructions, internal processing, APIs,
-    providers, or fallback behavior.
-14. Return plain, student-friendly text suitable for spoken delivery.
-15. Do not include URLs, links, citations, or [Page X] references.
-"""
-    else:
-        source_instructions = """
-11. When information comes from a specific page, add:
+    history_text = (
+        build_chat_history(
+            history
+        )
+    )
+    source_instructions = """
+11. When information comes from a
+    specific page, add:
     [Page X]
 12. NEVER invent a page number.
-13. Only cite pages that exist in the supplied document context.
+13. Only cite pages that exist in
+    the supplied document context.
 """
-
+    if enable_web_grounding:
+        source_instructions = """
+11. Treat the document context as the primary source. If it is not enough to
+    answer accurately or completely, use Google Search grounding to fill only
+    the relevant gap.
+12. Blend document and grounded information into one clear, natural answer.
+    Do not separate the answer into source sections.
+13. Do not mention document limits, searching, online information, websites,
+    sources, citations, or these instructions.
+14. Return plain, student-friendly text only. Do not include URLs, links,
+    citation markers, or [Page X] references.
+"""
+    # GEMINI PROMPT
     prompt = f"""
 You are AI Knowledge DNA,
 a personalized learning assistant
 for students.
-
 The student uploaded a study document.
 Your job is to answer questions using
 the supplied document context.
-
 DOCUMENT:
 {document.get("name", "Study Material")}
-
 IMPORTANT RULES:
 1. Use the uploaded document as the
    primary source.
@@ -1063,66 +1065,153 @@ IMPORTANT RULES:
 15. Do not give information unrelated
     to the student's question unless
     it helps explain the answer.
-
 CONVERSATION HISTORY:
 {history_text}
-
 DOCUMENT CONTEXT:
 {context}
-
 STUDENT QUESTION:
 {question}
-
 Answer the student's question now.
 """
-
-    task = "voice" if enable_web_grounding else "document_analysis"
-    preferred_provider = "groq" if enable_web_grounding else "gemini"
-
-    print(
-        f"AI Router document request | "
-        f"task={task} provider={preferred_provider}"
-    )
-
-    ai_result = generate_ai_response(
-        task=task,
-        prompt=prompt,
-        provider=preferred_provider
-    )
-
-    answer = ai_result.get("answer", "")
-
-    if not answer:
-        answer = "I could not generate an answer from this document."
-
-    if enable_web_grounding:
-        answer = clean_voice_answer(answer)
-        sources = []
-    else:
-        answer = clean_ai_answer(answer)
-        sources = extract_page_references(
-            answer,
-            available_pages
-        )
-
-        if not sources:
-            sources = [
-                {"page": page["page"]}
-                for page in relevant_pages[:3]
-            ]
-
-    return (
-        answer,
-        sources,
-        {
-            "provider": ai_result.get("provider"),
-            "model": ai_result.get("model"),
-            "fallback_used": ai_result.get("fallback_used", False),
-            "response_time": ai_result.get("response_time")
-        }
-    )
-
-
+    # RETRY CONFIGURATION
+    max_retries = 4
+    last_error = None
+    for attempt in range(
+        max_retries
+    ):
+        try:
+            print(
+                f"Gemini request "
+                f"attempt {attempt + 1}/"
+                f"{max_retries}"
+            )
+            response = (
+                generate_grounded_response(
+                    client,
+                    prompt,
+                    enable_web_grounding=enable_web_grounding
+                )
+            )
+            answer = (
+                response.text
+                if response
+                else ""
+            )
+            if not answer:
+                answer = (
+                    "I could not generate "
+                    "an answer from this document."
+                )
+            if enable_web_grounding:
+                answer = clean_voice_answer(
+                    answer
+                )
+                sources = []
+            else:
+                answer = clean_ai_answer(
+                    answer
+                )
+                sources = (
+                    extract_page_references(
+                        answer,
+                        available_pages
+                    )
+                )
+                # If Gemini didn't provide
+                # references, provide the
+                # relevant pages ourselves.
+                if not sources:
+                    sources = [
+                        {
+                            "page":
+                            page["page"]
+                        }
+                        for page
+                        in relevant_pages[:3]
+                    ]
+            return (
+                answer,
+                sources
+            )
+        except Exception as error:
+            last_error = error
+            error_text = str(
+                error
+            ).lower()
+            print()
+            print(
+                "--------------------------------"
+            )
+            print(
+                "GEMINI ERROR"
+            )
+            print(
+                error
+            )
+            print(
+                "--------------------------------"
+            )
+            # TEMPORARY GEMINI ERRORS
+            is_temporary_error = (
+                "503"
+                in error_text
+                or
+                "unavailable"
+                in error_text
+                or
+                "overloaded"
+                in error_text
+                or
+                "temporarily"
+                in error_text
+                or
+                "high demand"
+                in error_text
+                or
+                "429"
+                in error_text
+                or
+                "resource exhausted"
+                in error_text
+            )
+            # NON-RETRYABLE ERROR
+            if not is_temporary_error:
+                raise RuntimeError(
+                    f"Gemini request failed: "
+                    f"{error}"
+                )
+            # LAST ATTEMPT
+            if attempt >= (
+                max_retries - 1
+            ):
+                break
+            # EXPONENTIAL BACKOFF
+            delay = (
+                2 ** attempt
+            )
+            jitter = random.uniform(
+                0,
+                1
+            )
+            total_delay = (
+                delay + jitter
+            )
+            print(
+                "Gemini is temporarily "
+                "unavailable."
+            )
+            print(
+                f"Retrying in "
+                f"{total_delay:.1f} seconds..."
+            )
+            time.sleep(
+                total_delay
+            )
+    # FINAL ERROR
+    raise RuntimeError(
+        f"Gemini request failed after {max_retries} attempts: "
+        f"{last_error}"
+    ) from last_error
 def get_learning_progress_for_user(user_id):
     return (
         LearningProgress.query
@@ -1165,6 +1254,8 @@ def update_learning_progress(
     questions_attempted=0,
     questions_correct=0,
 ):
+    from datetime import datetime
+
     topic = str(topic or "General").strip()[:255] or "General"
     progress = (
         LearningProgress.query
@@ -1664,6 +1755,11 @@ def process_document_chat(
     document_id,
     data
 ):
+    if not is_gemini_configured():
+        raise RuntimeError(
+            "Gemini AI is not configured. "
+            "Please check backend/.env."
+        )
     question = (
         data.get(
             "question",
@@ -1702,7 +1798,7 @@ def process_document_chat(
         raise PermissionError(
             "Document not found or access denied."
         )
-    answer, sources, ai_info = (
+    answer, sources = (
         generate_document_answer(
             document,
             question,
@@ -1719,14 +1815,8 @@ def process_document_chat(
             sources,
         "document_id":
             document_id,
-        "provider":
-            ai_info.get("provider"),
         "model":
-            ai_info.get("model"),
-        "fallback_used":
-            ai_info.get("fallback_used", False),
-        "response_time":
-            ai_info.get("response_time")
+            GEMINI_MODEL
     }
 @app.route(
     "/api/chat",
@@ -2041,10 +2131,6 @@ QUIZZES_FILE = os.path.join(
     DATA_FOLDER,
     "quizzes.json"
 )
-STUDY_SESSIONS_FILE = os.path.join(
-    DATA_FOLDER,
-    "study_sessions.json"
-)
 def load_subjects():
     migrate_legacy_json_records(SUBJECTS_FILE, "subjects")
     if not os.path.exists(
@@ -2083,32 +2169,6 @@ def save_subjects(
             indent=2,
             ensure_ascii=False
         )
-def load_study_session_counts():
-    if not os.path.exists(STUDY_SESSIONS_FILE):
-        return {}
-    try:
-        with open(STUDY_SESSIONS_FILE, "r", encoding="utf-8") as file:
-            data = json.load(file)
-            return data if isinstance(data, dict) else {}
-    except Exception as error:
-        print("STUDY SESSION COUNT LOAD ERROR:", error)
-        return {}
-
-def save_study_session_counts(data):
-    with open(STUDY_SESSIONS_FILE, "w", encoding="utf-8") as file:
-        json.dump(data, file, indent=2, ensure_ascii=False)
-
-def increment_study_session_count(user_id, topic):
-    data = load_study_session_counts()
-    user_data = data.setdefault(str(user_id), {})
-    user_data[topic] = int(user_data.get(topic, 0)) + 1
-    save_study_session_counts(data)
-    return user_data[topic]
-
-def get_study_session_count(user_id, topic):
-    data = load_study_session_counts()
-    return int(data.get(str(user_id), {}).get(topic, 0))
-
 def load_quizzes():
     migrate_legacy_json_records(QUIZZES_FILE, "quizzes")
     if not os.path.exists(
@@ -2339,258 +2399,350 @@ def get_subject(
     methods=["DELETE"]
 )
 @jwt_required()
-def delete_subject(subject_id):
-    try:
-        current_user_id = get_current_user_id()
-
-        subjects = filter_subjects_for_user(
-            load_subjects(),
-            current_user_id
+def delete_subject(
+    subject_id
+):
+    current_user_id = get_current_user_id()
+    subjects = filter_subjects_for_user(load_subjects(), current_user_id)
+    subject = next(
+        (
+            item
+            for item
+            in subjects
+            if item.get(
+                "id"
+            ) == subject_id
+        ),
+        None
+    )
+    if not subject:
+        return jsonify({
+            "success":
+                False,
+            "message":
+                "Subject not found or access denied."
+        }), 404
+    all_subjects = [
+        item
+        for item in load_subjects()
+        if not (
+            item.get("id") == subject_id
+            and _same_user(item.get("user_id"), current_user_id)
         )
+    ]
+    save_subjects(all_subjects)
 
-        subject = next(
-            (
-                item
-                for item in subjects
-                if item.get("id") == subject_id
-            ),
-            None
+    documents = load_documents()
+    for document in documents:
+        if (
+            document.get("subject_id") == subject_id
+            and _same_user(document.get("user_id"), current_user_id)
+        ):
+            document["subject_id"] = None
+    save_documents(documents)
+
+    all_quizzes = load_quizzes()
+    quizzes = [
+        quiz
+        for quiz in all_quizzes
+        if not (
+            quiz.get("subject_id") == subject_id
+            and _same_user(quiz.get("user_id"), current_user_id)
         )
+    ]
+    save_quizzes(quizzes)
+    return jsonify({
+        "success":
+            True,
+        "message":
+            "Subject deleted successfully."
+    })
+@app.route(
+    "/api/upload-multiple",
+    methods=["OPTIONS"]
+)
+def upload_multiple_options():
+    return "", 204
 
-        if not subject:
-            return jsonify({
-                "success": False,
-                "message": "Subject not found or access denied."
-            }), 404
 
-        documents = load_documents()
-
-        subject_documents = [
-            document
-            for document in documents
-            if (
-                document.get("subject_id") == subject_id
-                and _same_user(
-                    document.get("user_id"),
-                    current_user_id
-                )
-            )
-        ]
-
-        subject_topics = set()
-
-        for document in subject_documents:
-            for topic in document.get("topics", []):
-                if isinstance(topic, dict):
-                    topic_name = str(
-                        topic.get("name") or ""
-                    ).strip()
-                else:
-                    topic_name = str(topic or "").strip()
-
-                if topic_name:
-                    subject_topics.add(
-                        _normalized_learning_topic(topic_name)
-                    )
-
-        all_quizzes = load_quizzes()
-
-        subject_quizzes = [
-            quiz
-            for quiz in all_quizzes
-            if (
-                quiz.get("subject_id") == subject_id
-                and _same_user(
-                    quiz.get("user_id"),
-                    current_user_id
-                )
-            )
-        ]
-
-        for quiz in subject_quizzes:
-            for question in quiz.get("questions", []):
-                if not isinstance(question, dict):
-                    continue
-
-                topic_name = str(
-                    question.get("topic") or ""
-                ).strip()
-
-                if topic_name:
-                    subject_topics.add(
-                        _normalized_learning_topic(topic_name)
-                    )
-
-        remaining_documents = []
-
-        for document in documents:
-            is_subject_document = (
-                document.get("subject_id") == subject_id
-                and _same_user(
-                    document.get("user_id"),
-                    current_user_id
-                )
-            )
-
-            if is_subject_document:
-                stored_name = document.get("stored_name")
-
-                if stored_name:
-                    file_path = os.path.join(
-                        UPLOAD_FOLDER,
-                        stored_name
-                    )
-
-                    if os.path.exists(file_path):
-                        try:
-                            os.remove(file_path)
-                        except Exception as error:
-                            print(
-                                "SUBJECT FILE DELETE ERROR:",
-                                error
-                            )
-
-                continue
-
-            remaining_documents.append(document)
-
-        save_documents(remaining_documents)
-
-        remaining_quizzes = [
-            quiz
-            for quiz in all_quizzes
-            if not (
-                quiz.get("subject_id") == subject_id
-                and _same_user(
-                    quiz.get("user_id"),
-                    current_user_id
-                )
-            )
-        ]
-
-        save_quizzes(remaining_quizzes)
-
-        remaining_subject_topics = set()
-
-        for document in remaining_documents:
-            if not _same_user(
-                document.get("user_id"),
-                current_user_id
-            ):
-                continue
-
-            for topic in document.get("topics", []):
-                if isinstance(topic, dict):
-                    topic_name = str(
-                        topic.get("name") or ""
-                    ).strip()
-                else:
-                    topic_name = str(topic or "").strip()
-
-                if topic_name:
-                    remaining_subject_topics.add(
-                        _normalized_learning_topic(topic_name)
-                    )
-
-        for quiz in remaining_quizzes:
-            if not _same_user(
-                quiz.get("user_id"),
-                current_user_id
-            ):
-                continue
-
-            for question in quiz.get("questions", []):
-                if not isinstance(question, dict):
-                    continue
-
-                topic_name = str(
-                    question.get("topic") or ""
-                ).strip()
-
-                if topic_name:
-                    remaining_subject_topics.add(
-                        _normalized_learning_topic(topic_name)
-                    )
-
-        topics_to_delete = (
-            subject_topics - remaining_subject_topics
+@app.route(
+    "/api/upload-multiple",
+    methods=["POST"]
+)
+@jwt_required()
+def upload_multiple():
+    subject_id = (
+        request.form.get(
+            "subject_id"
         )
-
-        if topics_to_delete:
-            progress_rows = get_learning_progress_for_user(
-                current_user_id
-            )
-
-            for row in progress_rows:
-                row_topic = _normalized_learning_topic(
-                    row.topic
-                )
-
-                if row_topic in topics_to_delete:
-                    db.session.delete(row)
-
-            db.session.commit()
-
+    )
+    if not subject_id:
+        return jsonify({
+            "success":
+                False,
+            "message":
+                "subject_id is required."
+        }), 400
+    current_user_id = get_current_user_id()
+    subjects = filter_subjects_for_user(load_subjects(), current_user_id)
+    subject = next(
+        (
+            item
+            for item
+            in subjects
+            if item.get(
+                "id"
+            ) == subject_id
+        ),
+        None
+    )
+    if not subject:
+        return jsonify({
+            "success":
+                False,
+            "message":
+                "Subject not found or access denied."
+        }), 404
+    files = request.files.getlist(
+        "files"
+    )
+    if not files:
+        return jsonify({
+            "success":
+                False,
+            "message":
+                "No files were selected."
+        }), 400
+    documents = load_documents()
+    uploaded_documents = []
+    errors = []
+    for file in files:
+        if not file or not file.filename:
+            continue
+        if not allowed_file(
+            file.filename
+        ):
+            errors.append({
+                "filename":
+                    file.filename,
+                "message":
+                    "Unsupported file type."
+            })
+            continue
+        original_name = secure_filename(
+            file.filename
+        )
+        extension = (
+            original_name
+            .rsplit(
+                ".",
+                1
+            )[1]
+            .lower()
+        )
+        document_id = uuid4().hex
+        stored_name = (
+            f"{document_id}.{extension}"
+        )
+        file_path = os.path.join(
+            UPLOAD_FOLDER,
+            stored_name
+        )
         try:
-            study_sessions = load_study_session_counts()
-
-            user_sessions = study_sessions.get(
-                str(current_user_id),
-                {}
+            file.save(
+                file_path
             )
-
-            if isinstance(user_sessions, dict):
-                for topic in list(user_sessions.keys()):
-                    normalized_topic = _normalized_learning_topic(
-                        topic
-                    )
-
-                    if normalized_topic in topics_to_delete:
-                        del user_sessions[topic]
-
-                study_sessions[str(current_user_id)] = user_sessions
-                save_study_session_counts(study_sessions)
-
+            pages = extract_pages(
+                file_path,
+                extension
+            )
+            analysis = analyze_document(
+                pages
+            )
+            document = {
+                "id":
+                    document_id,
+                "name":
+                    original_name,
+                "original_name":
+                    original_name,
+                "stored_name":
+                    stored_name,
+                "type":
+                    extension,
+                "user_id":
+                    current_user_id,
+                "subject_id":
+                    subject_id,
+                "subject_name":
+                    subject[
+                        "name"
+                    ],
+                "page_count":
+                    len(pages),
+                "pages":
+                    pages,
+                "summary":
+                    analysis[
+                        "summary"
+                    ],
+                "topics":
+                    analysis[
+                        "topics"
+                    ],
+                "word_count":
+                    analysis[
+                        "word_count"
+                    ],
+                "character_count":
+                    analysis[
+                        "character_count"
+                    ]
+            }
+            documents.append(
+                document
+            )
+            uploaded_documents.append(
+                document
+            )
         except Exception as error:
             print(
-                "SUBJECT STUDY SESSION DELETE ERROR:",
+                "MULTIPLE UPLOAD ERROR:",
                 repr(error)
             )
-
-        all_subjects = load_subjects()
-
-        remaining_subjects = [
+            if os.path.exists(
+                file_path
+            ):
+                try:
+                    os.remove(
+                        file_path
+                    )
+                except Exception:
+                    pass
+            errors.append({
+                "filename":
+                    original_name,
+                "message":
+                    str(error)
+            })
+    save_documents(
+        documents
+    )
+    return jsonify({
+        "success":
+            len(
+                uploaded_documents
+            ) > 0,
+        "message":
+            (
+                f"{len(uploaded_documents)} "
+                f"document(s) uploaded."
+            ),
+        "documents":
+            uploaded_documents,
+        "errors":
+            errors
+    })
+@app.route(
+    "/api/subjects/<subject_id>/documents",
+    methods=["GET"]
+)
+@jwt_required()
+def get_subject_documents(
+    subject_id
+):
+    current_user_id = get_current_user_id()
+    subjects = filter_subjects_for_user(load_subjects(), current_user_id)
+    subject = next(
+        (
             item
-            for item in all_subjects
-            if not (
-                item.get("id") == subject_id
-                and _same_user(
-                    item.get("user_id"),
-                    current_user_id
-                )
-            )
-        ]
+            for item
+            in subjects
+            if item.get(
+                "id"
+            ) == subject_id
+        ),
+        None
+    )
+    if not subject:
+        return jsonify({
+            "success":
+                False,
+            "message":
+                "Subject not found or access denied."
+        }), 404
+    documents = filter_documents_for_user(load_documents(), current_user_id)
+    subject_documents = [
+        document
+        for document
+        in documents
+        if document.get(
+            "subject_id"
+        ) == subject_id
+    ]
+    return jsonify({
+        "success":
+            True,
+        "subject":
+            subject,
+        "documents":
+            subject_documents
+    })
+@app.route(
+    "/api/learning/session",
+    methods=["POST"]
+)
+@jwt_required()
+def record_learning_session():
+    try:
+        data = request.get_json(silent=True) or {}
+        user_id = get_current_user_id()
+        topic = str(data.get("topic") or "General").strip() or "General"
+        try:
+            study_minutes = int(data.get("study_minutes", 0))
+        except (TypeError, ValueError):
+            study_minutes = 0
 
-        save_subjects(remaining_subjects)
+        if study_minutes < 1 or study_minutes > 720:
+            return jsonify({
+                "success": False,
+                "message": "study_minutes must be between 1 and 720."
+            }), 400
+
+        progress = update_learning_progress(
+            user_id=user_id,
+            topic=topic,
+            study_minutes=study_minutes,
+        )
+        db.session.commit()
+
+        rows = get_learning_progress_for_user(user_id)
+        total_minutes = sum(int(row.study_minutes or 0) for row in rows)
 
         return jsonify({
             "success": True,
-            "message": "Subject and all related learning data deleted successfully."
-        }), 200
-
+            "message": "Learning session recorded.",
+            "progress": {
+                "topic": progress.topic,
+                "mastery_score": progress.mastery_score,
+                "study_minutes": progress.study_minutes,
+                "last_studied": (
+                    progress.last_studied.isoformat()
+                    if progress.last_studied else None
+                ),
+            },
+            "study_hours": round(total_minutes / 60, 1),
+            "learning_streak": calculate_learning_streak(rows),
+        }), 201
     except Exception as error:
         db.session.rollback()
-
-        print(
-            "SUBJECT DELETE ERROR:",
-            repr(error)
-        )
-
+        print("LEARNING SESSION ERROR:", repr(error))
         return jsonify({
             "success": False,
-            "message": "Unable to delete subject.",
+            "message": "Unable to record learning session.",
             "error": str(error)
         }), 500
+
 @app.route(
     "/api/learning/progress",
     methods=["GET"]
@@ -2607,109 +2759,15 @@ def get_learning_progress():
             "questions_attempted": int(row.questions_attempted or 0),
             "questions_correct": int(row.questions_correct or 0),
             "study_minutes": int(row.study_minutes or 0),
-            "study_sessions": get_study_session_count(user_id, row.topic),
             "last_studied": (
                 row.last_studied.isoformat()
                 if row.last_studied else None
             ),
         } for row in rows]
 
-        # Build subject-wise learning data without changing the existing
-        # LearningProgress table. Topics are mapped to subjects using the
-        # user's uploaded document topics first, then quiz question topics.
-        subjects = filter_subjects_for_user(
-            load_subjects(),
-            user_id,
-        )
-        documents = filter_documents_for_user(
-            load_documents(),
-            user_id,
-        )
-        quizzes = filter_quizzes_for_user(
-            load_quizzes(),
-            user_id,
-        )
-
-        subject_topic_map = {}
-        topic_subject_candidates = {}
-
-        for subject in subjects:
-            subject_id = subject.get("id")
-            subject_topic_map[subject_id] = set()
-
-        for document in documents:
-            subject_id = document.get("subject_id")
-            if subject_id not in subject_topic_map:
-                continue
-            for topic in document.get("topics", []):
-                if isinstance(topic, dict):
-                    topic_name = str(topic.get("name") or "").strip()
-                else:
-                    topic_name = str(topic or "").strip()
-                if topic_name:
-                    key = topic_name.lower()
-                    subject_topic_map[subject_id].add(key)
-                    topic_subject_candidates.setdefault(key, []).append(subject_id)
-
-        for quiz in quizzes:
-            subject_id = quiz.get("subject_id")
-            if subject_id not in subject_topic_map:
-                continue
-            for question in quiz.get("questions", []):
-                topic_name = str(question.get("topic") or "").strip()
-                if topic_name:
-                    key = topic_name.lower()
-                    subject_topic_map[subject_id].add(key)
-                    topic_subject_candidates.setdefault(key, []).append(subject_id)
-
-        subject_progress = []
-        for subject in subjects:
-            subject_id = subject.get("id")
-            learned = []
-            weak = []
-
-            for row in rows:
-                topic_key = str(row.topic or "General").strip().lower()
-                candidates = topic_subject_candidates.get(topic_key, [])
-                belongs = subject_id in candidates
-
-                if not belongs and topic_key in subject_topic_map.get(subject_id, set()):
-                    belongs = True
-
-                if not belongs:
-                    continue
-
-                item = {
-                    "id": row.id,
-                    "topic": row.topic,
-                    "mastery_score": round(float(row.mastery_score or 0), 1),
-                    "questions_attempted": int(row.questions_attempted or 0),
-                    "questions_correct": int(row.questions_correct or 0),
-                    "study_minutes": int(row.study_minutes or 0),
-                    "last_studied": (
-                        row.last_studied.isoformat()
-                        if row.last_studied else None
-                    ),
-                }
-                learned.append(item)
-                if int(row.questions_attempted or 0) > 0:
-                    weak.append(item)
-
-            subject_progress.append({
-                "id": subject_id,
-                "name": subject.get("name", "Unnamed Subject"),
-                "description": subject.get("description", ""),
-                "learned_topics": learned,
-                "weak_topics": sorted(
-                    weak,
-                    key=lambda item: float(item.get("mastery_score") or 0),
-                )[:3],
-            })
-
         return jsonify({
             "success": True,
             "progress": progress,
-            "subjects": subject_progress,
             "learning_streak": calculate_learning_streak(rows),
             "study_hours": round(
                 sum(int(row.study_minutes or 0) for row in rows) / 60,
@@ -2722,296 +2780,6 @@ def get_learning_progress():
             "success": False,
             "message": "Unable to get learning progress.",
             "error": str(error)
-        }), 500
-
-
-def _normalized_learning_topic(value):
-    return str(value or "").strip().casefold()
-
-
-def _document_topic_name(topic):
-    if isinstance(topic, dict):
-        return str(topic.get("name") or "").strip()
-    return str(topic or "").strip()
-
-
-def build_learning_insights(user_id):
-    """Build user-scoped graph and plan data from existing learning records."""
-    subjects = filter_subjects_for_user(load_subjects(), user_id)
-    documents = filter_documents_for_user(load_documents(), user_id)
-    quizzes = filter_quizzes_for_user(load_quizzes(), user_id)
-    progress_rows = get_learning_progress_for_user(user_id)
-
-    subjects_by_id = {
-        subject.get("id"): subject
-        for subject in subjects
-        if subject.get("id") is not None
-    }
-    topic_entries = {}
-    topic_subject_candidates = {}
-    document_details = {}
-
-    def add_topic(topic_name, subject_id=None, document=None):
-        name = str(topic_name or "").strip()[:255]
-        normalized = _normalized_learning_topic(name)
-        if not normalized:
-            return None
-
-        if subject_id not in subjects_by_id:
-            subject_id = None
-            subject_name = "Independent learning"
-            subject_key = "independent"
-        else:
-            subject_name = str(subjects_by_id[subject_id].get("name") or "Subject")
-            subject_key = str(subject_id)
-
-        key = f"{subject_key}:{normalized}"
-        entry = topic_entries.setdefault(key, {
-            "key": key,
-            "topic": name,
-            "subject_id": subject_id,
-            "subject_name": subject_name,
-            "document_ids": set(),
-            "document_names": set(),
-            "progress": None,
-        })
-
-        if subject_id is not None:
-            candidates = topic_subject_candidates.setdefault(normalized, [])
-            if subject_id not in candidates:
-                candidates.append(subject_id)
-
-        if document:
-            document_id = str(document.get("id") or "")
-            document_name = str(
-                document.get("name")
-                or document.get("original_name")
-                or "Study material"
-            ).strip()
-            if document_id:
-                entry["document_ids"].add(document_id)
-                document_details.setdefault(document_id, {
-                    "id": document_id,
-                    "name": document_name or "Study material",
-                    "subject_id": subject_id,
-                })
-            if document_name:
-                entry["document_names"].add(document_name)
-        return entry
-
-    for document in documents:
-        subject_id = document.get("subject_id")
-        document_has_topic = False
-        for topic in document.get("topics", []):
-            if add_topic(_document_topic_name(topic), subject_id, document):
-                document_has_topic = True
-
-        if not document_has_topic and subject_id in subjects_by_id:
-            document_id = str(document.get("id") or "")
-            if document_id:
-                document_details.setdefault(document_id, {
-                    "id": document_id,
-                    "name": str(
-                        document.get("name")
-                        or document.get("original_name")
-                        or "Study material"
-                    ).strip() or "Study material",
-                    "subject_id": subject_id,
-                })
-
-    for quiz in quizzes:
-        subject_id = quiz.get("subject_id")
-        for question in quiz.get("questions", []):
-            add_topic(question.get("topic"), subject_id)
-
-    for row in progress_rows:
-        topic_name = str(row.topic or "General").strip()[:255] or "General"
-        normalized = _normalized_learning_topic(topic_name)
-        candidates = topic_subject_candidates.get(normalized, [])
-        entry = add_topic(topic_name, candidates[0] if candidates else None)
-        if entry is None:
-            continue
-        entry["progress"] = {
-            "mastery_score": round(float(row.mastery_score or 0), 1),
-            "questions_attempted": int(row.questions_attempted or 0),
-            "questions_correct": int(row.questions_correct or 0),
-            "study_minutes": int(row.study_minutes or 0),
-            "last_studied": row.last_studied,
-        }
-
-    plan_candidates = []
-    for entry in topic_entries.values():
-        progress = entry["progress"] or {}
-        mastery = max(0, min(100, float(progress.get("mastery_score") or 0)))
-        attempted = int(progress.get("questions_attempted") or 0)
-        correct = int(progress.get("questions_correct") or 0)
-        study_minutes = int(progress.get("study_minutes") or 0)
-        last_studied = progress.get("last_studied")
-        days_since_studied = None
-        if last_studied:
-            try:
-                days_since_studied = max(0, (datetime.utcnow() - last_studied).days)
-            except TypeError:
-                days_since_studied = None
-
-        no_activity = attempted == 0 and study_minutes == 0
-        if attempted and mastery < 60:
-            action = "Strengthen weak area"
-            recommended_minutes = 30
-            reason = (
-                f"Your mastery is {round(mastery)}% across {attempted} quiz question"
-                f"{'s' if attempted != 1 else ''}."
-            )
-            priority = 145 - mastery
-        elif no_activity:
-            action = "Start this topic"
-            recommended_minutes = 25
-            source_text = next(iter(entry["document_names"]), "your uploaded material")
-            reason = f"{source_text} includes this topic, with no recorded study session yet."
-            priority = 120
-        elif days_since_studied is not None and days_since_studied >= 7:
-            action = "Refresh and retain"
-            recommended_minutes = 20
-            reason = f"You last studied this {days_since_studied} days ago."
-            priority = 100 + min(days_since_studied, 30)
-        elif mastery < 75:
-            action = "Build confidence"
-            recommended_minutes = 25
-            reason = f"Current mastery is {round(mastery)}%; a short review can move it forward."
-            priority = 90 - mastery
-        else:
-            action = "Consolidate"
-            recommended_minutes = 15
-            reason = "A quick retrieval practice session will help preserve this strength."
-            priority = 10
-
-        plan_candidates.append({
-            "topic": entry["topic"],
-            "subject_id": entry["subject_id"],
-            "subject_name": entry["subject_name"],
-            "action": action,
-            "recommended_minutes": recommended_minutes,
-            "reason": reason,
-            "mastery_score": round(mastery, 1),
-            "questions_attempted": attempted,
-            "questions_correct": correct,
-            "study_minutes": study_minutes,
-            "last_studied": last_studied.isoformat() if last_studied else None,
-            "document_names": sorted(entry["document_names"])[:3],
-            "priority": priority,
-        })
-
-    plan_candidates.sort(
-        key=lambda item: (-item["priority"], item["subject_name"].casefold(), item["topic"].casefold())
-    )
-    plan_items = plan_candidates[:4]
-    for item in plan_items:
-        item.pop("priority", None)
-
-    graph_nodes = []
-    graph_edges = []
-    for subject in subjects:
-        subject_id = subject.get("id")
-        graph_nodes.append({
-            "id": f"subject:{subject_id}",
-            "type": "subject",
-            "label": str(subject.get("name") or "Subject"),
-            "subject_id": subject_id,
-        })
-
-    graph_topics_by_subject = {}
-    for entry in topic_entries.values():
-        subject_key = entry["subject_id"] if entry["subject_id"] is not None else "independent"
-        graph_topics_by_subject.setdefault(subject_key, []).append(entry)
-
-    if graph_topics_by_subject.get("independent"):
-        graph_nodes.append({
-            "id": "subject:independent",
-            "type": "subject",
-            "label": "Independent learning",
-            "subject_id": None,
-        })
-
-    connected_document_ids = set()
-    for subject_key, entries in graph_topics_by_subject.items():
-        subject_node_id = f"subject:{subject_key}"
-        for entry in sorted(entries, key=lambda item: item["topic"].casefold())[:10]:
-            topic_node_id = f"topic:{entry['key']}"
-            progress = entry["progress"] or {}
-            graph_nodes.append({
-                "id": topic_node_id,
-                "type": "topic",
-                "label": entry["topic"],
-                "subject_id": entry["subject_id"],
-                "subject_name": entry["subject_name"],
-                "mastery_score": round(float(progress.get("mastery_score") or 0), 1),
-                "study_minutes": int(progress.get("study_minutes") or 0),
-                "questions_attempted": int(progress.get("questions_attempted") or 0),
-            })
-            graph_edges.append({"source": subject_node_id, "target": topic_node_id})
-            for document_id in sorted(entry["document_ids"])[:3]:
-                connected_document_ids.add(document_id)
-                graph_edges.append({"source": topic_node_id, "target": f"document:{document_id}"})
-
-    for document_id in connected_document_ids:
-        document = document_details.get(document_id)
-        if not document:
-            continue
-        graph_nodes.append({
-            "id": f"document:{document_id}",
-            "type": "document",
-            "label": document["name"],
-            "subject_id": document["subject_id"],
-        })
-
-    for document in document_details.values():
-        if document["id"] in connected_document_ids:
-            continue
-        graph_nodes.append({
-            "id": f"document:{document['id']}",
-            "type": "document",
-            "label": document["name"],
-            "subject_id": document["subject_id"],
-        })
-        graph_edges.append({
-            "source": f"subject:{document['subject_id']}",
-            "target": f"document:{document['id']}",
-        })
-
-    return {
-        "graph": {
-            "nodes": graph_nodes,
-            "edges": graph_edges,
-        },
-        "study_plan": {
-            "items": plan_items,
-            "total_minutes": sum(item["recommended_minutes"] for item in plan_items),
-            "based_on": {
-                "subjects": len(subjects),
-                "documents": len(documents),
-                "tracked_topics": len(progress_rows),
-            },
-        },
-    }
-
-
-@app.route(
-    "/api/learning/insights",
-    methods=["GET"]
-)
-@jwt_required()
-def get_learning_insights():
-    try:
-        return jsonify({
-            "success": True,
-            **build_learning_insights(get_current_user_id()),
-        }), 200
-    except Exception as error:
-        print("LEARNING INSIGHTS ERROR:", repr(error))
-        return jsonify({
-            "success": False,
-            "message": "Unable to build learning insights.",
-            "error": str(error),
         }), 500
 
 @app.route(
@@ -3038,7 +2806,6 @@ def generate_quiz():
         subject_id = data.get(
             "subject_id"
         )
-        target_topic = str(data.get("topic") or "").strip()
         document_ids = data.get(
             "document_ids",
             []
@@ -3056,12 +2823,12 @@ def generate_quiz():
             )
             .lower()
         )
-        if not subject_id and not target_topic:
+        if not subject_id:
             return jsonify({
                 "success":
                     False,
                 "message":
-                    "subject_id or topic is required."
+                    "subject_id is required."
             }), 400
         question_count = max(
             5,
@@ -3071,27 +2838,6 @@ def generate_quiz():
             )
         )
         subjects = filter_subjects_for_user(load_subjects(), current_user_id)
-
-        if not subject_id and target_topic:
-            user_documents = filter_documents_for_user(load_documents(), current_user_id)
-            topic_lower = target_topic.lower()
-            matching_document = None
-            for candidate in user_documents:
-                topic_names = [
-                    str(item.get("name", "")).lower()
-                    for item in candidate.get("topics", [])
-                    if isinstance(item, dict)
-                ]
-                page_text = " ".join(
-                    str(page.get("text", ""))
-                    for page in candidate.get("pages", [])
-                ).lower()
-                if any(topic_lower in name for name in topic_names) or topic_lower in page_text:
-                    matching_document = candidate
-                    break
-            if matching_document:
-                subject_id = matching_document.get("subject_id")
-
         subject = next(
             (
                 item
@@ -3119,27 +2865,6 @@ def generate_quiz():
                 "subject_id"
             ) == subject_id
         ]
-        if target_topic:
-            topic_lower = target_topic.lower()
-            filtered_documents = []
-            for document in subject_documents:
-                matching_pages = []
-                for page in document.get("pages", []):
-                    page_text = str(page.get("text", ""))
-                    if topic_lower in page_text.lower():
-                        matching_pages.append(page)
-                topic_names = [
-                    str(item.get("name", ""))
-                    for item in document.get("topics", [])
-                    if isinstance(item, dict)
-                ]
-                if matching_pages or any(topic_lower in name.lower() for name in topic_names):
-                    document_copy = dict(document)
-                    if matching_pages:
-                        document_copy["pages"] = matching_pages
-                    filtered_documents.append(document_copy)
-            if filtered_documents:
-                subject_documents = filtered_documents
         if document_ids:
             subject_documents = [
                 document
@@ -3197,13 +2922,10 @@ Difficulty:
 {difficulty}
 Number of questions:
 {question_count}
-Target topic:
-{target_topic or "General"}
 STRICT RULES:
 1. Questions must be based ONLY
    on the supplied study material.
-2. When a Target topic is provided, keep the questions focused on that topic.
-3. Do not invent facts.
+2. Do not invent facts.
 3. Each question must have exactly
    four options.
 4. Exactly one option must be correct.
