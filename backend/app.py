@@ -1074,144 +1074,67 @@ STUDENT QUESTION:
 Answer the student's question now.
 """
     # RETRY CONFIGURATION
-    max_retries = 4
-    last_error = None
-    for attempt in range(
-        max_retries
-    ):
-        try:
-            print(
-                f"Gemini request "
-                f"attempt {attempt + 1}/"
-                f"{max_retries}"
-            )
-            response = (
-                generate_grounded_response(
-                    client,
-                    prompt,
-                    enable_web_grounding=enable_web_grounding
-                )
-            )
+        # AI ROUTER
+    try:
+        ai_result = generate_ai_response(
+            task="document_analysis",
+            prompt=prompt
+        )
+        answer = ai_result.get(
+            "answer",
+            ""
+        )
+        if not answer:
             answer = (
-                response.text
-                if response
-                else ""
+                "I could not generate "
+                "an answer from this document."
             )
-            if not answer:
-                answer = (
-                    "I could not generate "
-                    "an answer from this document."
+        if enable_web_grounding:
+            answer = clean_voice_answer(
+                answer
+            )
+            sources = []
+        else:
+            answer = clean_ai_answer(
+                answer
+            )
+            sources = (
+                extract_page_references(
+                    answer,
+                    available_pages
                 )
-            if enable_web_grounding:
-                answer = clean_voice_answer(
-                    answer
-                )
-                sources = []
-            else:
-                answer = clean_ai_answer(
-                    answer
-                )
-                sources = (
-                    extract_page_references(
-                        answer,
-                        available_pages
-                    )
-                )
-                # If Gemini didn't provide
-                # references, provide the
-                # relevant pages ourselves.
-                if not sources:
-                    sources = [
-                        {
-                            "page":
-                            page["page"]
-                        }
-                        for page
-                        in relevant_pages[:3]
-                    ]
-            return (
-                answer,
-                sources
             )
-        except Exception as error:
-            last_error = error
-            error_text = str(
-                error
-            ).lower()
-            print()
-            print(
-                "--------------------------------"
-            )
-            print(
-                "GEMINI ERROR"
-            )
-            print(
-                error
-            )
-            print(
-                "--------------------------------"
-            )
-            # TEMPORARY GEMINI ERRORS
-            is_temporary_error = (
-                "503"
-                in error_text
-                or
-                "unavailable"
-                in error_text
-                or
-                "overloaded"
-                in error_text
-                or
-                "temporarily"
-                in error_text
-                or
-                "high demand"
-                in error_text
-                or
-                "429"
-                in error_text
-                or
-                "resource exhausted"
-                in error_text
-            )
-            # NON-RETRYABLE ERROR
-            if not is_temporary_error:
-                raise RuntimeError(
-                    f"Gemini request failed: "
-                    f"{error}"
-                )
-            # LAST ATTEMPT
-            if attempt >= (
-                max_retries - 1
-            ):
-                break
-            # EXPONENTIAL BACKOFF
-            delay = (
-                2 ** attempt
-            )
-            jitter = random.uniform(
-                0,
-                1
-            )
-            total_delay = (
-                delay + jitter
-            )
-            print(
-                "Gemini is temporarily "
-                "unavailable."
-            )
-            print(
-                f"Retrying in "
-                f"{total_delay:.1f} seconds..."
-            )
-            time.sleep(
-                total_delay
-            )
-    # FINAL ERROR
-    raise RuntimeError(
-        f"Gemini request failed after {max_retries} attempts: "
-        f"{last_error}"
-    ) from last_error
+            # If the AI provider didn't provide
+            # references, provide relevant pages.
+            if not sources:
+                sources = [
+                    {
+                        "page": page["page"]
+                    }
+                    for page
+                    in relevant_pages[:3]
+                ]
+        return (
+            answer,
+            sources
+        )
+    except Exception as error:
+        print()
+        print(
+            "--------------------------------"
+        )
+        print(
+            "AI ROUTER ERROR"
+        )
+        print(
+            error
+        )
+        print(
+            "--------------------------------"
+        )
+        raise RuntimeError(
+            f"AI request failed: {error}"
+        ) from error
 def get_learning_progress_for_user(user_id):
     return (
         LearningProgress.query
