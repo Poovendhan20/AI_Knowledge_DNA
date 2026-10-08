@@ -131,10 +131,15 @@ function SubjectManager() {
   // LOAD SUBJECT DOCUMENTS
   // =====================================================
   const loadSubjectDocuments = async (
-    subjectId
+    subjectId,
+    {
+      preserveCurrentDocuments = false,
+    } = {}
   ) => {
     if (!subjectId) {
-      setDocuments([]);
+      if (!preserveCurrentDocuments) {
+        setDocuments([]);
+      }
       return;
     }
     try {
@@ -147,7 +152,7 @@ function SubjectManager() {
         setDocuments(
           result.documents || []
         );
-      } else {
+      } else if (!preserveCurrentDocuments) {
         setDocuments([]);
       }
     } catch (error) {
@@ -155,7 +160,9 @@ function SubjectManager() {
         "Unable to load subject documents:",
         error
       );
-      setDocuments([]);
+      if (!preserveCurrentDocuments) {
+        setDocuments([]);
+      }
       showMessage(
         "Unable to load study materials.",
         "error"
@@ -331,28 +338,57 @@ function SubjectManager() {
       return;
     }
     try {
+      const subjectId = selectedSubject.id;
+
       setUploading(true);
       setMessage("");
       const result =
         await uploadMultipleDocuments(
-          selectedSubject.id,
+          subjectId,
           selectedFiles
         );
       if (result?.success) {
+        const uploadedDocuments =
+          result.documents || [];
+        const uploadedIds = new Set(
+          uploadedDocuments
+            .map((document) => document?.id)
+            .filter(Boolean)
+        );
+
+        setDocuments((currentDocuments) => [
+          ...currentDocuments.filter(
+            (document) =>
+              !uploadedIds.has(document?.id)
+          ),
+          ...uploadedDocuments,
+        ]);
         setSelectedFiles([]);
         if (fileInputRef.current) {
           fileInputRef.current.value =
             "";
         }
         await loadSubjectDocuments(
-          selectedSubject.id
+          subjectId,
+          {
+            preserveCurrentDocuments: true,
+          }
         );
         await loadSubjects(
-          selectedSubject.id
+          subjectId
         );
+
+        const failedFiles = result.errors || [];
+        const failedMessage =
+          failedFiles.length > 0
+            ? ` ${failedFiles.length} file(s) could not be uploaded.`
+            : "";
+
         showMessage(
-          result.message ||
-          "Study materials uploaded successfully.",
+          `${
+            result.message ||
+            "Study materials uploaded successfully."
+          }${failedMessage}`,
           "success"
         );
       } else {
@@ -906,6 +942,17 @@ function SubjectManager() {
                       </p>
                     </div>
                   </div>
+                  <button
+                    type="button"
+                    className="sdna-upload-button"
+                    onClick={() =>
+                      fileInputRef.current?.click()
+                    }
+                    disabled={uploading}
+                  >
+                    <FaPlus />
+                    Upload Materials
+                  </button>
                 </div>
                 {/* HIDDEN FILE INPUT */}
                 <input

@@ -3,6 +3,7 @@ import re
 import json
 import time
 import random
+from datetime import datetime
 from uuid import uuid4
 from collections import Counter
 from flask import (
@@ -12,6 +13,7 @@ from flask import (
     send_from_directory,
 )
 from flask_cors import CORS
+from werkzeug.exceptions import RequestEntityTooLarge
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
 from pypdf import PdfReader
@@ -165,6 +167,16 @@ ALLOWED_EXTENSIONS = {
     "jpeg",
     "webp",
 }
+
+
+@app.errorhandler(RequestEntityTooLarge)
+def handle_request_too_large(error):
+    return jsonify({
+        "success": False,
+        "message": (
+            "Each uploaded file must be 25 MB or smaller."
+        )
+    }), 413
 STOP_WORDS = {
     "about",
     "after",
@@ -329,6 +341,31 @@ def filter_documents_for_user(documents, user_id):
         if isinstance(document, dict)
         and _same_user(document.get("user_id"), user_id)
     ]
+
+
+def document_list_item(document):
+    """Return the document fields the material list needs, without page text."""
+    name = document.get("name", "Study Material")
+    original_name = document.get("original_name", name)
+    file_type = document.get("type", "")
+
+    return {
+        "id": document.get("id"),
+        "name": name,
+        "filename": document.get("filename", original_name),
+        "original_name": original_name,
+        "stored_name": document.get("stored_name"),
+        "type": file_type,
+        "file_type": document.get("file_type", file_type),
+        "file_size": document.get("file_size", 0),
+        "subject_id": document.get("subject_id"),
+        "status": document.get("status", "uploaded"),
+        "uploaded_at": document.get("uploaded_at"),
+        "page_count": document.get("page_count", 0),
+        "topics": document.get("topics", []),
+        "summary": document.get("summary", ""),
+        "word_count": document.get("word_count", 0),
+    }
 
 def filter_subjects_for_user(subjects, user_id):
     if user_id is None:
@@ -1539,12 +1576,24 @@ def upload_file():
             document_id,
         "name":
             original_name,
+        "filename":
+            original_name,
         "original_name":
             original_name,
         "stored_name":
             stored_name,
         "type":
             extension,
+        "file_type":
+            extension,
+        "file_size":
+            os.path.getsize(file_path),
+        "subject_id":
+            None,
+        "status":
+            "uploaded",
+        "uploaded_at":
+            datetime.utcnow().isoformat() + "Z",
         "page_count":
             len(pages),
         "pages":
@@ -1589,57 +1638,14 @@ def upload_file():
 def get_documents():
     current_user_id = get_current_user_id()
     documents = filter_documents_for_user(load_documents(), current_user_id)
-    result = []
-    for document in documents:
-        result.append({
-            "id":
-                document[
-                    "id"
-                ],
-            "name":
-                document[
-                    "name"
-                ],
-            "original_name":
-                document.get(
-                    "original_name",
-                    document[
-                        "name"
-                    ]
-                ),
-            "stored_name":
-                document.get(
-                    "stored_name"
-                ),
-            "type":
-                document[
-                    "type"
-                ],
-            "page_count":
-                document[
-                    "page_count"
-                ],
-            "topics":
-                document.get(
-                    "topics",
-                    []
-                ),
-            "summary":
-                document.get(
-                    "summary",
-                    ""
-                ),
-            "word_count":
-                document.get(
-                    "word_count",
-                    0
-                )
-        })
     return jsonify({
         "success":
             True,
         "documents":
-            result
+            [
+                document_list_item(document)
+                for document in documents
+            ]
     })
 @app.route(
     "/api/documents/<document_id>",
@@ -2487,12 +2493,18 @@ def upload_multiple():
                     document_id,
                 "name":
                     original_name,
+                "filename":
+                    original_name,
                 "original_name":
                     original_name,
                 "stored_name":
                     stored_name,
                 "type":
                     extension,
+                "file_type":
+                    extension,
+                "file_size":
+                    os.path.getsize(file_path),
                 "user_id":
                     current_user_id,
                 "subject_id":
@@ -2501,6 +2513,10 @@ def upload_multiple():
                     subject[
                         "name"
                     ],
+                "status":
+                    "uploaded",
+                "uploaded_at":
+                    datetime.utcnow().isoformat() + "Z",
                 "page_count":
                     len(pages),
                 "pages":
@@ -2562,7 +2578,10 @@ def upload_multiple():
                 f"document(s) uploaded."
             ),
         "documents":
-            uploaded_documents,
+            [
+                document_list_item(document)
+                for document in uploaded_documents
+            ],
         "errors":
             errors
     })
@@ -2609,7 +2628,10 @@ def get_subject_documents(
         "subject":
             subject,
         "documents":
-            subject_documents
+            [
+                document_list_item(document)
+                for document in subject_documents
+            ]
     })
 @app.route(
     "/api/learning/session",
