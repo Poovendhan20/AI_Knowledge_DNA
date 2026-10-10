@@ -266,18 +266,13 @@ function Dashboard() {
 
   };
 
-
-  // =========================================================
-
   // ==========================================================
   // LEARNING PROGRESS
   // ==========================================================
 
   const loadLearningProgress = async () => {
     try {
-      const response = await API.get(
-        "/learning/progress"
-      );
+      const response = await API.get("/learning/progress");
 
       if (response?.data?.success) {
         const progressRows = Array.isArray(response.data.progress)
@@ -290,24 +285,28 @@ function Dashboard() {
         setLearningProgress(progressRows);
         setSubjectProgress(subjects);
 
-        // Automatically select the first available subject so the
-        // learned/weak topics are visible immediately after refresh.
         setSelectedLearnedSubject((current) =>
           current && subjects.some((subject) => subject.id === current)
             ? current
             : (subjects[0]?.id || null)
         );
+
         setSelectedWeakSubject((current) =>
           current && subjects.some((subject) => subject.id === current)
             ? current
             : (subjects[0]?.id || null)
         );
+      } else {
+        setLearningProgress([]);
+        setSubjectProgress([]);
       }
     } catch (error) {
       console.error(
         "Learning progress error:",
         error
       );
+      setLearningProgress([]);
+      setSubjectProgress([]);
     }
   };
 
@@ -363,8 +362,6 @@ function Dashboard() {
       );
     }
   };
-
-
 
   // INITIAL LOAD
 

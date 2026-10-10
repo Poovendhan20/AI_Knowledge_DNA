@@ -1113,8 +1113,9 @@ Answer the student's question now.
     # RETRY CONFIGURATION
         # AI ROUTER
     try:
+        task = "voice" if enable_web_grounding else "document_analysis"
         ai_result = generate_ai_response(
-            task="document_analysis",
+            task=task,
             prompt=prompt
         )
         answer = ai_result.get(
@@ -1263,6 +1264,92 @@ def update_learning_progress(
 
     progress.last_studied = datetime.utcnow()
     return progress
+
+def serialize_learning_progress_row(row):
+    return {
+        "id": row.id,
+        "topic": row.topic,
+        "mastery_score": round(float(row.mastery_score or 0), 1),
+        "questions_attempted": int(row.questions_attempted or 0),
+        "questions_correct": int(row.questions_correct or 0),
+        "study_minutes": int(row.study_minutes or 0),
+        "last_studied": (
+            row.last_studied.isoformat()
+            if row.last_studied else None
+        ),
+    }
+
+def extract_topic_name(topic):
+    if isinstance(topic, str):
+        return topic.strip()
+    if isinstance(topic, dict):
+        return str(topic.get("name") or topic.get("topic") or "").strip()
+    return ""
+
+def build_subjects_with_progress(user_id, progress_payload):
+    subjects = filter_subjects_for_user(load_subjects(), user_id)
+    documents = filter_documents_for_user(load_documents(), user_id)
+    quizzes = filter_quizzes_for_user(load_quizzes(), user_id)
+
+    progress_by_key = {}
+    for item in progress_payload:
+        topic_key = str(item.get("topic") or "").strip().lower()
+        if topic_key:
+            progress_by_key[topic_key] = item
+
+    result = []
+    for subject in subjects:
+        subject_id = subject.get("id")
+        subject_name = subject.get("name", "Subject")
+        topic_keys = {}
+
+        for document in documents:
+            if document.get("subject_id") != subject_id:
+                continue
+            for topic in document.get("topics") or []:
+                topic_name = extract_topic_name(topic)
+                if topic_name:
+                    topic_keys[topic_name.lower()] = topic_name
+
+        for quiz in quizzes:
+            if quiz.get("subject_id") != subject_id:
+                continue
+            quiz_topic = extract_topic_name(quiz.get("topic"))
+            if quiz_topic:
+                topic_keys[quiz_topic.lower()] = quiz_topic
+            for question in quiz.get("questions") or []:
+                question_topic = extract_topic_name(
+                    question.get("topic") if isinstance(question, dict) else question
+                )
+                if question_topic:
+                    topic_keys[question_topic.lower()] = question_topic
+
+        learned_topics = []
+        for topic_key, topic_name in topic_keys.items():
+            row = progress_by_key.get(topic_key)
+            if not row:
+                continue
+            learned_topics.append({
+                **row,
+                "topic": row.get("topic") or topic_name,
+                "subject_id": subject_id,
+                "subject_name": subject_name,
+            })
+
+        weak_topics = [
+            item for item in learned_topics
+            if int(item.get("questions_attempted") or 0) > 0
+            and float(item.get("mastery_score") or 0) < 70
+        ]
+        weak_topics.sort(key=lambda item: float(item.get("mastery_score") or 0))
+
+        result.append({
+            **subject,
+            "learned_topics": learned_topics,
+            "weak_topics": weak_topics,
+        })
+
+    return result
 
 @app.route(
     "/",
@@ -2697,22 +2784,16 @@ def get_learning_progress():
     try:
         user_id = get_current_user_id()
         rows = get_learning_progress_for_user(user_id)
-        progress = [{
-            "id": row.id,
-            "topic": row.topic,
-            "mastery_score": round(float(row.mastery_score or 0), 1),
-            "questions_attempted": int(row.questions_attempted or 0),
-            "questions_correct": int(row.questions_correct or 0),
-            "study_minutes": int(row.study_minutes or 0),
-            "last_studied": (
-                row.last_studied.isoformat()
-                if row.last_studied else None
-            ),
-        } for row in rows]
+        progress = [
+            serialize_learning_progress_row(row)
+            for row in rows
+        ]
+        subjects = build_subjects_with_progress(user_id, progress)
 
         return jsonify({
             "success": True,
             "progress": progress,
+            "subjects": subjects,
             "learning_streak": calculate_learning_streak(rows),
             "study_hours": round(
                 sum(int(row.study_minutes or 0) for row in rows) / 60,
@@ -2725,6 +2806,335 @@ def get_learning_progress():
             "success": False,
             "message": "Unable to get learning progress.",
             "error": str(error)
+        }), 500
+
+# ============================================================
+# PERSONALIZED LEARNING INSIGHTS / STUDY PLAN
+# ============================================================
+
+@app.route(
+    "/api/learning/insights",
+    methods=["GET"]
+)
+@jwt_required()
+def get_learning_insights():
+    try:
+        user_id = get_current_user_id()
+
+        progress_rows = get_learning_progress_for_user(user_id)
+
+        subjects = filter_subjects_for_user(
+            load_subjects(),
+            user_id
+        )
+
+        documents = filter_documents_for_user(
+            load_documents(),
+            user_id
+        )
+
+        quizzes = filter_quizzes_for_user(
+            load_quizzes(),
+            user_id
+        )
+
+        progress_map = {}
+
+        for row in progress_rows:
+            topic_key = str(
+                row.topic or ""
+            ).strip().lower()
+
+            if not topic_key:
+                continue
+
+            progress_map[topic_key] = {
+                "mastery_score": float(
+                    row.mastery_score or 0
+                ),
+                "questions_attempted": int(
+                    row.questions_attempted or 0
+                ),
+                "questions_correct": int(
+                    row.questions_correct or 0
+                ),
+                "study_minutes": int(
+                    row.study_minutes or 0
+                ),
+                "last_studied": (
+                    row.last_studied.isoformat()
+                    if row.last_studied
+                    else None
+                ),
+            }
+
+        topic_candidates = {}
+
+        for subject in subjects:
+            subject_id = subject.get("id")
+            subject_name = subject.get(
+                "name",
+                "Subject"
+            )
+
+            subject_documents = [
+                document
+                for document in documents
+                if document.get("subject_id") == subject_id
+            ]
+
+            for document in subject_documents:
+                document_topics = document.get(
+                    "topics",
+                    []
+                )
+
+                if not isinstance(
+                    document_topics,
+                    list
+                ):
+                    continue
+
+                for topic in document_topics:
+                    if isinstance(topic, str):
+                        topic_name = topic.strip()
+                    elif isinstance(topic, dict):
+                        topic_name = str(
+                            topic.get("name")
+                            or topic.get("topic")
+                            or ""
+                        ).strip()
+                    else:
+                        topic_name = ""
+
+                    if not topic_name:
+                        continue
+
+                    topic_key = topic_name.lower()
+
+                    if topic_key not in topic_candidates:
+                        topic_candidates[topic_key] = {
+                            "topic": topic_name,
+                            "subject_id": subject_id,
+                            "subject_name": subject_name,
+                        }
+
+        for quiz in quizzes:
+            subject_id = quiz.get("subject_id")
+            subject_name = next(
+                (s.get("name") for s in subjects if s.get("id") == subject_id),
+                "General"
+            )
+            quiz_topic = extract_topic_name(quiz.get("topic"))
+            if quiz_topic:
+                topic_key = quiz_topic.lower()
+                if topic_key not in topic_candidates:
+                    topic_candidates[topic_key] = {
+                        "topic": quiz_topic,
+                        "subject_id": subject_id,
+                        "subject_name": subject_name,
+                    }
+
+        # Also include topics already present in learning progress.
+        for row in progress_rows:
+            topic_name = str(
+                row.topic or ""
+            ).strip()
+
+            if not topic_name:
+                continue
+
+            topic_key = topic_name.lower()
+
+            if topic_key not in topic_candidates:
+                topic_candidates[topic_key] = {
+                    "topic": topic_name,
+                    "subject_id": None,
+                    "subject_name": "General",
+                }
+
+        plan_items = []
+
+        for topic_key, candidate in topic_candidates.items():
+
+            progress = progress_map.get(
+                topic_key,
+                {}
+            )
+
+            mastery = float(
+                progress.get(
+                    "mastery_score",
+                    0
+                )
+            )
+
+            attempted = int(
+                progress.get(
+                    "questions_attempted",
+                    0
+                )
+            )
+
+            study_minutes = int(
+                progress.get(
+                    "study_minutes",
+                    0
+                )
+            )
+
+            last_studied = progress.get(
+                "last_studied"
+            )
+
+            if mastery < 40:
+                recommended_minutes = 30
+                action = "Strengthen this concept"
+
+                if attempted > 0:
+                    reason = (
+                        "Your quiz mastery is low, "
+                        "so this topic needs focused practice."
+                    )
+                else:
+                    reason = (
+                        "You have not completed quiz "
+                        "questions for this topic yet."
+                    )
+
+            elif mastery < 70:
+                recommended_minutes = 25
+                action = "Practice and review"
+
+                reason = (
+                    "Your current mastery suggests "
+                    "that another focused review will help."
+                )
+
+            elif mastery < 85:
+                recommended_minutes = 20
+                action = "Review and reinforce"
+
+                reason = (
+                    "You understand the topic, "
+                    "but more practice can improve retention."
+                )
+
+            else:
+                recommended_minutes = 15
+                action = "Keep practicing"
+
+                reason = (
+                    "Your mastery is strong. "
+                    "A short review will help maintain it."
+                )
+
+            if not last_studied:
+                reason = (
+                    "This topic has not been studied yet. "
+                    "Start with a focused review."
+                )
+            elif study_minutes == 0 and attempted == 0:
+                reason = (
+                    "You have material available for this topic "
+                    "but no recorded learning activity yet."
+                )
+
+            plan_items.append({
+                "subject_id": candidate.get(
+                    "subject_id"
+                ),
+                "subject_name": candidate.get(
+                    "subject_name",
+                    "General"
+                ),
+                "topic": candidate.get(
+                    "topic"
+                ),
+                "mastery_score": round(
+                    mastery,
+                    1
+                ),
+                "questions_attempted": attempted,
+                "questions_correct": int(
+                    progress.get(
+                        "questions_correct",
+                        0
+                    )
+                ),
+                "study_minutes": study_minutes,
+                "last_studied": last_studied,
+                "recommended_minutes": recommended_minutes,
+                "action": action,
+                "reason": reason,
+            })
+
+        def plan_priority(item):
+            mastery = float(
+                item.get(
+                    "mastery_score",
+                    0
+                )
+            )
+
+            attempted = int(
+                item.get(
+                    "questions_attempted",
+                    0
+                )
+            )
+
+            last_studied = item.get(
+                "last_studied"
+            )
+
+            return (
+                mastery,
+                0 if attempted == 0 else 1,
+                0 if not last_studied else 1,
+            )
+
+        plan_items.sort(
+            key=plan_priority
+        )
+
+        # Keep today's plan focused.
+        plan_items = plan_items[:3]
+
+        total_minutes = sum(
+            int(
+                item.get(
+                    "recommended_minutes",
+                    0
+                )
+            )
+            for item in plan_items
+        )
+
+        return jsonify({
+            "success": True,
+            "study_plan": {
+                "total_minutes": total_minutes,
+                "items": plan_items,
+            }
+        }), 200
+
+    except Exception as error:
+        print(
+            "LEARNING INSIGHTS ERROR:",
+            repr(error)
+        )
+
+        return jsonify({
+            "success": False,
+            "message": (
+                "Unable to build your "
+                "personalized study plan."
+            ),
+            "study_plan": {
+                "total_minutes": 0,
+                "items": [],
+            }
         }), 500
 
 @app.route(
@@ -2751,6 +3161,11 @@ def generate_quiz():
         subject_id = data.get(
             "subject_id"
         )
+        
+        topic = str(
+            data.get("topic") or ""
+        ).strip()
+            
         document_ids = data.get(
             "document_ids",
             []
@@ -2819,6 +3234,58 @@ def generate_quiz():
                     "id"
                 ) in document_ids
             ]
+        # ========================================================
+        # OPTIONAL TARGET TOPIC FILTER
+        # ========================================================
+        if topic:
+            topic_key = topic.strip().lower()
+            topic_documents = []
+
+            for document in subject_documents:
+                document_topics = document.get(
+                    "topics",
+                    []
+                )
+                matched = False
+
+                if isinstance(
+                    document_topics,
+                    list
+                ):
+                    for document_topic in document_topics:
+                        if isinstance(
+                            document_topic,
+                            str
+                        ):
+                            topic_name = document_topic
+                        elif isinstance(
+                            document_topic,
+                            dict
+                        ):
+                            topic_name = (
+                                document_topic.get("name")
+                                or document_topic.get("topic")
+                                or ""
+                            )
+                        else:
+                            topic_name = ""
+
+                        if (
+                            str(topic_name)
+                            .strip()
+                            .lower()
+                            == topic_key
+                        ):
+                            matched = True
+                            break
+
+                if matched:
+                    topic_documents.append(
+                        document
+                    )
+
+            if topic_documents:
+                subject_documents = topic_documents
         if not subject_documents:
             return jsonify({
                 "success":
@@ -2867,6 +3334,13 @@ Difficulty:
 {difficulty}
 Number of questions:
 {question_count}
+TARGET TOPIC:
+{topic if topic else "All topics in the selected subject"}
+
+IMPORTANT TOPIC RULE:
+If TARGET TOPIC is provided, every question must test
+that topic only. Do not generate questions from unrelated
+topics in the subject.
 STRICT RULES:
 1. Questions must be based ONLY
    on the supplied study material.

@@ -170,6 +170,8 @@ function VoiceAssistant() {
 
   const recognitionRef = useRef(null);
 
+  const hasSubmittedFinalRef = useRef(false);
+
   const spokenPrefixRef = useRef("");
 
   const messagesEndRef = useRef(null);
@@ -422,260 +424,177 @@ function VoiceAssistant() {
 
 
 
-  const startListening = () => {
-
-    setSpeechError("");
-
-
-
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-
-
-    if (!SpeechRecognition) {
-
-      setSpeechSupported(false);
-
-      setSpeechError("Speech recognition is not available in this browser. You can still type your question.");
-
-      return;
-
-    }
-
-
-
-    stopSpeaking();
-
-    recognitionRef.current?.abort?.();
-
-
-
-    const recognition = new SpeechRecognition();
-
-    recognition.lang = language;
-
-    recognition.continuous = false;
-
-    recognition.interimResults = true;
-
-    spokenPrefixRef.current = input.trim();
-
-
-
-    recognition.onstart = () => setIsListening(true);
-
-    recognition.onend = () => setIsListening(false);
-
-    recognition.onerror = (event) => {
-
-      setIsListening(false);
-
-
-
-      if (event.error === "not-allowed" || event.error === "service-not-allowed") {
-
-        setSpeechError("Microphone permission was blocked. Allow microphone access and try again.");
-
-      } else if (event.error !== "aborted") {
-
-        setSpeechError("I could not hear that clearly. Please try again or type your question.");
-
-      }
-
-    };
-
-    recognition.onresult = (event) => {
-
-      let transcript = "";
-
-
-
-      for (let index = event.resultIndex; index < event.results.length; index += 1) {
-
-        transcript += event.results[index][0].transcript;
-
-      }
-
-
-
-      setInput([spokenPrefixRef.current, transcript.trim()].filter(Boolean).join(" "));
-
-    };
-
-
-
-    recognitionRef.current = recognition;
-
-    recognition.start();
-
-  };
-
-
-
   const stopListening = () => {
-
     recognitionRef.current?.stop?.();
-
   };
-
-
 
   const clearConversation = () => {
-
     if (!storageKey || !isHistoryReady) {
-
       return;
-
     }
-
-
 
     stopSpeaking();
-
     localStorage.removeItem(storageKey);
-
     setMessages([createWelcomeMessage(getDocumentName(selectedDocument))]);
-
     setInput("");
-
     setSpeechError("");
-
   };
 
-
-
-  const sendQuestion = async (event) => {
-
-    event?.preventDefault();
-
-
-
-    const question = input.trim();
-
-
-
-    if (!question || !selectedDocumentId || !isHistoryReady || isSending) {
-
-      return;
-
+  const sendQuestion = async (eventOrQuestion) => {
+    if (eventOrQuestion && typeof eventOrQuestion.preventDefault === "function") {
+      eventOrQuestion.preventDefault();
     }
 
+    const question = (
+      typeof eventOrQuestion === "string"
+        ? eventOrQuestion
+        : input
+    ).trim();
 
+    if (!question || !selectedDocumentId || !isHistoryReady || isSending) {
+      return;
+    }
 
     stopListening();
-
     setSpeechError("");
 
-
-
     const userMessage = {
-
       id: `user-${Date.now()}`,
-
       role: "user",
-
       content: question,
-
       sources: [],
-
     };
 
     const requestHistory = messages
-
       .filter((message) => !message.isWelcome)
-
       .slice(-MAX_REQUEST_HISTORY)
-
       .map(({ role, content }) => ({ role, content }));
 
-
-
     setMessages((currentMessages) => [...currentMessages, userMessage]);
-
     setInput("");
-
     setIsSending(true);
 
-
-
     try {
-
       const result = await chatWithDocument(
-
         selectedDocumentId,
-
         question,
-
         requestHistory,
-
         { voiceResponse: true }
-
       );
 
-      const answer = result?.answer || result?.response || result?.message || "I could not generate an answer from this study material.";
+      const answer =
+        result?.answer ||
+        result?.response ||
+        result?.message ||
+        "I could not generate an answer from this study material.";
 
       const assistantMessage = {
-
         id: `assistant-${Date.now()}`,
-
         role: "assistant",
-
         content: answer,
-
         sources: [],
-
       };
-
-
 
       setMessages((currentMessages) => [...currentMessages, assistantMessage]);
 
-
-
       if (autoSpeak) {
-
         speak(answer);
-
       }
-
     } catch (error) {
-
       const message =
-
         error?.response?.data?.message ||
-
         "I could not reach the AI assistant. Please check your connection and try again.";
 
-
-
       setSpeechError(message);
-
       setMessages((currentMessages) => [
-
         ...currentMessages,
-
         {
-
           id: `error-${Date.now()}`,
-
           role: "assistant",
-
           content: message,
-
           sources: [],
-
           isError: true,
-
         },
-
       ]);
-
     } finally {
-
       setIsSending(false);
+    }
+  };
 
+  const startListening = () => {
+    setSpeechError("");
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      setSpeechSupported(false);
+      setSpeechError("Speech recognition is not available in this browser. You can still type your question.");
+      return;
     }
 
+    stopSpeaking();
+    recognitionRef.current?.abort?.();
+    hasSubmittedFinalRef.current = false;
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = language;
+    recognition.continuous = false;
+    recognition.interimResults = true;
+    spokenPrefixRef.current = input.trim();
+
+    recognition.onstart = () => setIsListening(true);
+    recognition.onend = () => setIsListening(false);
+
+    recognition.onerror = (event) => {
+      console.error("Speech recognition error:", event?.error, event);
+      setIsListening(false);
+
+      if (event.error === "not-allowed" || event.error === "service-not-allowed") {
+        setSpeechError("Microphone permission was blocked. Allow microphone access and try again.");
+      } else if (event.error === "no-speech") {
+        setSpeechError("No speech detected. Please speak closer to the microphone or try again.");
+      } else if (event.error === "audio-capture") {
+        setSpeechError("No microphone was found or microphone is in use by another application.");
+      } else if (event.error === "network") {
+        setSpeechError("Network error occurred during speech recognition. Please check your connection.");
+      } else if (event.error === "aborted") {
+        // Recognition was aborted by user or replacement; ignore silently
+      } else {
+        setSpeechError("I could not hear that clearly. Please try again or type your question.");
+      }
+    };
+
+    recognition.onresult = (event) => {
+      let interimTranscript = "";
+      let finalTranscript = "";
+
+      for (let index = event.resultIndex; index < event.results.length; index += 1) {
+        const result = event.results[index];
+        const text = result?.[0]?.transcript || "";
+        if (result.isFinal) {
+          finalTranscript += text;
+        } else {
+          interimTranscript += text;
+        }
+      }
+
+      const spokenText = (finalTranscript || interimTranscript).trim();
+      const fullQuestion = [spokenPrefixRef.current, spokenText]
+        .filter(Boolean)
+        .join(" ")
+        .trim();
+
+      setInput(fullQuestion);
+
+      if (finalTranscript.trim() && !hasSubmittedFinalRef.current) {
+        hasSubmittedFinalRef.current = true;
+        recognition.stop();
+        sendQuestion(fullQuestion);
+      }
+    };
+
+    recognitionRef.current = recognition;
+    recognition.start();
   };
 
 
