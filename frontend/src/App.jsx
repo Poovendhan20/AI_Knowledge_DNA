@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {
   BrowserRouter,
+  Link,
   Navigate,
   Route,
   Routes,
@@ -16,6 +17,7 @@ import Quiz from "./features/quiz/Quiz";
 import VoiceAssistant from "./features/voice-assistant/VoiceAssistant";
 
 import { AuthProvider, useAuth } from "./context/AuthContext";
+import { ThemeProvider } from "./context/ThemeContext";
 
 
 /* =========================================================
@@ -115,9 +117,9 @@ function Login() {
 
         <p className="auth-switch">
           Don't have an account?{" "}
-          <a href="/register">
+          <Link to="/register">
             Create Account
-          </a>
+          </Link>
         </p>
 
       </div>
@@ -234,9 +236,9 @@ function Register() {
 
         <p className="auth-switch">
           Already have an account?{" "}
-          <a href="/login">
+          <Link to="/login">
             Login
-          </a>
+          </Link>
         </p>
 
       </div>
@@ -422,11 +424,11 @@ function AppRoutes() {
 function App() {
   return (
     <BrowserRouter>
-
-      <AuthProvider>
-        <AppRoutes />
-      </AuthProvider>
-
+      <ThemeProvider>
+        <AuthProvider>
+          <AppRoutes />
+        </AuthProvider>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }

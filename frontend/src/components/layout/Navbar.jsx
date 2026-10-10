@@ -11,14 +11,18 @@ import {
   FaUserCircle,
   FaChevronDown,
   FaSignOutAlt,
+  FaSun,
+  FaMoon,
 } from "react-icons/fa";
 import { useAuth } from "../../context/AuthContext";
+import { useTheme } from "../../context/ThemeContext";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
 
   const { user, isAuthenticated, logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
   const closeMenu = () => {
@@ -70,6 +74,17 @@ function Navbar() {
             <span>Voice Assistant</span>
           </Link>
         )}
+
+        {/* THEME TOGGLE (DESKTOP) */}
+        <button
+          type="button"
+          className="theme-toggle-button"
+          onClick={toggleTheme}
+          aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+        >
+          {theme === "dark" ? <FaSun className="theme-toggle-icon sun" /> : <FaMoon className="theme-toggle-icon moon" />}
+        </button>
 
         {!isAuthenticated ? (
           <>
@@ -198,6 +213,17 @@ function Navbar() {
             <span>Voice Assistant</span>
           </Link>
         )}
+
+        {/* MOBILE THEME TOGGLE */}
+        <button
+          type="button"
+          className="mobile-theme-toggle"
+          onClick={toggleTheme}
+          aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+        >
+          {theme === "dark" ? <FaSun /> : <FaMoon />}
+          <span>{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
+        </button>
 
         {!isAuthenticated ? (
           <>

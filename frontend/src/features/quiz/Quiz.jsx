@@ -11,7 +11,6 @@ import {
 import {
   FaCheck,
   FaArrowRight,
-  FaBrain,
 } from "react-icons/fa";
 
 import {

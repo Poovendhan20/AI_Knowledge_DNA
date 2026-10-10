@@ -962,29 +962,51 @@ function Dashboard() {
 
 
       {/* =====================================================
-
           LEARNED TOPICS
-
       ===================================================== */}
 
-      <section style={{ marginBottom: "24px", padding: "22px", borderRadius: "18px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
-        <div style={{ marginBottom: "16px" }}>
-          <h2 style={{ margin: 0 }}>Learned Topics</h2>
-          <p style={{ margin: "6px 0 0", opacity: 0.7 }}>Select a subject to see the topics you have studied in that subject.</p>
+      <section className="learned-topics-card">
+        <div className="learned-topics-header">
+          <h2>Learned Topics</h2>
+          <p>Select a subject to see the topics you have studied in that subject.</p>
         </div>
         {subjectProgress.length === 0 ? (
-          <p style={{ opacity: 0.7 }}>Add subjects and study materials to build your learned topics.</p>
+          <p style={{ color: "var(--text-muted)" }}>Add subjects and study materials to build your learned topics.</p>
         ) : (
           <>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: "18px" }}>
+            <div className="subject-filter-chips">
               {subjectProgress.map((subject) => (
-                <button key={subject.id} type="button" onClick={() => setSelectedLearnedSubject(subject.id)} style={SUBJECT_BUTTON_STYLE}>{subject.name}</button>
+                <button
+                  key={subject.id}
+                  type="button"
+                  onClick={() => setSelectedLearnedSubject(subject.id)}
+                  className={selectedLearnedSubject === subject.id ? "subject-chip-btn active" : "subject-chip-btn"}
+                >
+                  {subject.name}
+                </button>
               ))}
             </div>
             {(() => {
               const activeSubject = subjectProgress.find((subject) => subject.id === selectedLearnedSubject) || subjectProgress[0];
-              if (!activeSubject || !activeSubject.learned_topics?.length) return <p style={{ opacity: 0.7 }}>No learned topics yet for this subject.</p>;
-              return <div><h3 style={{ margin: "0 0 12px" }}>{activeSubject.name}</h3><div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "12px" }}>{activeSubject.learned_topics.map((item) => <button key={item.id || item.topic} type="button" onClick={() => setSelectedTopic({ ...item, subject_id: activeSubject.id, subject_name: activeSubject.name })} style={{ textAlign: "left", padding: "16px", borderRadius: "14px", border: "1px solid rgba(255,255,255,0.09)", background: "rgba(255,255,255,0.035)", color: "inherit", cursor: "pointer" }}><strong style={{ display: "block", marginBottom: "8px" }}>{item.topic || "Unknown Topic"}</strong><span style={{ opacity: 0.7, fontSize: "13px" }}>{Number(item.study_minutes || 0)} minutes studied</span></button>)}</div></div>;
+              if (!activeSubject || !activeSubject.learned_topics?.length) return <p style={{ color: "var(--text-muted)" }}>No learned topics yet for this subject.</p>;
+              return (
+                <div>
+                  <h3 style={{ margin: "0 0 12px", color: "var(--text-primary)", fontSize: "16px" }}>{activeSubject.name}</h3>
+                  <div className="learned-topics-grid">
+                    {activeSubject.learned_topics.map((item) => (
+                      <button
+                        key={item.id || item.topic}
+                        type="button"
+                        onClick={() => setSelectedTopic({ ...item, subject_id: activeSubject.id, subject_name: activeSubject.name })}
+                        className="learned-topic-item"
+                      >
+                        <strong>{item.topic || "Unknown Topic"}</strong>
+                        <span>{Number(item.study_minutes || 0)} minutes studied</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              );
             })()}
           </>
         )}
@@ -1180,16 +1202,61 @@ function Dashboard() {
 
 
         <div className="weak-concepts-card">
-          <div className="weak-concepts-header"><h2>Weak Concepts</h2><p>Select a subject to see the weak topics for that subject.</p></div>
+          <div className="weak-concepts-header">
+            <h2>Weak Concepts</h2>
+            <p>Select a subject to see the weak topics for that subject.</p>
+          </div>
           {subjectProgress.length === 0 ? (
-            <div className="weak-concept"><strong>No subjects available</strong><span>Add a subject and complete a quiz to identify weak concepts.</span></div>
+            <div className="weak-concept">
+              <strong>No subjects available</strong>
+              <span>Add a subject and complete a quiz to identify weak concepts.</span>
+            </div>
           ) : (
             <>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "16px" }}>{subjectProgress.map((subject) => <button key={subject.id} type="button" onClick={() => setSelectedWeakSubject(subject.id)} style={{ ...SUBJECT_BUTTON_STYLE, padding: "8px 13px", fontSize: "12px" }}>{subject.name}</button>)}</div>
+              <div className="subject-filter-chips">
+                {subjectProgress.map((subject) => (
+                  <button
+                    key={subject.id}
+                    type="button"
+                    onClick={() => setSelectedWeakSubject(subject.id)}
+                    className={selectedWeakSubject === subject.id ? "subject-chip-btn active" : "subject-chip-btn"}
+                  >
+                    {subject.name}
+                  </button>
+                ))}
+              </div>
               {(() => {
                 const activeSubject = subjectProgress.find((subject) => subject.id === selectedWeakSubject) || subjectProgress[0];
-                if (!activeSubject || !activeSubject.weak_topics?.length) return <div className="weak-concept"><strong>{activeSubject?.name || "Subject"}</strong><span>No weak concepts yet. Complete a quiz for this subject.</span></div>;
-                return activeSubject.weak_topics.map((item) => { const mastery = Math.max(0, Math.min(100, Number(item?.mastery_score || 0))); return <div className="weak-concept" key={item.id || item.topic}><div className="weak-concept-top"><div><strong>{item.topic || "Unknown Topic"}</strong><span>Mastery based on your quiz performance</span></div><b>{Math.round(mastery)}%</b></div><div className="weak-progress"><div style={{ width: `${mastery}%` }} /></div><button type="button" onClick={() => openPracticeQuiz(item.topic, activeSubject.id, activeSubject.name)} style={{ ...BLUE_ACTION_BUTTON_STYLE, marginTop: "12px", padding: "8px 12px", fontSize: "12px" }}>📝 Practice Quiz</button></div>; });
+                if (!activeSubject || !activeSubject.weak_topics?.length) return (
+                  <div className="weak-concept">
+                    <strong>{activeSubject?.name || "Subject"}</strong>
+                    <span>No weak concepts yet. Complete a quiz for this subject.</span>
+                  </div>
+                );
+                return activeSubject.weak_topics.map((item) => {
+                  const mastery = Math.max(0, Math.min(100, Number(item?.mastery_score || 0)));
+                  return (
+                    <div className="weak-concept" key={item.id || item.topic}>
+                      <div className="weak-concept-top">
+                        <div>
+                          <strong>{item.topic || "Unknown Topic"}</strong>
+                          <span>Mastery based on your quiz performance</span>
+                        </div>
+                        <b>{Math.round(mastery)}%</b>
+                      </div>
+                      <div className="weak-progress">
+                        <div style={{ width: `${mastery}%` }} />
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => openPracticeQuiz(item.topic, activeSubject.id, activeSubject.name)}
+                        className="weak-practice-btn"
+                      >
+                        📝 Practice Quiz
+                      </button>
+                    </div>
+                  );
+                });
               })()}
             </>
           )}
@@ -1343,64 +1410,117 @@ function Dashboard() {
 
 
       {selectedTopic && (
-        <div onClick={() => setSelectedTopic(null)} style={{ position: "fixed", inset: 0, zIndex: 1000, background: "rgba(0,0,0,0.65)", display: "flex", alignItems: "center", justifyContent: "center", padding: "20px" }}>
-          <div onClick={(event) => event.stopPropagation()} style={{ width: "min(520px, 100%)", padding: "24px", borderRadius: "20px", background: "#101a36", border: "1px solid rgba(255,255,255,0.12)" }}>
-            <h2 style={{ marginTop: 0 }}>{selectedTopic.topic}</h2><div style={{ opacity: 0.7, marginBottom: "14px" }}>{selectedTopic.subject_name || "Subject"}</div>
-            <div style={{ display: "grid", gap: "10px" }}>
-              <div>Study time: <strong>{Number(selectedTopic.study_minutes || 0)} minutes</strong></div>
-              <div>Mastery: <strong>{Math.round(Number(selectedTopic.mastery_score || 0))}%</strong></div>
-              <div>Questions attempted: <strong>{Number(selectedTopic.questions_attempted || 0)}</strong></div>
-              <div>Questions correct: <strong>{Number(selectedTopic.questions_correct || 0)}</strong></div>
-              <div>Last studied: <strong>{selectedTopic.last_studied ? new Date(selectedTopic.last_studied).toLocaleString() : "Not yet"}</strong></div>
+        <div onClick={() => setSelectedTopic(null)} className="dashboard-modal-overlay">
+          <div onClick={(event) => event.stopPropagation()} className="dashboard-modal-card">
+            <h2 style={{ marginTop: 0, marginBottom: "4px" }}>{selectedTopic.topic}</h2>
+            <div style={{ color: "var(--accent)", fontSize: "13px", fontWeight: 600, marginBottom: "16px" }}>
+              {selectedTopic.subject_name || "Subject"}
             </div>
-            <div style={{ marginTop: "20px", display: "flex", gap: "10px" }}>
-              <button type="button" onClick={() => { const topic = selectedTopic.topic; const subjectId = selectedTopic.subject_id; const subjectName = selectedTopic.subject_name; setSelectedTopic(null); openPracticeQuiz(topic, subjectId, subjectName); }} style={BLUE_ACTION_BUTTON_STYLE}>📝 Practice Quiz</button>
-              <button type="button" onClick={() => setSelectedTopic(null)} style={{ padding: "10px 14px", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.12)", background: "transparent", color: "inherit", cursor: "pointer" }}>Close</button>
+            <div style={{ display: "grid", gap: "10px" }}>
+              <div className="modal-stat-row"><span>Study time</span><strong>{Number(selectedTopic.study_minutes || 0)} minutes</strong></div>
+              <div className="modal-stat-row"><span>Mastery</span><strong>{Math.round(Number(selectedTopic.mastery_score || 0))}%</strong></div>
+              <div className="modal-stat-row"><span>Questions attempted</span><strong>{Number(selectedTopic.questions_attempted || 0)}</strong></div>
+              <div className="modal-stat-row"><span>Questions correct</span><strong>{Number(selectedTopic.questions_correct || 0)}</strong></div>
+              <div className="modal-stat-row"><span>Last studied</span><strong>{selectedTopic.last_studied ? new Date(selectedTopic.last_studied).toLocaleString() : "Not yet"}</strong></div>
+            </div>
+            <div className="modal-action-row">
+              <button
+                type="button"
+                onClick={() => {
+                  const topic = selectedTopic.topic;
+                  const subjectId = selectedTopic.subject_id;
+                  const subjectName = selectedTopic.subject_name;
+                  setSelectedTopic(null);
+                  openPracticeQuiz(topic, subjectId, subjectName);
+                }}
+                className="primary-button"
+              >
+                📝 Practice Quiz
+              </button>
+              <button type="button" onClick={() => setSelectedTopic(null)} className="secondary-button">
+                Close
+              </button>
             </div>
           </div>
         </div>
       )}
 
       {(practiceQuiz || practiceLoading || practiceError) && (
-        <div style={{ position: "fixed", inset: 0, zIndex: 1100, background: "rgba(0,0,0,0.72)", overflowY: "auto", padding: "30px 20px" }}>
-          <div style={{ width: "min(760px, 100%)", margin: "0 auto", padding: "24px", borderRadius: "20px", background: "#101a36", border: "1px solid rgba(255,255,255,0.12)" }}>
-            {practiceLoading && !practiceQuiz && <p>Generating practice quiz...</p>}
-            {practiceError && <div style={{ marginBottom: "16px", color: "#fca5a5" }}>{practiceError}</div>}
-            {practiceQuiz && !practiceResult && <>
-              <h2 style={{ marginTop: 0 }}>Practice Quiz: {practiceQuiz.target_topic || practiceQuiz.questions?.[0]?.topic || "Weak Concept"}</h2><div style={{ opacity: 0.7, marginBottom: "16px" }}>{practiceQuiz.subject_name || "Subject"}</div>
-              {practiceQuiz.questions?.map((question, index) => <div key={question.id} style={{ marginBottom: "18px", padding: "16px", borderRadius: "14px", background: "rgba(255,255,255,0.04)" }}>
-                <strong>{index + 1}. {question.question}</strong>
-                <div style={{ marginTop: "10px", display: "grid", gap: "7px" }}>
-                  {question.options?.map((option, optionIndex) => <label key={optionIndex} style={{ cursor: "pointer" }}><input type="radio" name={`practice-${question.id}`} checked={Number(practiceAnswers[question.id]) === optionIndex} onChange={() => setPracticeAnswers((current) => ({ ...current, [question.id]: optionIndex }))} /> {option}</label>)}
+        <div className="dashboard-modal-overlay">
+          <div className="dashboard-modal-card wide-modal" onClick={(event) => event.stopPropagation()}>
+            {practiceLoading && !practiceQuiz && <p style={{ color: "var(--text-muted)" }}>Generating practice quiz...</p>}
+            {practiceError && <div className="auth-error">{practiceError}</div>}
+            {practiceQuiz && !practiceResult && (
+              <>
+                <h2 style={{ marginTop: 0, marginBottom: "4px" }}>Practice Quiz: {practiceQuiz.target_topic || practiceQuiz.questions?.[0]?.topic || "Weak Concept"}</h2>
+                <div style={{ color: "var(--accent)", fontSize: "13px", fontWeight: 600, marginBottom: "18px" }}>
+                  {practiceQuiz.subject_name || "Subject"}
                 </div>
-              </div>)}
-              <button type="button" onClick={submitPracticeQuiz} disabled={practiceLoading} style={{ ...BLUE_ACTION_BUTTON_STYLE, marginRight: "10px" }}>{practiceLoading ? "Submitting..." : "Submit Quiz"}</button>
-              <button type="button" onClick={closePracticeQuiz} style={BLUE_ACTION_BUTTON_STYLE}>Close</button>
-            </>}
-            {practiceQuiz && practiceResult && <>
-              <h2 style={{ marginTop: 0 }}>Quiz Completed 🎉</h2>
-              <div style={{ display: "grid", gap: "8px", marginBottom: "20px" }}>
-                <div>Score: <strong>{practiceResult.score} / {practiceResult.total}</strong></div>
-                <div>Correct: <strong>{practiceResult.score}</strong></div>
-                <div>Wrong: <strong>{practiceResult.total - practiceResult.score}</strong></div>
-                <div>Accuracy: <strong>{practiceResult.accuracy}%</strong></div>
-              </div>
-              <button type="button" onClick={() => setShowPracticeAnswers((value) => !value)} style={BLUE_ACTION_BUTTON_STYLE}>{showPracticeAnswers ? "Hide Answers" : "View Answers"}</button>
-              {showPracticeAnswers && <div style={{ display: "grid", gap: "12px", marginTop: "16px" }}>
-                {practiceResult.results?.map((result, index) => {
-                  const question = practiceQuiz.questions?.find((item) => item.id === result.question_id);
-                  const selected = result.selected_answer;
-                  const correct = result.correct_answer;
-                  return <div key={result.question_id} style={{ padding: "15px", borderRadius: "13px", background: "rgba(255,255,255,0.04)" }}>
-                    <strong>{index + 1}. {question?.question}</strong>
-                    <p>Your answer: {selected >= 0 ? question?.options?.[selected] : "Not answered"}</p>
-                    {!result.correct && <p>Correct answer: {question?.options?.[correct]}</p>}
-                    {result.explanation && <p style={{ opacity: 0.7 }}>{result.explanation}</p>}
-                  </div>;
-                })}
-              </div>}
-              <button type="button" onClick={closePracticeQuiz} style={{ marginTop: "18px", padding: "10px 15px", borderRadius: "10px", cursor: "pointer" }}>Close</button>
-            </>}
+                {practiceQuiz.questions?.map((question, index) => (
+                  <div key={question.id} style={{ marginBottom: "16px", padding: "16px", borderRadius: "var(--radius-lg)", background: "var(--bg-surface-secondary)", border: "1px solid var(--border-subtle)" }}>
+                    <strong style={{ display: "block", marginBottom: "12px", fontSize: "15px" }}>{index + 1}. {question.question}</strong>
+                    <div style={{ display: "grid", gap: "8px" }}>
+                      {question.options?.map((option, optionIndex) => (
+                        <label key={optionIndex} style={{ display: "flex", alignItems: "center", gap: "10px", padding: "8px 12px", borderRadius: "var(--radius-sm)", cursor: "pointer", background: Number(practiceAnswers[question.id]) === optionIndex ? "var(--primary-subtle)" : "transparent", border: Number(practiceAnswers[question.id]) === optionIndex ? "1px solid var(--primary-border)" : "1px solid transparent" }}>
+                          <input type="radio" name={`practice-${question.id}`} checked={Number(practiceAnswers[question.id]) === optionIndex} onChange={() => setPracticeAnswers((current) => ({ ...current, [question.id]: optionIndex }))} />
+                          <span>{option}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+                <div style={{ display: "flex", gap: "10px", marginTop: "20px" }}>
+                  <button type="button" onClick={submitPracticeQuiz} disabled={practiceLoading} className="primary-button">
+                    {practiceLoading ? "Submitting..." : "Submit Quiz"}
+                  </button>
+                  <button type="button" onClick={closePracticeQuiz} className="secondary-button">
+                    Close
+                  </button>
+                </div>
+              </>
+            )}
+            {practiceQuiz && practiceResult && (
+              <>
+                <h2 style={{ marginTop: 0, marginBottom: "12px" }}>Quiz Completed 🎉</h2>
+                <div style={{ display: "grid", gap: "8px", margin: "16px 0 20px" }}>
+                  <div className="modal-stat-row"><span>Score</span><strong>{practiceResult.score} / {practiceResult.total}</strong></div>
+                  <div className="modal-stat-row"><span>Correct</span><strong style={{ color: "var(--success)" }}>{practiceResult.score}</strong></div>
+                  <div className="modal-stat-row"><span>Wrong</span><strong style={{ color: "var(--error)" }}>{practiceResult.total - practiceResult.score}</strong></div>
+                  <div className="modal-stat-row"><span>Accuracy</span><strong>{practiceResult.accuracy}%</strong></div>
+                </div>
+                <div style={{ display: "flex", gap: "10px", marginBottom: "16px" }}>
+                  <button type="button" onClick={() => setShowPracticeAnswers((value) => !value)} className="primary-button">
+                    {showPracticeAnswers ? "Hide Answers" : "View Answers"}
+                  </button>
+                  <button type="button" onClick={closePracticeQuiz} className="secondary-button">
+                    Close
+                  </button>
+                </div>
+                {showPracticeAnswers && (
+                  <div style={{ display: "grid", gap: "12px", marginTop: "16px" }}>
+                    {practiceResult.results?.map((result, index) => {
+                      const question = practiceQuiz.questions?.find((item) => item.id === result.question_id);
+                      const selected = result.selected_answer;
+                      const correct = result.correct_answer;
+                      return (
+                        <div key={result.question_id} style={{ padding: "14px 16px", borderRadius: "var(--radius-md)", background: "var(--bg-surface-secondary)", border: "1px solid var(--border-subtle)" }}>
+                          <strong style={{ display: "block", marginBottom: "6px" }}>{index + 1}. {question?.question}</strong>
+                          <p style={{ margin: "4px 0", color: result.correct ? "var(--success)" : "var(--error)" }}>
+                            Your answer: {selected >= 0 ? question?.options?.[selected] : "Not answered"}
+                          </p>
+                          {!result.correct && (
+                            <p style={{ margin: "4px 0", color: "var(--primary)" }}>
+                              Correct answer: {question?.options?.[correct]}
+                            </p>
+                          )}
+                          {result.explanation && <p style={{ margin: "4px 0", color: "var(--text-muted)", fontSize: "13px" }}>{result.explanation}</p>}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </>
+            )}
           </div>
         </div>
       )}
