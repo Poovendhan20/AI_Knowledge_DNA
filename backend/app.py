@@ -3415,13 +3415,9 @@ STUDY MATERIAL:
                     in error_text
                 )
                 if not temporary:
-                    raise
+                    break
                 if attempt >= 3:
-                    raise RuntimeError(
-                        "Gemini is temporarily "
-                        "unavailable. Please try "
-                        "again shortly."
-                    )
+                    break
                 time.sleep(
                     (2 ** attempt)
                     + random.uniform(
@@ -3429,14 +3425,23 @@ STUDY MATERIAL:
                         1
                     )
                 )
-        if not response:
-            raise RuntimeError(
-                str(last_error)
-            )
-        raw = (
-            response.text
-            or ""
-        ).strip()
+        raw = ""
+        if response and getattr(response, "text", None):
+            raw = (response.text or "").strip()
+        else:
+            print("Gemini direct generation unavailable. Falling back to AI Router...")
+            try:
+                ai_result = generate_ai_response(
+                    task="document_analysis",
+                    prompt=prompt
+                )
+                raw = (ai_result.get("answer") or "").strip()
+            except Exception as router_error:
+                if last_error:
+                    raise RuntimeError(
+                        f"AI generation failed: {last_error}"
+                    ) from router_error
+                raise
         raw = re.sub(
             r"^```json\s*",
             "",

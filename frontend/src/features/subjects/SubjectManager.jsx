@@ -69,6 +69,10 @@ function SubjectManager() {
     setSelectedFiles,
   ] = useState([]);
   const [
+    isDragging,
+    setIsDragging,
+  ] = useState(false);
+  const [
     uploading,
     setUploading,
   ] = useState(false);
@@ -109,6 +113,16 @@ function SubjectManager() {
           if (existing) {
             setSelectedSubject(existing);
           }
+        } else {
+          setSelectedSubject((current) => {
+            if (current) {
+              const matched = nextSubjects.find(
+                (subject) => String(subject.id) === String(current.id)
+              );
+              if (matched) return matched;
+            }
+            return nextSubjects.length > 0 ? nextSubjects[0] : null;
+          });
         }
       }
     } catch (error) {
@@ -578,6 +592,28 @@ function SubjectManager() {
     }
   };
   // =====================================================
+  // DRAG & DROP HANDLERS
+  // =====================================================
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const dropped = Array.from(e.dataTransfer?.files || []);
+    if (dropped.length > 0) {
+      setSelectedFiles((current) => [...current, ...dropped]);
+    }
+  };
+
+  // =====================================================
   // EMPTY STATE
   // =====================================================
   const renderDocuments = () => {
@@ -595,26 +631,29 @@ function SubjectManager() {
       documents.length === 0
     ) {
       return (
-        <div className="sdna-empty-documents">
+        <div
+          className={`sdna-empty-documents ${isDragging ? "dragging" : ""}`}
+          onClick={() => fileInputRef.current?.click()}
+        >
           <div className="sdna-empty-icon">
-            <FaFileAlt />
+            <FaUpload />
           </div>
           <h4>
             No study materials yet
           </h4>
           <p>
-            Upload PDFs, PPTX, DOCX or images
-            for this subject.
+            Drag and drop PDFs, PPTX, DOCX or images here, or click to browse.
           </p>
           <button
             type="button"
             className="sdna-secondary-button"
-            onClick={() =>
-              fileInputRef.current?.click()
-            }
+            onClick={(e) => {
+              e.stopPropagation();
+              fileInputRef.current?.click();
+            }}
           >
             <FaUpload />
-            Upload Materials
+            Browse Files
           </button>
         </div>
       );
@@ -926,7 +965,12 @@ function SubjectManager() {
               {/* =================================================*
 *&#xA0;                 STUDY MATERIALS*
 *&#xA0;             ================================================= */}
-              <section className="sdna-material-panel">
+              <section
+                className={`sdna-material-panel ${isDragging ? "dragging" : ""}`}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+              >
                 <div className="sdna-material-header">
                   <div className="sdna-material-title">
                     <div className="sdna-material-icon">
@@ -1022,11 +1066,29 @@ function SubjectManager() {
                                   .pop()
                               )}
                             </div>
-                            <span
-                              title={file.name}
+                            <div className="sdna-selected-file-info">
+                              <span
+                                className="sdna-selected-file-name"
+                                title={file.name}
+                              >
+                                {file.name}
+                              </span>
+                              <span className="sdna-selected-file-size">
+                                {(file.size / (1024 * 1024)).toFixed(2)} MB
+                              </span>
+                            </div>
+                            <button
+                              type="button"
+                              className="sdna-selected-file-remove"
+                              onClick={() =>
+                                setSelectedFiles((current) =>
+                                  current.filter((_, i) => i !== index)
+                                )
+                              }
+                              title="Remove file"
                             >
-                              {file.name}
-                            </span>
+                              <FaTimes />
+                            </button>
                           </div>
                         )
                       )}

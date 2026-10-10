@@ -241,6 +241,7 @@ function QuizGenerator() {
 
           setError(
             result.message ||
+            result.error ||
             "Unable to generate quiz."
           );
 
@@ -250,10 +251,23 @@ function QuizGenerator() {
 
         console.error(err);
 
-        setError(
+        const serverError =
+          err.response?.data?.error ||
           err.response?.data?.message ||
-          "Unable to generate quiz."
-        );
+          err.response?.data?.msg;
+
+        if (serverError) {
+          setError(serverError);
+        } else if (err.message === "Network Error" || !err.response) {
+          setError(
+            "Cannot connect to the backend server. Please verify the Flask backend is running on http://127.0.0.1:5000."
+          );
+        } else {
+          setError(
+            err.message ||
+            "Unable to generate quiz."
+          );
+        }
 
       } finally {
 
@@ -355,8 +369,8 @@ function QuizGenerator() {
                 <button
                   type="button"
                   className={
-                    selectedDocuments.length ===
-                    documents.length
+                    selectedDocuments.length === 0 ||
+                    selectedDocuments.length === documents.length
                       ? "quiz-doc active"
                       : "quiz-doc"
                   }
