@@ -46,30 +46,6 @@ import PersonalizedStudyPlan from "./PersonalizedStudyPlan";
 
 import "./Dashboard.css";
 
-const SUBJECT_BUTTON_STYLE = {
-  padding: "10px 16px",
-  borderRadius: "999px",
-  border: "1px solid rgba(120,180,255,0.8)",
-  background: "rgba(80,140,255,0.18)",
-  color: "inherit",
-  cursor: "pointer",
-  fontWeight: 700,
-};
-
-const BLUE_ACTION_BUTTON_STYLE = {
-  padding: "9px 14px",
-  borderRadius: "10px",
-  border: "1px solid rgba(120,180,255,0.8)",
-  background: "rgba(80,140,255,0.18)",
-  color: "inherit",
-  cursor: "pointer",
-  fontWeight: 700,
-};
-
-
-
-
-
 function Dashboard() {
 
 
@@ -100,7 +76,7 @@ function Dashboard() {
 
     useState("");
 
-  const [learningProgress, setLearningProgress] =
+  const [_learningProgress, setLearningProgress] =
     useState([]);
   const [subjectProgress, setSubjectProgress] = useState([]);
   const [studyPlan, setStudyPlan] = useState({

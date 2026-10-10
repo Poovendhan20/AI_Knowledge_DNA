@@ -13,7 +13,7 @@ from flask import (
     send_from_directory,
 )
 from flask_cors import CORS
-from werkzeug.exceptions import RequestEntityTooLarge
+from werkzeug.exceptions import RequestEntityTooLarge, HTTPException
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
 from pypdf import PdfReader
@@ -409,54 +409,52 @@ def extract_pdf_pages(
     file_path
 ):
     pages = []
-    reader = PdfReader(
-        file_path
-    )
-    for page_number, page in enumerate(
-        reader.pages,
-        start=1
-    ):
-        try:
-            text = (
-                page.extract_text()
-                or ""
-            )
-            pages.append({
-                "page":
-                    page_number,
-                "text":
-                    text.strip()
-            })
-        except Exception as error:
-            print(
-                f"PDF PAGE "
-                f"{page_number} ERROR:",
-                error
-            )
-            pages.append({
-                "page":
-                    page_number,
-                "text":
-                    ""
-            })
+    with open(file_path, "rb") as f:
+        reader = PdfReader(f)
+        for page_number, page in enumerate(
+            reader.pages,
+            start=1
+        ):
+            try:
+                text = (
+                    page.extract_text()
+                    or ""
+                )
+                pages.append({
+                    "page":
+                        page_number,
+                    "text":
+                        text.strip()
+                })
+            except Exception as error:
+                print(
+                    f"PDF PAGE "
+                    f"{page_number} ERROR:",
+                    error
+                )
+                pages.append({
+                    "page":
+                        page_number,
+                    "text":
+                        ""
+                })
     return pages
 def extract_docx_pages(
     file_path
 ):
-    document = Document(
-        file_path
-    )
-    text = []
-    for paragraph in (
-        document.paragraphs
-    ):
-        value = (
-            paragraph.text.strip()
-        )
-        if value:
-            text.append(
-                value
+    with open(file_path, "rb") as f:
+        document = Document(f)
+        text = []
+        for paragraph in (
+            document.paragraphs
+        ):
+            value = (
+                paragraph.text.strip()
             )
+            if value:
+                text.append(
+                    value
+                )
     return [
         {
             "page": 1,
@@ -466,52 +464,49 @@ def extract_docx_pages(
 def extract_pptx_pages(
     file_path
 ):
-    presentation = Presentation(
-        file_path
-    )
-    pages = []
-    for slide_number, slide in enumerate(
-        presentation.slides,
-        start=1
-    ):
-        texts = []
-        for shape in slide.shapes:
-            if hasattr(
-                shape,
-                "text"
-            ):
-                value = (
-                    shape.text.strip()
-                )
-                if value:
-                    texts.append(
-                        value
+    with open(file_path, "rb") as f:
+        presentation = Presentation(f)
+        pages = []
+        for slide_number, slide in enumerate(
+            presentation.slides,
+            start=1
+        ):
+            texts = []
+            for shape in slide.shapes:
+                if hasattr(
+                    shape,
+                    "text"
+                ):
+                    value = (
+                        shape.text.strip()
                     )
-        pages.append({
-            "page":
-                slide_number,
-            "text":
-                "\n".join(texts)
-        })
+                    if value:
+                        texts.append(
+                            value
+                        )
+            pages.append({
+                "page":
+                    slide_number,
+                "text":
+                    "\n".join(texts)
+            })
     return pages
 def extract_image_pages(
     file_path
 ):
     try:
-        image = Image.open(
-            file_path
-        )
-        text = (
-            pytesseract.image_to_string(
-                image
+        with Image.open(file_path) as image:
+            text = (
+                pytesseract.image_to_string(
+                    image
+                )
             )
-        )
-        return [
-            {
-                "page": 1,
-                "text": text.strip()
-            }
-        ]
+            return [
+                {
+                    "page": 1,
+                    "text": text.strip()
+                }
+            ]
     except Exception as error:
         print(
             "OCR ERROR:",
@@ -2117,6 +2112,13 @@ def file_too_large(
 def handle_general_error(
     error
 ):
+    if isinstance(error, HTTPException):
+        return jsonify({
+            "success": False,
+            "message": error.description or "HTTP error occurred.",
+            "error": error.name
+        }), error.code
+
     print()
     print(
         "======================================"

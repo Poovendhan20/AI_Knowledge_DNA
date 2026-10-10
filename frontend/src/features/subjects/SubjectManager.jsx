@@ -3,6 +3,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   FaPlus,
   FaBook,
@@ -31,6 +32,7 @@ import {
 } from "../../services/api";
 import "./SubjectManager.css";
 function SubjectManager() {
+  const navigate = useNavigate();
   // =====================================================
   // SUBJECT STATE
   // =====================================================
@@ -89,6 +91,18 @@ function SubjectManager() {
     setMessageType,
   ] = useState("");
   const fileInputRef = useRef(null);
+
+  const showMessage = (
+    text,
+    type = "success"
+  ) => {
+    setMessage(text);
+    setMessageType(type);
+    window.setTimeout(() => {
+      setMessage("");
+      setMessageType("");
+    }, 4000);
+  };
   // =====================================================
   // LOAD SUBJECTS
   // =====================================================
@@ -199,20 +213,6 @@ function SubjectManager() {
   }, [
     selectedSubject?.id,
   ]);
-  // =====================================================
-  // MESSAGE
-  // =====================================================
-  const showMessage = (
-    text,
-    type = "success"
-  ) => {
-    setMessage(text);
-    setMessageType(type);
-    window.setTimeout(() => {
-      setMessage("");
-      setMessageType("");
-    }, 4000);
-  };
   // =====================================================
   // CREATE SUBJECT
   // =====================================================
@@ -538,8 +538,7 @@ function SubjectManager() {
       );
       return;
     }
-    window.location.href =
-      `/document/${document.id}`;
+    navigate(`/document/${document.id}`);
   };
   // =====================================================
   // DOWNLOAD DOCUMENT
