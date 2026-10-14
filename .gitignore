@@ -86,3 +86,5 @@ desktop.ini
 test_output/
 tmp/
 temp/
+.vercel
+.env*
