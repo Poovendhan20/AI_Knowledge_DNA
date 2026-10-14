@@ -350,8 +350,19 @@ function Dashboard() {
     loadLearningProgress();
     loadPersonalizedStudyPlan();
 
+    const refreshDashboard = () => {
+      loadDashboardStats();
+      loadLearningProgress();
+      loadPersonalizedStudyPlan();
+    };
+
     const handleStudySessionRecorded = (event) => {
       const detail = event?.detail || {};
+
+      if (detail.alreadyRecorded) {
+        refreshDashboard();
+        return;
+      }
 
       recordStudySession(
         detail.topic,
@@ -363,11 +374,19 @@ function Dashboard() {
       "ai-knowledge-dna:study-session",
       handleStudySessionRecorded
     );
+    window.addEventListener(
+      "ai-knowledge-dna:study-session-updated",
+      refreshDashboard
+    );
 
     return () => {
       window.removeEventListener(
         "ai-knowledge-dna:study-session",
         handleStudySessionRecorded
+      );
+      window.removeEventListener(
+        "ai-knowledge-dna:study-session-updated",
+        refreshDashboard
       );
     };
   }, []);
@@ -599,346 +618,129 @@ function Dashboard() {
 
 
 
+      {/* =====================================================
+          1. DASHBOARD WELCOME
+      ===================================================== */}
+
       <section className="dashboard-header">
-
-
-
         <div className="dashboard-welcome">
-
-
-
           <p className="dashboard-label">
-
             YOUR LEARNING SPACE
-
           </p>
-
-
 
           <h1>
-
             Welcome back 👋
-
           </h1>
 
-
-
           <p className="dashboard-subtitle">
-
             Let's continue building your
-
             Knowledge DNA.
-
           </p>
-
-
-
         </div>
-
-
-
-
-
-        {/* ===================================================
-
-            KNOWLEDGE DNA SCORE
-
-        =================================================== */}
-
-
-
-        <div className="dna-score">
-
-
-
-          <span>
-
-            🧠
-
-          </span>
-
-
-
-          <small>
-
-            Knowledge DNA
-
-          </small>
-
-
-
-          <strong>
-
-            {displayPercentage(
-
-              stats.knowledge_dna
-
-            )}
-
-          </strong>
-
-
-
-        </div>
-
-
-
       </section>
 
-
-
-
-
       {/* =====================================================
-
           API ERROR
-
       ===================================================== */}
-
-
 
       {statsError && (
-
-
-
         <div
-
           style={{
-
             marginBottom: "18px",
-
             padding: "12px 15px",
-
             borderRadius: "10px",
-
             border:
-
               "1px solid rgba(239,68,68,0.35)",
-
             background:
-
               "rgba(239,68,68,0.08)",
-
             color: "#fca5a5",
-
             fontSize: "13px",
-
           }}
-
-       >
-
-
-
+        >
           {statsError}
-
-
-
         </div>
-
-
-
       )}
 
-
-
-
-
       {/* =====================================================
-
-          STATISTICS
-
+          2. ALL TOPICS, QUIZ, AND LEARN STREAK (STATISTICS)
       ===================================================== */}
 
-
-
       <section className="stats-grid">
-
-
-
-
-
         {/* TOPICS */}
-
-
-
         <div className="stat-card">
-
-
-
           <div className="stat-icon">
-
             <FaBook />
-
           </div>
 
-
-
           <p>
-
             Topics Learned
-
           </p>
 
-
-
           <strong>
-
             {displayNumber(
-
               stats.topics_learned
-
             )}
-
           </strong>
-
-
-
         </div>
-
-
-
-
 
         {/* QUIZ ACCURACY */}
-
-
-
         <div className="stat-card">
-
-
-
           <div className="stat-icon">
-
             <FaBullseye />
-
           </div>
 
-
-
           <p>
-
             Quiz Accuracy
-
           </p>
 
-
-
           <strong>
-
             {displayPercentage(
-
               stats.quiz_accuracy
-
             )}
-
           </strong>
-
-
-
         </div>
-
-
-
-
 
         {/* LEARNING STREAK */}
-
-
-
         <div className="stat-card">
-
-
-
           <div className="stat-icon">
-
             <FaFire />
-
           </div>
 
-
-
           <p>
-
             Learning Streak
-
           </p>
 
-
-
           <strong>
-
             {displayNumber(
-
               stats.learning_streak
-
             )}
-
             {" "}
-
             {stats.learning_streak === 1
-
               ? "Day"
-
               : "Days"}
-
           </strong>
-
-
-
         </div>
-
-
-
-
 
         {/* STUDY HOURS */}
-
-
-
         <div className="stat-card">
-
-
-
           <div className="stat-icon">
-
             <FaClock />
-
           </div>
 
-
-
           <p>
-
             Study Hours
-
           </p>
 
-
-
           <strong>
-
             {displayNumber(
-
               stats.study_hours
-
             )}
-
           </strong>
-
-
-
         </div>
-
-
-
       </section>
 
-
-
-
-
       {/* =====================================================
-          LEARNED TOPICS
+          3. LEARNED TOPICS
       ===================================================== */}
 
       <section className="learned-topics-card">
@@ -988,6 +790,149 @@ function Dashboard() {
         )}
       </section>
 
+      {/* =====================================================
+          4. UPLOAD DOCUMENTS / UPLOAD STUDY MATERIAL
+      ===================================================== */}
+
+      <section className="dashboard-upload-card">
+        <div className="dashboard-upload-icon">
+          <FaUpload />
+        </div>
+
+        <h2>
+          Upload Study Material
+        </h2>
+
+        <p>
+          Upload your PDFs, PowerPoint presentations, lecture notes or
+          handwritten notes. AI will understand your material and connect
+          every topic to its original source.
+        </p>
+
+        <div className="upload-types">
+          <span>
+            PDF
+          </span>
+          <span>
+            PPTX
+          </span>
+          <span>
+            DOCX
+          </span>
+          <span>
+            Images
+          </span>
+        </div>
+
+        <button
+          className="primary-button"
+          onClick={() => {
+            const subjectSection =
+              document.querySelector(
+                ".sdna-subject-manager"
+              );
+
+            if (
+              subjectSection
+            ) {
+              subjectSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            }
+          }}
+        >
+          <FaUpload />
+          Upload Material
+          <FaArrowRight />
+        </button>
+      </section>
+
+      {/* =====================================================
+          5. MY SUBJECTS
+      ===================================================== */}
+
+      <SubjectManager />
+
+      {/* =====================================================
+          6. GENERATE QUIZ
+      ===================================================== */}
+
+      <QuizGenerator />
+
+      {/* =====================================================
+          7. WEEK CONCEPTS (WEAK CONCEPTS)
+      ===================================================== */}
+
+      <section className="weak-concepts-card">
+        <div className="weak-concepts-header">
+          <h2>Weak Concepts</h2>
+          <p>Select a subject to see the weak topics for that subject.</p>
+        </div>
+        {subjectProgress.length === 0 ? (
+          <div className="weak-concept">
+            <strong>No subjects available</strong>
+            <span>Add a subject and complete a quiz to identify weak concepts.</span>
+          </div>
+        ) : (
+          <>
+            <div className="subject-filter-chips">
+              {subjectProgress.map((subject) => (
+                <button
+                  key={subject.id}
+                  type="button"
+                  onClick={() => setSelectedWeakSubject(subject.id)}
+                  className={selectedWeakSubject === subject.id ? "subject-chip-btn active" : "subject-chip-btn"}
+                >
+                  {subject.name}
+                </button>
+              ))}
+            </div>
+            {(() => {
+              const activeSubject = subjectProgress.find((subject) => subject.id === selectedWeakSubject) || subjectProgress[0];
+              if (!activeSubject || !activeSubject.weak_topics?.length) return (
+                <div className="weak-concept">
+                  <strong>{activeSubject?.name || "Subject"}</strong>
+                  <span>No weak concepts yet. Complete a quiz for this subject.</span>
+                </div>
+              );
+              return (
+                <div className="weak-concepts-grid">
+                  {activeSubject.weak_topics.map((item) => {
+                    const mastery = Math.max(0, Math.min(100, Number(item?.mastery_score || 0)));
+                    return (
+                      <div className="weak-concept" key={item.id || item.topic}>
+                        <div className="weak-concept-top">
+                          <div>
+                            <strong>{item.topic || "Unknown Topic"}</strong>
+                            <span>Mastery based on your quiz performance</span>
+                          </div>
+                          <b>{Math.round(mastery)}%</b>
+                        </div>
+                        <div className="weak-progress">
+                          <div style={{ width: `${mastery}%` }} />
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => openPracticeQuiz(item.topic, activeSubject.id, activeSubject.name)}
+                          className="weak-practice-btn"
+                        >
+                          📝 Practice Quiz
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })()}
+          </>
+        )}
+      </section>
+
+      {/* =====================================================
+          8. STUDY PLAN
+      ===================================================== */}
+
       <PersonalizedStudyPlan
         studyPlan={studyPlan}
         loading={studyPlanLoading}
@@ -995,389 +940,46 @@ function Dashboard() {
         onPracticeTopic={openPracticeQuiz}
       />
 
-      <section className="dashboard-main-grid">
-
-
-
-
-
-        {/* ===================================================
-
-            UPLOAD CARD
-
-        =================================================== */}
-
-
-
-        <div className="dashboard-upload-card">
-
-
-
-          <div className="dashboard-upload-icon">
-
-
-
-            <FaUpload />
-
-
-
-          </div>
-
-
-
-
-
-          <h2>
-
-            Upload Study Material
-
-          </h2>
-
-
-
-
-
-          <p>
-
-
-
-            Upload your PDFs, PowerPoint
-
-            presentations, lecture notes or
-
-            handwritten notes. AI will understand
-
-            your material and connect every topic
-
-            to its original source.
-
-
-
-          </p>
-
-
-
-
-
-          <div className="upload-types">
-
-
-
-            <span>
-
-              PDF
-
-            </span>
-
-
-
-            <span>
-
-              PPTX
-
-            </span>
-
-
-
-            <span>
-
-              DOCX
-
-            </span>
-
-
-
-            <span>
-
-              Images
-
-            </span>
-
-
-
-          </div>
-
-
-
-
-
-          <button
-
-            className="primary-button"
-
-            onClick={() => {
-
-
-
-              const subjectSection =
-
-                document.querySelector(
-
-                  ".sdna-subject-manager"
-
-                );
-
-
-
-              if (
-
-                subjectSection
-
-              ) {
-
-
-
-                subjectSection.scrollIntoView({
-
-                  behavior: "smooth",
-
-                  block: "start",
-
-                });
-
-
-
-              }
-
-
-
-            }}
-
-         >
-
-
-
-            <FaUpload />
-
-
-
-            Upload Material
-
-
-
-            <FaArrowRight />
-
-
-
-          </button>
-
-
-
-        </div>
-
-
-
-
-
-        {/* ===================================================
-
-            WEAK CONCEPTS
-
-        =================================================== */}
-
-
-
-        <div className="weak-concepts-card">
-          <div className="weak-concepts-header">
-            <h2>Weak Concepts</h2>
-            <p>Select a subject to see the weak topics for that subject.</p>
-          </div>
-          {subjectProgress.length === 0 ? (
-            <div className="weak-concept">
-              <strong>No subjects available</strong>
-              <span>Add a subject and complete a quiz to identify weak concepts.</span>
-            </div>
-          ) : (
-            <>
-              <div className="subject-filter-chips">
-                {subjectProgress.map((subject) => (
-                  <button
-                    key={subject.id}
-                    type="button"
-                    onClick={() => setSelectedWeakSubject(subject.id)}
-                    className={selectedWeakSubject === subject.id ? "subject-chip-btn active" : "subject-chip-btn"}
-                  >
-                    {subject.name}
-                  </button>
-                ))}
-              </div>
-              {(() => {
-                const activeSubject = subjectProgress.find((subject) => subject.id === selectedWeakSubject) || subjectProgress[0];
-                if (!activeSubject || !activeSubject.weak_topics?.length) return (
-                  <div className="weak-concept">
-                    <strong>{activeSubject?.name || "Subject"}</strong>
-                    <span>No weak concepts yet. Complete a quiz for this subject.</span>
-                  </div>
-                );
-                return activeSubject.weak_topics.map((item) => {
-                  const mastery = Math.max(0, Math.min(100, Number(item?.mastery_score || 0)));
-                  return (
-                    <div className="weak-concept" key={item.id || item.topic}>
-                      <div className="weak-concept-top">
-                        <div>
-                          <strong>{item.topic || "Unknown Topic"}</strong>
-                          <span>Mastery based on your quiz performance</span>
-                        </div>
-                        <b>{Math.round(mastery)}%</b>
-                      </div>
-                      <div className="weak-progress">
-                        <div style={{ width: `${mastery}%` }} />
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => openPracticeQuiz(item.topic, activeSubject.id, activeSubject.name)}
-                        className="weak-practice-btn"
-                      >
-                        📝 Practice Quiz
-                      </button>
-                    </div>
-                  );
-                });
-              })()}
-            </>
-          )}
-        </div>
-
-
-
-      </section>
-
-
-
-
-
       {/* =====================================================
-
-          SUBJECT MANAGEMENT
-
+          9. KNOWLEDGE GPA / SCORE (BOTTOM OF DASHBOARD)
       ===================================================== */}
-
-
-
-      <SubjectManager />
-
-
-
-
-
-      {/* =====================================================
-
-          AI QUIZ GENERATOR
-
-      ===================================================== */}
-
-
-
-      <QuizGenerator />
-
-
-
-
-
-      {/* =====================================================
-
-          KNOWLEDGE DNA SECTION
-
-      ===================================================== */}
-
-
 
       <section className="knowledge-dna-preview">
-
-
-
         <div className="knowledge-dna-icon">
-
-
-
           <FaBrain />
-
-
-
         </div>
-
-
-
-
 
         <div className="knowledge-dna-content">
-
-
-
           <span>
-
-            YOUR KNOWLEDGE DNA
-
+            YOUR KNOWLEDGE GPA / SCORE
           </span>
-
-
 
           <h2>
-
             Your learning profile grows
-
             as you study.
-
           </h2>
 
-
-
           <p>
-
-
-
             Upload study materials, study
-
             different topics and complete
-
             AI-generated quizzes. Your
-
             Knowledge DNA will gradually
-
             represent your understanding,
-
             strengths and learning gaps.
-
-
-
           </p>
-
-
-
         </div>
-
-
-
-
 
         <div className="knowledge-dna-value">
-
-
-
           <strong>
-
             {displayPercentage(
-
               stats.knowledge_dna
-
             )}
-
           </strong>
 
-
-
           <span>
-
             Current Score
-
           </span>
-
-
-
         </div>
-
-
-
       </section>
 
 

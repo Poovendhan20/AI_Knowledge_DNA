@@ -1,8 +1,3 @@
-/* =========================================================
-   ACADEMIC FOCUS DESIGN TOKENS
-   AI Knowledge DNA — Intelligent Personalized Learning Assistant
-========================================================= */
-
 :root,
 [data-theme="light"] {
   /* Color Palette - Academic Focus Light */
@@ -14,20 +9,17 @@
   --bg-surface-hover: #f1f5f9;
   --bg-surface-active: #e2e8f0;
   --bg-glass: rgba(255, 255, 255, 0.94);
-
   /* Borders */
   --border-subtle: #e2e8f0;
   --border-default: #cbd5e1;
   --border-strong: #94a3b8;
   --border-focus: #2563eb;
-
   /* Typography / Text Colors */
   --text-primary: #0f172a;
   --text-secondary: #334155;
   --text-muted: #64748b;
   --text-dim: #94a3b8;
   --text-inverse: #ffffff;
-
   /* Brand Primary Actions (Academic Blue) */
   --primary: #2563eb;
   --primary-hover: #1d4ed8;
@@ -37,7 +29,6 @@
   --primary-border: rgba(37, 99, 235, 0.25);
   --primary-text: #1d4ed8;
   --primary-gradient: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-
   /* Brand Secondary Accents (Academic Teal) */
   --accent: #0d9488;
   --accent-hover: #0f766e;
@@ -46,48 +37,40 @@
   --accent-border: rgba(13, 148, 136, 0.25);
   --accent-text: #0f766e;
   --accent-gradient: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
-
   /* Semantic Feedback Colors */
   --success: #16a34a;
   --success-bg: rgba(22, 163, 74, 0.08);
   --success-border: rgba(22, 163, 74, 0.25);
   --success-text: #15803d;
-
   --error: #dc2626;
   --error-bg: rgba(220, 38, 38, 0.08);
   --error-border: rgba(220, 38, 38, 0.25);
   --error-text: #b91c1c;
-
   --warning: #d97706;
   --warning-bg: rgba(217, 119, 6, 0.08);
   --warning-border: rgba(217, 119, 6, 0.25);
   --warning-text: #b45309;
-
   --info: #0284c7;
   --info-bg: rgba(2, 132, 199, 0.08);
   --info-border: rgba(2, 132, 199, 0.25);
   --info-text: #0369a1;
-
   /* Elevation & Shadows */
   --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
   --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.03);
   --shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
   --card-shadow: 0 1px 3px rgba(15, 23, 42, 0.05), 0 4px 12px rgba(15, 23, 42, 0.03);
-
   /* Radius */
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 16px;
   --radius-xl: 20px;
   --radius-full: 9999px;
-
   /* Transitions */
   --transition-fast: 0.15s ease;
   --transition-normal: 0.2s ease;
   --transition-slow: 0.3s ease;
 }
-
 [data-theme="dark"] {
   /* Color Palette - Academic Focus Dark */
   --bg-page: #0b1120;
@@ -98,20 +81,17 @@
   --bg-surface-hover: #233149;
   --bg-surface-active: #2d3e5c;
   --bg-glass: rgba(21, 31, 50, 0.94);
-
   /* Borders */
   --border-subtle: rgba(255, 255, 255, 0.08);
   --border-default: rgba(255, 255, 255, 0.14);
   --border-strong: rgba(255, 255, 255, 0.24);
   --border-focus: #3b82f6;
-
   /* Typography / Text Colors */
   --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;
   --text-dim: #64748b;
   --text-inverse: #0f172a;
-
   /* Brand Primary Actions (Academic Blue) */
   --primary: #3b82f6;
   --primary-hover: #60a5fa;
@@ -121,7 +101,6 @@
   --primary-border: rgba(59, 130, 246, 0.35);
   --primary-text: #93c5fd;
   --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-
   /* Brand Secondary Accents (Academic Teal) */
   --accent: #14b8a6;
   --accent-hover: #2dd4bf;
@@ -130,28 +109,23 @@
   --accent-border: rgba(20, 184, 166, 0.35);
   --accent-text: #5eead4;
   --accent-gradient: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
-
   /* Semantic Feedback Colors */
   --success: #22c55e;
   --success-bg: rgba(34, 197, 94, 0.14);
   --success-border: rgba(34, 197, 94, 0.3);
   --success-text: #86efac;
-
   --error: #ef4444;
   --error-bg: rgba(239, 68, 68, 0.14);
   --error-border: rgba(239, 68, 68, 0.3);
   --error-text: #fca5a5;
-
   --warning: #f59e0b;
   --warning-bg: rgba(245, 158, 11, 0.14);
   --warning-border: rgba(245, 158, 11, 0.3);
   --warning-text: #fde68a;
-
   --info: #38bdf8;
   --info-bg: rgba(56, 189, 248, 0.14);
   --info-border: rgba(56, 189, 248, 0.3);
   --info-text: #7dd3fc;
-
   /* Elevation & Shadows */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
@@ -159,17 +133,14 @@
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
   --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
 }
-
 /* =========================================================
    GLOBAL RESET & TYPOGRAPHY
 ========================================================= */
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
 html,
 body,
 #root {
@@ -177,12 +148,10 @@ body,
   min-width: 100%;
   min-height: 100%;
 }
-
 html {
   scroll-behavior: smooth;
   color-scheme: light dark;
 }
-
 body {
   min-width: 320px;
   color: var(--text-primary);
@@ -202,7 +171,6 @@ body {
   overflow-x: hidden;
   transition: background-color var(--transition-normal), color var(--transition-normal);
 }
-
 body,
 button,
 input,
@@ -210,48 +178,39 @@ textarea,
 select {
   font-family: inherit;
 }
-
 button {
   cursor: pointer;
   background: none;
   border: none;
 }
-
 a {
   color: inherit;
   text-decoration: none;
 }
-
 #root {
   width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
-
 /* Scrollbars */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
-
 ::-webkit-scrollbar-track {
   background: var(--bg-page-subtle);
 }
-
 ::-webkit-scrollbar-thumb {
   background: var(--border-default);
   border-radius: var(--radius-full);
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background: var(--border-strong);
 }
-
 /* =========================================================
    THEME TOGGLE BUTTON
 ========================================================= */
-
 .theme-toggle-button {
   width: 40px;
   height: 40px;
@@ -267,27 +226,22 @@ a {
   transition: all var(--transition-fast);
   box-sizing: border-box;
 }
-
 .theme-toggle-button:hover {
   background: var(--bg-surface-hover);
   color: var(--text-primary);
   border-color: var(--border-default);
   transform: translateY(-1px);
 }
-
 .theme-toggle-icon {
   font-size: 16px;
   transition: transform var(--transition-fast);
 }
-
 .theme-toggle-icon.sun {
   color: #f59e0b;
 }
-
 .theme-toggle-icon.moon {
   color: #6366f1;
 }
-
 .mobile-theme-toggle {
   width: 100%;
   min-height: 44px;
@@ -305,20 +259,16 @@ a {
   margin-bottom: 6px;
   transition: all var(--transition-fast);
 }
-
 .mobile-theme-toggle:hover {
   background: var(--bg-surface-hover);
 }
-
 .mobile-theme-toggle svg {
   font-size: 16px;
   color: var(--primary);
 }
-
 /* =========================================================
    NAVBAR
 ========================================================= */
-
 .navbar {
   position: sticky;
   top: 0;
@@ -335,7 +285,6 @@ a {
   border-bottom: 1px solid var(--border-subtle);
   transition: background var(--transition-normal), border-color var(--transition-normal);
 }
-
 .logo {
   display: flex;
   align-items: center;
@@ -346,7 +295,6 @@ a {
   font-weight: 700;
   white-space: nowrap;
 }
-
 .logo-icon {
   width: 38px;
   height: 38px;
@@ -359,24 +307,19 @@ a {
   font-size: 18px;
   transition: transform var(--transition-fast);
 }
-
 .logo:hover .logo-icon {
   transform: translateY(-1px) scale(1.03);
 }
-
 .logo-text {
   letter-spacing: -0.2px;
   color: var(--text-primary);
 }
-
 /* Navigation Links */
-
 .nav-links {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-
 .nav-link {
   display: inline-flex;
   align-items: center;
@@ -393,7 +336,6 @@ a {
   color: var(--text-primary);
   background: var(--bg-surface-hover);
 }
-
 .nav-dashboard {
   display: inline-flex;
   align-items: center;
@@ -408,14 +350,12 @@ a {
   font-weight: 600;
   transition: all var(--transition-fast);
 }
-
 .nav-dashboard:hover {
   background: var(--primary-light);
   border-color: var(--primary);
   color: var(--primary-hover);
   transform: translateY(-1px);
 }
-
 .nav-login {
   display: inline-flex;
   align-items: center;

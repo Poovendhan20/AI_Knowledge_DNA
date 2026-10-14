@@ -1,0 +1,53 @@
+%% AI Knowledge DNA - Document Chat and RAG Sequence Diagram
+%% Illustrates grounded context retrieval, prompt assembly, AI inference, and citation linking.
+
+sequenceDiagram
+    autonumber
+    actor Student as Student (UI)
+    participant DocChat as DocumentChat Component
+    participant DocViewer as DocumentViewer (PDF Canvas)
+    participant ChatAPI as Backend (/api/chat or /documents/:id/chat)
+    participant Store as documents.json Repository
+    participant RAGEngine as RAG Context Builder (app.py)
+    participant AIRouter as AI Router (ai_router.py)
+    participant LLM as External AI Model (Gemini / Groq)
+
+    Student->>DocChat: Enters question ("Explain active transport in cell biology")
+    DocChat->>ChatAPI: POST /api/chat {document_id, question, history, voice_response: false}
+    
+    ChatAPI->>ChatAPI: Validate JWT Identity & Request Payload
+    ChatAPI->>Store: load_documents() & filter_documents_for_user(user_id)
+    Store-->>ChatAPI: Return user-owned documents
+    
+    alt Document not found or owned by another user
+        ChatAPI-->>DocChat: 403 Forbidden / 404 Not Found
+        DocChat-->>Student: Display "Document not found or access denied"
+    else Document ownership confirmed
+        ChatAPI->>RAGEngine: build_document_context(pages, question)
+        note over RAGEngine: Keyword matching scores pages against question.<br/>Sorts and selects top-k relevant pages.<br/>Attaches [Page X] boundary markers.
+        RAGEngine-->>ChatAPI: Returns {context_string, relevant_pages}
+        
+        ChatAPI->>RAGEngine: build_chat_history(history)
+        RAGEngine-->>ChatAPI: Formatted prior turns
+        
+        ChatAPI->>RAGEngine: Assemble Grounded Prompt with Citation Rules
+        note over RAGEngine: Injects rule: "When info comes from a page, add [Page X].<br/>Never invent page numbers."
+
+        ChatAPI->>AIRouter: generate_ai_response(task="document_analysis", prompt)
+        AIRouter->>LLM: Ingest Context + Instructions + Prompt
+        LLM-->>AIRouter: "Active transport requires ATP [Page 3] to move against gradient [Page 4]."
+        AIRouter-->>ChatAPI: Return {success: true, answer, model}
+
+        ChatAPI->>ChatAPI: clean_ai_answer(answer)
+        ChatAPI->>ChatAPI: extract_page_references(answer, available_pages)
+        note over ChatAPI: Parses regex r"\[Page\s+(\d+)\]"<br/>Maps to structured sources: [{page: 3}, {page: 4}]
+
+        ChatAPI-->>DocChat: 200 OK {success: true, answer, sources: [{page: 3}, {page: 4}], model}
+        DocChat-->>Student: Renders AI message bubble with clickable [Page 3] and [Page 4] chips
+        
+        opt Student clicks [Page 3] chip
+            Student->>DocChat: Click Page 3 citation chip
+            DocChat->>DocViewer: onPageChange(3)
+            DocViewer-->>Student: Scrolls & renders Page 3 in PDF canvas
+        end
+    end

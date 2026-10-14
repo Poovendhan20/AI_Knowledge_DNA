@@ -1,0 +1,51 @@
+%% AI Knowledge DNA - Document Upload and Processing Activity Diagram
+%% Illustrates client-side selection, security checks, multi-format text parsing, topic extraction, and persistence.
+
+flowchart TD
+    classDef startNode fill:#10B981,stroke:#059669,color:#FFFFFF,stroke-width:2px;
+    classDef actionNode fill:#EFF6FF,stroke:#3B82F6,color:#1E3A8A,stroke-width:1px;
+    classDef decisionNode fill:#FEF3C7,stroke:#D97706,color:#78350F,stroke-width:2px;
+    classDef errorNode fill:#FEE2E2,stroke:#DC2626,color:#991B1B,stroke-width:1px;
+    classDef endNode fill:#1E293B,stroke:#0F172A,color:#FFFFFF,stroke-width:2px;
+
+    Start([Student Selects Document in UI]):::startNode --> ValidateClient[Client Validates Format & Previews]:::actionNode
+    ValidateClient --> SendRequest[POST /api/upload multipart/form-data with JWT]:::actionNode
+
+    SendRequest --> CheckJWT{JWT Valid & Identity Present?}:::decisionNode
+    CheckJWT -- No --> Reject401[Return 401 Unauthorized]:::errorNode --> EndFailure([Upload Aborted]):::endNode
+    CheckJWT -- Yes --> CheckFile{File Part Present & Not Empty?}:::decisionNode
+
+    CheckFile -- No --> Reject400[Return 400 'No file provided']:::errorNode --> EndFailure
+    CheckFile -- Yes --> CheckExt{Extension in ALLOWED_EXTENSIONS?<br/>pdf, docx, pptx, png, jpg, jpeg, webp}:::decisionNode
+
+    CheckExt -- No --> RejectType[Return 400 'Unsupported file type']:::errorNode --> EndFailure
+    CheckExt -- Yes --> CheckSize{File Size <= 25 MB?}:::decisionNode
+
+    CheckSize -- No --> RejectSize[Return 413 'File is too large']:::errorNode --> EndFailure
+    CheckSize -- Yes --> SaveDisk[Generate UUID & Save to backend/uploads/<uuid>.<ext>]:::actionNode
+
+    SaveDisk --> BranchExt{Detect File Extension}:::decisionNode
+
+    BranchExt -- pdf --> ExtractPDF[extract_pdf_pages: Stream PdfReader page-by-page]:::actionNode
+    BranchExt -- docx --> ExtractDOCX[extract_docx_pages: Stream Document paragraphs]:::actionNode
+    BranchExt -- pptx --> ExtractPPTX[extract_pptx_pages: Stream Presentation slide shapes]:::actionNode
+    BranchExt -- image --> ExtractOCR[extract_image_pages: PIL Image + Tesseract OCR]:::actionNode
+
+    ExtractPDF --> JoinAnalysis[Consolidate Pages Array]:::actionNode
+    ExtractDOCX --> JoinAnalysis
+    ExtractPPTX --> JoinAnalysis
+    ExtractOCR --> JoinAnalysis
+
+    JoinAnalysis --> CheckParseSuccess{Text Extracted Successfully?}:::decisionNode
+    CheckParseSuccess -- Exception --> CleanupDisk[Unlink / Delete Staged File from Disk]:::errorNode
+    CleanupDisk --> Return500[Return 500 'Extraction Error']:::errorNode --> EndFailure
+
+    CheckParseSuccess -- Success --> RunAnalysis[analyze_document: Keyword Extraction & Sentence Scoring]:::actionNode
+    RunAnalysis --> GenTopics[generate_topics: Top Keywords & Source Pages]:::actionNode
+    RunAnalysis --> GenSummary[generate_summary: Top Scored Sentences]:::actionNode
+
+    GenTopics & GenSummary --> AssembleDoc[Construct Document Object with user_id, word_count, topics]:::actionNode
+    AssembleDoc --> SaveJSON[Append to backend/data/documents.json with Lock]:::actionNode
+    SaveJSON --> Return201[Return 201 Created with Document Metadata]:::actionNode
+    Return201 --> UpdateUI[UI Updates Subject Materials List & Renders Viewer]:::actionNode
+    UpdateUI --> EndSuccess([Processing Complete]):::endNode

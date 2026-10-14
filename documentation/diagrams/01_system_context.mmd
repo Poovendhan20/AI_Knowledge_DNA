@@ -1,0 +1,33 @@
+%% AI Knowledge DNA - System Context Diagram (C4 Level 1)
+%% Represents the system boundary, primary users, and external service integrations.
+
+flowchart TD
+    classDef userNode fill:#2563EB,stroke:#1D4ED8,color:#FFFFFF,stroke-width:2px;
+    classDef systemBoundary fill:#F8FAFC,stroke:#3B82F6,color:#0F172A,stroke-width:3px,stroke-dasharray: 5 5;
+    classDef internalCore fill:#1E293B,stroke:#0F172A,color:#F8FAFC,stroke-width:2px;
+    classDef externalService fill:#475569,stroke:#334155,color:#F8FAFC,stroke-width:2px;
+
+    User["Student / Learner<br/>(Web Browser / Mobile Client)"]:::userNode
+
+    subgraph SystemBoundary ["AI Knowledge DNA Platform (System Boundary)"]
+        Platform["AI Knowledge DNA System<br/>• Personalized Learning Assistant<br/>• Document Processing & RAG Engine<br/>• Knowledge DNA & Topic Mastery<br/>• Interactive Voice & Quiz Studio"]:::internalCore
+    end
+
+    Gemini["Google Gemini API<br/>(Gemini 2.5 Flash / 1.5 Pro)<br/>Doc Analysis & Knowledge Extraction"]:::externalService
+    Groq["Groq Cloud API<br/>(Llama 3 / Mixtral)<br/>Ultra-Fast Chat & Voice Synthesis"]:::externalService
+    OpenRouter["OpenRouter API<br/>(Multi-Model AI Gateway)<br/>General Reasoning & Secondary Fallback"]:::externalService
+    GoogleSearch["Google Search Tool<br/>(Live Web Grounding)"]:::externalService
+    TiDBCloud["TiDB Cloud MySQL<br/>(Distributed Relational Database)"]:::externalService
+    OSFileSystem["Server Local File System<br/>(Encrypted Uploads & JSON Stores)"]:::externalService
+    TesseractOCR["Tesseract OCR Engine<br/>(Image Text Recognition)"]:::externalService
+
+    User -->|"1. Submits study materials, chat prompts, quiz requests"| Platform
+    Platform -->|"2. Streams synthesized answers, quizzes, mastery metrics"| User
+
+    Platform -->|"3. Primary deep analysis prompts"| Gemini
+    Platform -->|"4. Low-latency conversational queries"| Groq
+    Platform -->|"5. Fallback requests on provider rate limits"| OpenRouter
+    Gemini -.->|"6. Retrieves live citations"| GoogleSearch
+    Platform -->|"7. Persists users, progress, sessions"| TiDBCloud
+    Platform -->|"8. Stores uploaded files and JSON documents"| OSFileSystem
+    Platform -->|"9. Passes images for text extraction"| TesseractOCR

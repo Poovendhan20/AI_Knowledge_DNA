@@ -1,0 +1,74 @@
+%% AI Knowledge DNA - High-Level System Architecture Diagram
+%% Multi-tier architectural decomposition showing presentation, routing, core services, and storage.
+
+flowchart TB
+    classDef clientLayer fill:#EFF6FF,stroke:#3B82F6,color:#1E3A8A,stroke-width:2px;
+    classDef gatewayLayer fill:#F0FDF4,stroke:#22C55E,color:#14532D,stroke-width:2px;
+    classDef serviceLayer fill:#FAF5FF,stroke:#A855F7,color:#581C87,stroke-width:2px;
+    classDef aiLayer fill:#FFFBEB,stroke:#F59E0B,color:#78350F,stroke-width:2px;
+    classDef dataLayer fill:#F1F5F9,stroke:#64748B,color:#0F172A,stroke-width:2px;
+    classDef extLayer fill:#FEF2F2,stroke:#EF4444,color:#7F1D1D,stroke-width:2px;
+
+    subgraph PresentationTier ["1. Presentation Tier (Client Single Page Application)"]
+        direction TB
+        UIApp["React 19 SPA (Vite Bundler)"]:::clientLayer
+        ThemeEng["Academic Focus Theme System (Light / Dark)"]:::clientLayer
+        SpeechIO["Web Speech Interface (SpeechRecognition & Synthesis)"]:::clientLayer
+        Routing["React Router v7 Protected Routes"]:::clientLayer
+        UIApp --- ThemeEng
+        UIApp --- SpeechIO
+        UIApp --- Routing
+    end
+
+    subgraph GatewayTier ["2. API Gateway & Security Tier"]
+        direction TB
+        FlaskCORS["Flask CORS Interceptor & Preflight"]:::gatewayLayer
+        JWTAuth["JWT Security Filter (Token Validation & User Isolation)"]:::gatewayLayer
+        ErrHandler["Global Error Handler (HTTPException & 500 Trapping)"]:::gatewayLayer
+        FlaskCORS --> JWTAuth --> ErrHandler
+    end
+
+    subgraph ServiceTier ["3. Business Logic & Processing Tier"]
+        direction TB
+        AuthSvc["Authentication Service (bcrypt Hashing)"]:::serviceLayer
+        DocProc["Document Parser (PDF, DOCX, PPTX, OCR)"]:::serviceLayer
+        RAGChat["RAG Context Assembly & Citation Engine"]:::serviceLayer
+        QuizEngine["Quiz Generator & Scoring Engine"]:::serviceLayer
+        AnalyticsEngine["Learning Analytics & Knowledge DNA Calculator"]:::serviceLayer
+    end
+
+    subgraph AITier ["4. AI Routing & Orchestration Tier"]
+        direction TB
+        AIRouter["AI Router (Task-Based Dynamic Dispatch)"]:::aiLayer
+        FallbackCircuit["Provider Fallback & Retry Handler (429/503 Detection)"]:::aiLayer
+        VoiceCleaner["Speech Synthesizer Cleaner (Regex Tag Stripper)"]:::aiLayer
+        AIRouter --> FallbackCircuit --> VoiceCleaner
+    end
+
+    subgraph PersistenceTier ["5. Data Persistence Tier"]
+        direction TB
+        SQLAlchemyORM["SQLAlchemy Relational ORM"]:::dataLayer
+        TiDBCloud["TiDB Cloud MySQL (Users, Progress, Attempts)"]:::dataLayer
+        JSONStores["Flat-File JSON Repositories (subjects, documents, quizzes)"]:::dataLayer
+        UploadFS["Encrypted Disk Storage (backend/uploads/*.ext)"]:::dataLayer
+        SQLAlchemyORM --> TiDBCloud
+    end
+
+    subgraph ExternalServices ["6. External Service Ecosystem"]
+        direction TB
+        GeminiAPI["Google Gemini API (Primary Document Model)"]:::extLayer
+        GroqAPI["Groq Cloud API (Low-Latency Chat & Voice)"]:::extLayer
+        OpenRouterAPI["OpenRouter Gateway (Secondary Fallback)"]:::extLayer
+        TesseractBinary["Tesseract OCR Binary"]:::extLayer
+    end
+
+    PresentationTier -->|"REST / JSON via HTTPS / Axios"| GatewayTier
+    GatewayTier -->|"Dispatches Authorized Request"| ServiceTier
+    ServiceTier -->|"Requests Inferences"| AITier
+    AITier -->|"Gemini Calls"| GeminiAPI
+    AITier -->|"Groq Calls"| GroqAPI
+    AITier -->|"OpenRouter Calls"| OpenRouterAPI
+    DocProc -->|"Extracts Image Text"| TesseractBinary
+    ServiceTier -->|"Relational Queries"| SQLAlchemyORM
+    ServiceTier -->|"Atomic File Operations"| JSONStores
+    DocProc -->|"Stores Staged Blobs"| UploadFS

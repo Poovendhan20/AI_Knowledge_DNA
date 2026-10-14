@@ -1,0 +1,85 @@
+%% AI Knowledge DNA - Frontend-Backend-Database Component Diagram
+%% Detailed component view showing exact module interfaces and dependencies.
+
+flowchart LR
+    classDef feComp fill:#DBEAFE,stroke:#2563EB,color:#1E40AF,stroke-width:1px;
+    classDef beRoute fill:#DCFCE7,stroke:#16A34A,color:#14532D,stroke-width:1px;
+    classDef beSvc fill:#F3E8FF,stroke:#9333EA,color:#581C87,stroke-width:1px;
+    classDef dbModel fill:#FEE2E2,stroke:#DC2626,color:#7F1D1D,stroke-width:1px;
+
+    subgraph FrontendComponents ["Frontend Components (src/features & context)"]
+        direction TB
+        AuthCtx["AuthContext<br/>(JWT Token & User State)"]:::feComp
+        ThemeCtx["ThemeContext<br/>(ai_knowledge_dna_theme)"]:::feComp
+        DashComp["Dashboard View<br/>(Metrics & Streaks)"]:::feComp
+        StudyPlanWidget["PersonalizedStudyPlan<br/>(Weak Concepts Widget)"]:::feComp
+        SubjMgrComp["SubjectManager<br/>(CRUD & Upload Modal)"]:::feComp
+        DocViewComp["DocumentViewer<br/>(PDF Canvas / Markdown)"]:::feComp
+        DocChatComp["DocumentChat<br/>(RAG Interface & Chips)"]:::feComp
+        QuizGenComp["QuizGenerator<br/>(Configurator)"]:::feComp
+        QuizPlayComp["QuizPlayer<br/>(Evaluation & Review)"]:::feComp
+        VoiceComp["VoiceAssistant<br/>(Speech IO Component)"]:::feComp
+
+        DashComp --- StudyPlanWidget
+        DocViewComp --- DocChatComp
+    end
+
+    subgraph BackendEndpoints ["Backend Controllers (app.py Routes)"]
+        direction TB
+        AuthCtrl["Auth Controller<br/>(/api/auth/register, login, me)"]:::beRoute
+        SubjCtrl["Subject Controller<br/>(/api/subjects, /subjects/<id>)"]:::beRoute
+        DocCtrl["Document Controller<br/>(/api/upload, /documents/<id>, /files/<f>)"]:::beRoute
+        ChatCtrl["Chat Controller<br/>(/api/chat, /documents/<id>/chat)"]:::beRoute
+        QuizCtrl["Quiz Controller<br/>(/api/quiz/generate, submit, /quizzes)"]:::beRoute
+        LearningCtrl["Learning & Dashboard Controller<br/>(/api/learning/session, progress, insights, /dashboard/stats)"]:::beRoute
+    end
+
+    subgraph BackendServices ["Backend Services & Utility Modules"]
+        direction TB
+        ExtractSvc["Doc Extraction Module<br/>(PdfReader, docx, pptx, OCR)"]:::beSvc
+        RAGSvc["Context & Citation Builder<br/>(build_document_context)"]:::beSvc
+        AIRouterSvc["services/ai/ai_router.py<br/>(Dynamic Provider Dispatch)"]:::beSvc
+        GeminiSvc["services/ai/gemini_service.py"]:::beSvc
+        GroqSvc["services/ai/groq_service.py"]:::beSvc
+        OpenRouterSvc["services/ai/openrouter_service.py"]:::beSvc
+        AnalyticsSvc["Mastery & Streak Calc<br/>(calculate_knowledge_dna)"]:::beSvc
+
+        AIRouterSvc --> GeminiSvc
+        AIRouterSvc --> GroqSvc
+        AIRouterSvc --> OpenRouterSvc
+    end
+
+    subgraph DataStorage ["Database Models & Storage (models.py & data/)"]
+        direction TB
+        UserModel["User Model<br/>(SQL: users)"]:::dbModel
+        ProgressModel["LearningProgress Model<br/>(SQL: learning_progress)"]:::dbModel
+        SubjectJSON["subjects.json Store"]:::dbModel
+        DocumentJSON["documents.json Store"]:::dbModel
+        QuizJSON["quizzes.json Store"]:::dbModel
+        BlobStorage["backend/uploads/ Disk Store"]:::dbModel
+    end
+
+    %% Client-Server Bindings
+    AuthCtx -->|"Authorization: Bearer <jwt>"| AuthCtrl
+    SubjMgrComp -->|"REST"| SubjCtrl
+    DocViewComp -->|"Upload & Fetch"| DocCtrl
+    DocChatComp -->|"Chat Q&A"| ChatCtrl
+    QuizGenComp & QuizPlayComp -->|"Generate & Submit"| QuizCtrl
+    DashComp & StudyPlanWidget -->|"Progress & Stats"| LearningCtrl
+    VoiceComp -->|"Voice Mode Chat"| ChatCtrl
+
+    %% Internal Service Dependencies
+    AuthCtrl --> UserModel
+    DocCtrl --> ExtractSvc
+    ExtractSvc --> BlobStorage
+    DocCtrl --> DocumentJSON
+    SubjCtrl --> SubjectJSON
+    ChatCtrl --> RAGSvc
+    RAGSvc --> AIRouterSvc
+    QuizCtrl --> AIRouterSvc
+    QuizCtrl --> QuizJSON
+    QuizCtrl --> ProgressModel
+    LearningCtrl --> AnalyticsSvc
+    AnalyticsSvc --> ProgressModel
+    LearningCtrl --> SubjectJSON
+    LearningCtrl --> DocumentJSON

@@ -1,0 +1,45 @@
+%% AI Knowledge DNA - Physical and Logical Deployment Diagram
+%% Illustrates physical execution nodes, networking protocols, ports, and deployment boundaries.
+
+flowchart TB
+    classDef clientNode fill:#EFF6FF,stroke:#2563EB,color:#1E3A8A,stroke-width:2px;
+    classDef serverNode fill:#F0FDF4,stroke:#16A34A,color:#14532D,stroke-width:2px;
+    classDef dbNode fill:#FEF3C7,stroke:#D97706,color:#78350F,stroke-width:2px;
+    classDef cloudNode fill:#FAF5FF,stroke:#9333EA,color:#581C87,stroke-width:2px;
+
+    subgraph ClientDevice ["Client Tier: Student Workstation / Mobile Device"]
+        direction TB
+        BrowserRuntime["Modern Web Browser (Chromium / Firefox / Safari)"]:::clientNode
+        ClientArtifacts["• React 19 Single Page Application<br/>• Web Speech Recognition & Synthesis APIs<br/>• Client-Side HTML5 Canvas (PDF.js rendering)<br/>• LocalStorage (JWT token & ai_knowledge_dna_theme)"]:::clientNode
+        BrowserRuntime --- ClientArtifacts
+    end
+
+    subgraph AppServerNode ["Application Server Tier: Backend Host (Port 5000)"]
+        direction TB
+        FlaskWSGI["Flask REST API Server (Python 3.14 Runtime)"]:::serverNode
+        ServerComponents["• Flask-CORS & Flask-JWT-Extended Middleware<br/>• PyMuPDF / PyPDF Page Stream Extraction<br/>• python-docx & python-pptx Parsers<br/>• Tesseract OCR Subprocess Bridge<br/>• Multi-Provider AI Routing & Fallback Service"]:::serverNode
+        LocalStoragePool["Local Server Disk Volumes:<br/>• backend/uploads/ (Encrypted Raw Documents)<br/>• backend/data/ (JSON Flat-File Stores)"]:::serverNode
+        
+        FlaskWSGI --- ServerComponents
+        FlaskWSGI --- LocalStoragePool
+    end
+
+    subgraph DatabaseCloudNode ["Database Tier: TiDB Cloud Distributed Cluster"]
+        direction TB
+        TiDBInstance["TiDB Cloud MySQL Gateway<br/>Host: gateway01.ap-southeast-1.prod.aws.tidbcloud.com<br/>Port: 4000 (TLS 1.2/1.3 with CA Certificate)"]:::dbNode
+        DBSchemas["Relational Schemas:<br/>• users table (Identity & bcrypt credentials)<br/>• learning_progress table (Mastery & Streaks)<br/>• quiz_attempts table (Submission histories)<br/>• subjects, documents, quizzes tables"]:::dbNode
+        TiDBInstance --- DBSchemas
+    end
+
+    subgraph ExternalAICloud ["External AI Cloud Tier (HTTPS / TLS 443)"]
+        direction TB
+        GeminiEndpoint["Google Gemini API<br/>https://generativelanguage.googleapis.com<br/>Model: gemini-3.5-flash / gemini-1.5-pro"]:::cloudNode
+        GroqEndpoint["Groq Cloud API<br/>https://api.groq.com/openai/v1<br/>Model: openai/gpt-oss-20b (Llama-3 accelerated)"]:::cloudNode
+        OpenRouterEndpoint["OpenRouter AI Gateway<br/>https://openrouter.ai/api/v1<br/>Model: openai/gpt-6-luna"]:::cloudNode
+    end
+
+    ClientDevice -->|"HTTPS / REST (JSON API on :5000)<br/>Authorization: Bearer <jwt>"| AppServerNode
+    AppServerNode -->|"MySQL Protocol over TLS (:4000)<br/>SQLAlchemy Connection Pool with pool_pre_ping"| DatabaseCloudNode
+    AppServerNode -->|"REST over HTTPS (:443)<br/>API Key Injected via Environment"| GeminiEndpoint
+    AppServerNode -->|"REST over HTTPS (:443)<br/>Low-Latency Streaming"| GroqEndpoint
+    AppServerNode -->|"REST over HTTPS (:443)<br/>Resilient Fallback Gateway"| OpenRouterEndpoint

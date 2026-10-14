@@ -12,14 +12,18 @@ import {
   FaFilePdf,
   FaChevronLeft,
   FaChevronRight,
+  FaBrain,
+  FaTimes,
+  FaComments,
 } from "react-icons/fa";
 
-import API, {
+import {
   getDocument,
   getFileBlob,
 } from "../../services/api";
 
 import DocumentChat from "./DocumentChat";
+import { useStudyTracker } from "../../context/StudyTrackerContext";
 
 function DocumentViewer() {
   const { documentId } = useParams();
@@ -34,6 +38,8 @@ function DocumentViewer() {
   const [document, setDocument] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [showTopics, setShowTopics] = useState(false);
+  const [mobileTab, setMobileTab] = useState("pdf");
 
   // =====================================================
   // PROTECTED PDF STATE
@@ -52,13 +58,17 @@ function DocumentViewer() {
     Number(searchParams.get("page") || 1)
   );
 
+  const [inputPage, setInputPage] = useState(currentPage);
+
+  useEffect(() => {
+    setInputPage(currentPage);
+  }, [currentPage]);
+
   // =====================================================
-  // STUDY TIME TRACKING
+  // STUDY TOPIC TRACKING
   // =====================================================
 
-  const studyStartedAtRef = useRef(null);
-  const studyRecordedMinutesRef = useRef(0);
-  const studyTimerRef = useRef(null);
+  const { setStudyTopic } = useStudyTracker();
   const currentPageRef = useRef(currentPage);
 
   useEffect(() => {
@@ -85,47 +95,14 @@ function DocumentViewer() {
     );
   };
 
-  const recordCompletedStudyMinutes = async () => {
-    if (!studyStartedAtRef.current) {
-      return;
+  useEffect(() => {
+    if (document) {
+      setStudyTopic(getStudyTopic());
     }
-
-    const elapsedMinutes = Math.floor(
-      (Date.now() - studyStartedAtRef.current) / 60000
-    );
-
-    const minutesToRecord =
-      elapsedMinutes -
-      studyRecordedMinutesRef.current;
-
-    if (minutesToRecord <= 0) {
-      return;
-    }
-
-    try {
-      if (!API || typeof API.post !== "function") {
-        throw new Error("API client is not available.");
-      }
-
-      const response = await API.post(
-        "/learning/session",
-        {
-          topic: getStudyTopic(),
-          study_minutes: minutesToRecord,
-        }
-      );
-
-      if (response?.data?.success) {
-        studyRecordedMinutesRef.current =
-          elapsedMinutes;
-      }
-    } catch (studyError) {
-      console.error(
-        "Study time tracking error:",
-        studyError
-      );
-    }
-  };
+    return () => {
+      setStudyTopic("General");
+    };
+  }, [document, currentPage, setStudyTopic]);
 
   // =====================================================
   // LOAD DOCUMENT
@@ -300,49 +277,6 @@ function DocumentViewer() {
     };
   }, [document?.stored_name]);
 
-  // =====================================================
-  // ACTIVE STUDY TIMER
-  // =====================================================
-
-  useEffect(() => {
-    if (
-      loading ||
-      error ||
-      !document ||
-      !documentId
-    ) {
-      return undefined;
-    }
-
-    studyStartedAtRef.current = Date.now();
-    studyRecordedMinutesRef.current = 0;
-
-    studyTimerRef.current =
-      window.setInterval(() => {
-        recordCompletedStudyMinutes();
-      }, 60000);
-
-    return () => {
-      if (studyTimerRef.current) {
-        window.clearInterval(
-          studyTimerRef.current
-        );
-
-        studyTimerRef.current = null;
-      }
-
-      recordCompletedStudyMinutes();
-
-      studyStartedAtRef.current = null;
-      studyRecordedMinutesRef.current = 0;
-    };
-  }, [
-    loading,
-    error,
-    document?.id,
-    document?.stored_name,
-    documentId,
-  ]);
 
   // =====================================================
   // CHANGE PDF PAGE
@@ -472,6 +406,7 @@ function DocumentViewer() {
         <Link
           to="/dashboard"
           className="viewer-back"
+          title="Return to Dashboard"
         >
           <FaArrowLeft />
 
@@ -496,37 +431,80 @@ function DocumentViewer() {
           </div>
         </div>
 
-        {/* OPEN PDF */}
+        {/* HEADER ACTIONS: TOPICS TOGGLE & OPEN PDF */}
 
-        {pdfBlobUrl && (
-          <a
-            href={pdfUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="viewer-open"
+        <div className="viewer-header-actions">
+          <button
+            type="button"
+            className={`viewer-topics-toggle ${showTopics ? "active" : ""}`}
+            onClick={() => setShowTopics((prev) => !prev)}
+            aria-label="Toggle extracted topics"
+            title="View extracted topics and summaries"
           >
-            <FaExternalLinkAlt />
+            <FaBrain />
+            <span>Topics ({Array.isArray(document.topics) ? document.topics.length : 0})</span>
+          </button>
 
-            Open PDF
-          </a>
-        )}
+          {pdfBlobUrl && (
+            <a
+              href={pdfUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="viewer-open"
+              title="Open PDF in new browser tab"
+            >
+              <FaExternalLinkAlt />
+              <span>Open PDF</span>
+            </a>
+          )}
+        </div>
 
       </header>
 
       {/* =================================================
-          THREE COLUMN WORKSPACE
+          MOBILE TABS (< 768px)
       ================================================= */}
 
-      <div className="viewer-workspace">
+      <div className="viewer-mobile-tabs" role="tablist">
+        <button
+          type="button"
+          className={`viewer-mobile-tab ${mobileTab === "pdf" ? "active" : ""}`}
+          onClick={() => setMobileTab("pdf")}
+          role="tab"
+          aria-selected={mobileTab === "pdf"}
+        >
+          <FaFilePdf />
+          <span>PDF Viewer</span>
+        </button>
+        <button
+          type="button"
+          className={`viewer-mobile-tab ${mobileTab === "chat" ? "active" : ""}`}
+          onClick={() => setMobileTab("chat")}
+          role="tab"
+          aria-selected={mobileTab === "chat"}
+        >
+          <FaComments />
+          <span>AI Chat</span>
+        </button>
+      </div>
 
-        {/* =================================================
-            LEFT — SOURCES
-        ================================================= */}
+      {/* =================================================
+          TOPICS / SOURCES SLIDE-OVER DRAWER
+      ================================================= */}
 
-        <aside className="source-panel">
+      {showTopics && (
+        <div
+          className="topics-drawer-backdrop"
+          onClick={() => setShowTopics(false)}
+          aria-hidden="true"
+        />
+      )}
 
-          {/* SOURCE HEADER */}
-
+      <aside
+        className={`source-panel-drawer ${showTopics ? "open" : ""}`}
+        aria-label="Document Sources and Topics"
+      >
+        <div className="drawer-header">
           <div className="source-heading">
             <div className="source-heading-icon">
               🧠
@@ -534,92 +512,113 @@ function DocumentViewer() {
 
             <div>
               <strong>
-                Sources
+                Sources & Topics
               </strong>
 
               <span>
-                AI extracted topics
+                AI extracted from {documentName}
               </span>
             </div>
           </div>
 
-          {/* DOCUMENT SUMMARY */}
+          <button
+            type="button"
+            className="drawer-close-btn"
+            onClick={() => setShowTopics(false)}
+            aria-label="Close topics drawer"
+            title="Close"
+          >
+            <FaTimes />
+          </button>
+        </div>
 
-          <div className="source-summary">
-            <h3>
-              Document
-            </h3>
+        {/* DOCUMENT SUMMARY */}
 
-            <p>
-              {document.summary ||
-                "AI extracted information from this document."}
-            </p>
-          </div>
+        <div className="source-summary">
+          <h3>
+            Document Summary
+          </h3>
 
-          {/* TOPICS */}
+          <p>
+            {document.summary ||
+              "AI extracted information from this document."}
+          </p>
+        </div>
 
-          <div className="source-topics">
-            <h3>
-              Topics
-            </h3>
+        {/* TOPICS */}
 
-            {Array.isArray(document.topics) &&
-            document.topics.length > 0 ? (
-              document.topics.map(
-                (topic, index) => {
-                  const topicPage =
-                    Number(topic.page) || 1;
+        <div className="source-topics">
+          <h3>
+            Extracted Topics
+          </h3>
 
-                  const active =
-                    topicPage ===
-                    currentPage;
+          {Array.isArray(document.topics) &&
+          document.topics.length > 0 ? (
+            document.topics.map(
+              (topic, index) => {
+                const topicPage =
+                  Number(topic.page) || 1;
 
-                  return (
-                    <button
-                      key={`${topic.name || "topic"}-${index}`}
-                      type="button"
-                      className={
-                        active
-                          ? "source-item active"
-                          : "source-item"
+                const active =
+                  topicPage ===
+                  currentPage;
+
+                return (
+                  <button
+                    key={`${topic.name || "topic"}-${index}`}
+                    type="button"
+                    className={
+                      active
+                        ? "source-item active"
+                        : "source-item"
+                    }
+                    onClick={() => {
+                      changePage(topicPage);
+                      if (window.innerWidth < 1024) {
+                        setShowTopics(false);
+                        setMobileTab("pdf");
                       }
-                      onClick={() =>
-                        changePage(topicPage)
-                      }
-                    >
-                      <div className="source-icon">
-                        🧠
-                      </div>
+                    }}
+                  >
+                    <div className="source-icon">
+                      🧠
+                    </div>
 
-                      <div className="source-info">
-                        <strong>
-                          {topic.name ||
-                            "Untitled topic"}
-                        </strong>
+                    <div className="source-info">
+                      <strong>
+                        {topic.name ||
+                          "Untitled topic"}
+                      </strong>
 
-                        <span>
-                          Page {topicPage}
-                        </span>
-                      </div>
+                      <span>
+                        Page {topicPage}
+                      </span>
+                    </div>
 
-                      <FaExternalLinkAlt />
-                    </button>
-                  );
-                }
-              )
-            ) : (
-              <div className="source-empty">
-                <span>
-                  No extracted topics yet.
-                </span>
-              </div>
-            )}
-          </div>
+                    <FaExternalLinkAlt />
+                  </button>
+                );
+              }
+            )
+          ) : (
+            <div className="source-empty">
+              <span>
+                No extracted topics yet.
+              </span>
+            </div>
+          )}
+        </div>
 
-        </aside>
+      </aside>
+
+      {/* =================================================
+          TWO COLUMN WORKSPACE (PDF ~58% | CHAT ~42%)
+      ================================================= */}
+
+      <div className={`viewer-workspace mobile-${mobileTab}`}>
 
         {/* =================================================
-            CENTER — PDF VIEWER
+            LEFT — PDF VIEWER
         ================================================= */}
 
         <section className="pdf-area">
@@ -642,22 +641,43 @@ function DocumentViewer() {
               }
               aria-label="Previous page"
               title="Previous page"
+              className="pdf-page-btn"
             >
               <FaChevronLeft />
             </button>
 
-            {/* PAGE NUMBER */}
+            {/* DIRECT PAGE INPUT & TOTAL */}
 
-            <span>
-              Page{" "}
-              <strong>
-                {currentPage}
-              </strong>
-              {" "}of{" "}
-              <strong>
-                {totalPages}
-              </strong>
-            </span>
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                changePage(inputPage);
+              }}
+              className="pdf-page-form"
+            >
+              <span className="pdf-page-label">
+                Page
+              </span>
+
+              <input
+                type="number"
+                min={1}
+                max={totalPages}
+                value={inputPage}
+                onChange={(event) =>
+                  setInputPage(event.target.value)
+                }
+                onBlur={() =>
+                  changePage(inputPage)
+                }
+                className="pdf-page-input"
+                aria-label="Page number input"
+              />
+
+              <span className="pdf-page-total">
+                of <strong>{totalPages}</strong>
+              </span>
+            </form>
 
             {/* NEXT */}
 
@@ -674,6 +694,7 @@ function DocumentViewer() {
               }
               aria-label="Next page"
               title="Next page"
+              className="pdf-page-btn"
             >
               <FaChevronRight />
             </button>
@@ -740,7 +761,12 @@ function DocumentViewer() {
           <DocumentChat
             documentId={documentId}
             documentName={documentName}
-            onPageChange={changePage}
+            onPageChange={(targetPage) => {
+              changePage(targetPage);
+              if (window.innerWidth <= 768) {
+                setMobileTab("pdf");
+              }
+            }}
           />
 
         </section>

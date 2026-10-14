@@ -1,0 +1,40 @@
+%% AI Knowledge DNA - Voice Assistant Sequence Diagram
+%% Illustrates client-side speech recognition, low-latency AI routing, answer sanitization, and TTS synthesis.
+
+sequenceDiagram
+    autonumber
+    actor Student as Student (Voice Assistant)
+    participant UI as VoiceAssistant Component
+    participant WebSpeechIn as Web Speech API (SpeechRecognition)
+    participant ChatAPI as Backend (/api/chat)
+    participant AIRouter as AI Router (services/ai/ai_router.py)
+    participant GroqAPI as Groq Cloud API (Low-Latency LLM)
+    participant Cleaner as clean_voice_answer (app.py)
+    participant WebSpeechOut as Web Speech API (SpeechSynthesis)
+
+    Student->>UI: Clicks Microphone Button ("Start Listening")
+    UI->>WebSpeechIn: recognition.start()
+    WebSpeechIn-->>Student: Prompts for mic access / listens to audio
+    Student->>WebSpeechIn: Speaks query ("What is mitosis and how does it work?")
+    WebSpeechIn-->>UI: Event onresult (Transcribed Text: "What is mitosis and how does it work?")
+
+    UI->>UI: Display user prompt & set listening = false, processing = true
+    UI->>ChatAPI: POST /api/chat {document_id, question, history, voice_response: true}
+
+    ChatAPI->>ChatAPI: Validate JWT & Verify Document Ownership
+    ChatAPI->>AIRouter: generate_ai_response(task="voice", prompt)
+    note over AIRouter: Task "voice" routes primarily to Groq<br/>for sub-second generation latency.
+    AIRouter->>GroqAPI: Low-latency inference query
+    GroqAPI-->>AIRouter: Raw answer containing markdown & citation tags
+    AIRouter-->>ChatAPI: Return raw answer text
+
+    ChatAPI->>Cleaner: clean_voice_answer(raw_answer)
+    note over Cleaner: Regex sanitization:<br/>1. Strip markdown headers (#, ##, ###)<br/>2. Strip citation tags [Page X]<br/>3. Strip hyperlinks https://...<br/>4. Strip Source: and References: blocks<br/>5. Normalize whitespace for natural cadence.
+    Cleaner-->>ChatAPI: Clean, natural speakable text
+
+    ChatAPI-->>UI: 200 OK {success: true, answer: clean_text, sources: []}
+    UI->>UI: Append answer to conversation log
+
+    UI->>WebSpeechOut: new SpeechSynthesisUtterance(clean_text)
+    WebSpeechOut-->>Student: Speaks natural synthesized voice response
+    Student->>UI: Toggles mic again or continues learning session

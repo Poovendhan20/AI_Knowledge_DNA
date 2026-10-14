@@ -1,142 +1,64 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-
 import { Link } from "react-router-dom";
-
 import {
-
   FaBrain,
-
   FaCheck,
-
   FaFileAlt,
-
   FaMicrophone,
-
   FaPaperPlane,
-
   FaPause,
-
   FaPlus,
-
   FaRobot,
-
   FaSpinner,
-
   FaStop,
-
   FaTrashAlt,
-
   FaUser,
-
   FaVolumeUp,
-
 } from "react-icons/fa";
-
 import { chatWithDocument } from "../../services/api";
 import { getSubjects, getSubjectDocuments } from "../../services/subjectApi";
-
 import { useAuth } from "../../context/AuthContext";
-
 import "./VoiceAssistant.css";
-
-
-
 const MAX_STORED_MESSAGES = 30;
-
 const MAX_REQUEST_HISTORY = 10;
-
-
-
 const LANGUAGE_OPTIONS = [
-
   { code: "en-IN", label: "English" },
-
   { code: "ta-IN", label: "தமிழ்" },
-
 ];
-
-
-
 const WAVE_BARS = Array.from({ length: 11 }, (_, index) => index);
-
-
-
 function createWelcomeMessage(documentName) {
-
   return {
-
     id: `welcome-${Date.now()}`,
-
     role: "assistant",
-
     content: documentName
-
       ? `Hi! I am ready to help you study ${documentName}. You can ask a question by voice or type it below.`
-
       : "Choose a study material, then ask me a question by voice or text.",
-
     sources: [],
-
     isWelcome: true,
-
   };
-
 }
-
-
-
 function getDocumentName(document) {
-
   return document?.original_name || document?.name || document?.filename || "Study material";
-
 }
-
-
-
 function readHistory(storageKey, documentName) {
-
   try {
-
     const stored = localStorage.getItem(storageKey);
-
     const parsed = stored ? JSON.parse(stored) : [];
-
-
-
     if (Array.isArray(parsed) && parsed.length > 0) {
-
       return parsed.filter(
-
         (message) =>
-
           message &&
-
           (message.role === "assistant" || message.role === "user") &&
-
           typeof message.content === "string"
-
       );
-
     }
-
   } catch {
-
     // A corrupted local conversation should never prevent the assistant loading.*
-
   }
-
-
-
   return [createWelcomeMessage(documentName)];
-
 }
-
-
-
 function VoiceAssistant() {
-
   const { user } = useAuth();
-
   const [subjects, setSubjects] = useState([]);
   const [selectedSubjectId, setSelectedSubjectId] = useState("");
   const [documents, setDocuments] = useState([]);
@@ -145,138 +67,61 @@ function VoiceAssistant() {
   const [isLoadingDocuments, setIsLoadingDocuments] = useState(false);
   const [documentError, setDocumentError] = useState("");
   const [subjectError, setSubjectError] = useState("");
-
   const [messages, setMessages] = useState([]);
-
   const [input, setInput] = useState("");
-
   const [isSending, setIsSending] = useState(false);
-
   const [isListening, setIsListening] = useState(false);
-
   const [isSpeaking, setIsSpeaking] = useState(false);
-
   const [speechSupported, setSpeechSupported] = useState(true);
-
   const [speechError, setSpeechError] = useState("");
-
   const [language, setLanguage] = useState("en-IN");
-
   const [autoSpeak, setAutoSpeak] = useState(true);
-
   const [activeHistoryKey, setActiveHistoryKey] = useState(null);
-
-
-
   const recognitionRef = useRef(null);
-
   const hasSubmittedFinalRef = useRef(false);
-
   const spokenPrefixRef = useRef("");
-
   const messagesEndRef = useRef(null);
-
-
-
   const selectedSubject = useMemo(
     () => subjects.find((subject) => String(subject.id) === selectedSubjectId) || null,
     [subjects, selectedSubjectId]
   );
-
   const selectedDocument = useMemo(
-
     () => documents.find((document) => String(document.id) === selectedDocumentId) || null,
-
     [documents, selectedDocumentId]
-
   );
-
-
-
   const storageKey = user?.id && selectedDocumentId
-
     ? `ai-knowledge-dna:voice-history:${user.id}:${selectedDocumentId}`
-
     : null;
-
-
-
   const voiceActivity = isListening ? "listening" : isSpeaking ? "speaking" : "idle";
-
   const isHistoryReady = Boolean(storageKey) && activeHistoryKey === storageKey;
-
-
-
   const stopSpeaking = useCallback(() => {
-
     if ("speechSynthesis" in window) {
-
       window.speechSynthesis.cancel();
-
     }
-
     setIsSpeaking(false);
-
   }, []);
-
-
-
   const speak = useCallback(
-
     (text) => {
-
       if (!("speechSynthesis" in window) || !text) {
-
         return;
-
       }
-
-
-
       stopSpeaking();
-
-
-
       const utterance = new SpeechSynthesisUtterance(text.replace(/\[Page\s+\d+\]/gi, ""));
-
       utterance.lang = language;
-
       utterance.rate = language === "ta-IN" ? 0.9 : 1;
-
-
-
       const matchingVoice = window.speechSynthesis
-
         .getVoices()
-
         .find((voice) => voice.lang.toLowerCase().startsWith(language.slice(0, 2).toLowerCase()));
-
-
-
       if (matchingVoice) {
-
         utterance.voice = matchingVoice;
-
       }
-
-
-
       utterance.onstart = () => setIsSpeaking(true);
-
       utterance.onend = () => setIsSpeaking(false);
-
       utterance.onerror = () => setIsSpeaking(false);
-
       window.speechSynthesis.speak(utterance);
-
     },
-
     [language, stopSpeaking]
-
   );
-
-
-
   useEffect(() => {
     let isMounted = true;
     const loadSubjects = async () => {

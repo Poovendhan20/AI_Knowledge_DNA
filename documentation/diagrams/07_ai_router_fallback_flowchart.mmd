@@ -1,0 +1,46 @@
+%% AI Knowledge DNA - AI Provider Routing and Fallback Flowchart
+%% Depicts task mapping, provider determination, rate-limit classification, and fallback sequence.
+
+flowchart TD
+    classDef startNode fill:#10B981,stroke:#059669,color:#FFFFFF,stroke-width:2px;
+    classDef actionNode fill:#EFF6FF,stroke:#3B82F6,color:#1E3A8A,stroke-width:1px;
+    classDef decisionNode fill:#FEF3C7,stroke:#D97706,color:#78350F,stroke-width:2px;
+    classDef errorNode fill:#FEE2E2,stroke:#DC2626,color:#991B1B,stroke-width:1px;
+    classDef endNode fill:#1E293B,stroke:#0F172A,color:#FFFFFF,stroke-width:2px;
+
+    Start([Call generate_ai_response]):::startNode --> ValidateInput{Validate Task & Prompt?}:::decisionNode
+
+    ValidateInput -- Empty / Invalid --> RaiseValueError[Raise ValueError 'Task/Prompt Required']:::errorNode --> Abort([Execution Terminated]):::endNode
+    ValidateInput -- Valid --> CheckExplicitProvider{Explicit Provider Specified?}:::decisionNode
+
+    CheckExplicitProvider -- Yes --> UseExplicit[Selected = Explicit Provider]:::actionNode
+    CheckExplicitProvider -- No --> TaskLookup[Lookup TASK_PROVIDER_MAP by Task]:::actionNode
+
+    TaskLookup --> BranchTask{Classify Task}:::decisionNode
+    BranchTask -- document_analysis / summary / embedding --> MapGemini[Primary = Gemini]:::actionNode
+    BranchTask -- chat / voice / fast_response / quick_quiz --> MapGroq[Primary = Groq]:::actionNode
+    BranchTask -- general / model_testing --> MapOpenRouter[Primary = OpenRouter]:::actionNode
+
+    UseExplicit & MapGemini & MapGroq & MapOpenRouter --> ResolveSequence[Resolve Sequence from FALLBACK_ORDER]:::actionNode
+
+    ResolveSequence --> SeqNote["Gemini: [Gemini -> OpenRouter -> Groq]<br/>Groq: [Groq -> OpenRouter -> Gemini]<br/>OpenRouter: [OpenRouter -> Groq -> Gemini]"]:::actionNode
+
+    SeqNote --> InitLoop[Index = 0; FallbackUsed = False]:::actionNode
+    InitLoop --> ExecProvider[Execute _generate_with_provider for Current Provider]:::actionNode
+
+    ExecProvider --> CheckCallSuccess{API Call Successful?}:::decisionNode
+
+    CheckCallSuccess -- Yes --> LogSuccess[Log Response Time & Model Metadata]:::actionNode
+    LogSuccess --> ReturnPayload[Return {success: True, provider, model, answer, fallback_used}]:::actionNode
+    ReturnPayload --> EndSuccess([Return Response]):::endNode
+
+    CheckCallSuccess -- Caught Exception --> CheckTempErr{is_temporary_error?<br/>429, rate limit, quota, timeout, 500, 502, 503, overloaded}:::decisionNode
+
+    CheckTempErr -- No Permanent Error<br/>e.g. Auth/Invalid Key --> RaisePermanent[Raise Exception Immediately<br/>Do Not Cascade Fallback]:::errorNode --> Abort
+
+    CheckTempErr -- Yes Transient Error --> CheckHasNext{Next Provider Available in Sequence?}:::decisionNode
+
+    CheckHasNext -- Yes --> TriggerFallback[Set FallbackUsed = True<br/>Index = Index + 1<br/>Log Fallback Warning]:::actionNode
+    TriggerFallback --> ExecProvider
+
+    CheckHasNext -- No Exhausted --> RaiseAllFailed[Raise RuntimeError 'All AI providers failed']:::errorNode --> Abort

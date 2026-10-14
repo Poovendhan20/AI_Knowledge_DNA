@@ -1,0 +1,42 @@
+%% AI Knowledge DNA - Learning Progress Update Activity Diagram
+%% Illustrates metric accumulation, mastery score calculation, streak evaluation, and persistence.
+
+flowchart TD
+    classDef startNode fill:#10B981,stroke:#059669,color:#FFFFFF,stroke-width:2px;
+    classDef actionNode fill:#EFF6FF,stroke:#3B82F6,color:#1E3A8A,stroke-width:1px;
+    classDef decisionNode fill:#FEF3C7,stroke:#D97706,color:#78350F,stroke-width:2px;
+    classDef errorNode fill:#FEE2E2,stroke:#DC2626,color:#991B1B,stroke-width:1px;
+    classDef endNode fill:#1E293B,stroke:#0F172A,color:#FFFFFF,stroke-width:2px;
+
+    StartA([Event A: Study Session Completed]):::startNode --> InputMinutes[Payload: topic, study_minutes]:::actionNode
+    StartB([Event B: Quiz Attempt Submitted]):::startNode --> InputQuiz[Payload: topic_totals with questions attempted & correct]:::actionNode
+
+    InputMinutes --> CheckMinutes{Minutes between 1 and 720?}:::decisionNode
+    CheckMinutes -- No --> RejectMinutes[Return 400 'Invalid study_minutes']:::errorNode --> EndFailure([Aborted]):::endNode
+    CheckMinutes -- Yes --> FetchUser[Extract Authenticated user_id from JWT]:::actionNode
+
+    InputQuiz --> FetchUser
+
+    FetchUser --> QueryDB[Query LearningProgress for user_id and topic in TiDB]:::actionNode
+    QueryDB --> CheckRowExists{Record Exists for Topic?}:::decisionNode
+
+    CheckRowExists -- No --> CreateRow[Instantiate new LearningProgress record<br/>defaults: attempted=0, correct=0, minutes=0]:::actionNode
+    CheckRowExists -- Yes --> LoadRow[Load existing LearningProgress entity]:::actionNode
+
+    CreateRow & LoadRow --> AccumulateStats[Accumulate Metrics:<br/>study_minutes += new_minutes<br/>questions_attempted += new_attempted<br/>questions_correct += new_correct]:::actionNode
+
+    AccumulateStats --> CalcMastery{questions_attempted > 0?}:::decisionNode
+    CalcMastery -- Yes --> ComputeMastery[mastery_score = round((correct / attempted) * 100, 2)]:::actionNode
+    CalcMastery -- No --> KeepMastery[Preserve existing mastery_score]:::actionNode
+
+    ComputeMastery & KeepMastery --> UpdateTimestamp[Update last_studied = current UTC timestamp]:::actionNode
+    UpdateTimestamp --> CommitDB[Execute db.session.commit() to TiDB Cloud]:::actionNode
+
+    CommitDB --> LoadAllUserRows[Fetch all progress rows for user_id]:::actionNode
+    LoadAllUserRows --> CalcStreak[calculate_learning_streak: Count consecutive active study dates]:::actionNode
+    LoadAllUserRows --> CalcHours[Total Study Hours = sum(study_minutes) / 60]:::actionNode
+    LoadAllUserRows --> CalcDNA["calculate_knowledge_dna:<br/>Score = 0.6 * avg(mastery) + 0.4 * quiz_accuracy"]:::actionNode
+
+    CalcStreak & CalcHours & CalcDNA --> ReturnResponse[Return 200/201 JSON with progress, study_hours, streak, DNA score]:::actionNode
+    ReturnResponse --> UpdateUI[Dashboard & Personalized Study Plan Refresh UI]:::actionNode
+    UpdateUI --> EndSuccess([Learning Progress Synchronized]):::endNode

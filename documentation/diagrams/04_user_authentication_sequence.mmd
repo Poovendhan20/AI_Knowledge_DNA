@@ -1,0 +1,72 @@
+%% AI Knowledge DNA - User Authentication Sequence Diagram
+%% Details registration, credential verification, JWT issuance, and authorized request lifecycle.
+
+sequenceDiagram
+    autonumber
+    actor Student as Student (Client Browser)
+    participant AuthContext as Frontend AuthContext
+    participant AuthAPI as Backend (/api/auth/*)
+    participant UserModel as User Model (models.py)
+    participant TiDB as TiDB Cloud MySQL
+    participant JWTService as Flask-JWT-Extended
+
+    %% REGISTRATION FLOW
+    rect rgb(240, 249, 255)
+        note over Student, TiDB: Registration Workflow
+        Student->>AuthContext: Submit Name, Email, Password (>= 6 chars)
+        AuthContext->>AuthAPI: POST /api/auth/register {name, email, password}
+        AuthAPI->>UserModel: User.query.filter_by(email=email).first()
+        UserModel->>TiDB: SELECT * FROM users WHERE email = ?
+        TiDB-->>UserModel: User not found (None)
+        AuthAPI->>UserModel: Create User instance & set_password(password)
+        note over UserModel: bcrypt.generate_password_hash(password)
+        UserModel->>TiDB: INSERT INTO users (name, email, password_hash)
+        TiDB-->>UserModel: Commit OK, user.id = 101
+        AuthAPI->>JWTService: create_access_token(identity=str(user.id))
+        JWTService-->>AuthAPI: Generated Access Token (24h validity)
+        AuthAPI-->>AuthContext: 201 Created {success: true, token, user: {...}}
+        AuthContext-->>Student: Set user state, store token in localStorage
+    end
+
+    %% LOGIN FLOW
+    rect rgb(240, 253, 244)
+        note over Student, TiDB: Login Workflow
+        Student->>AuthContext: Enter Credentials {email, password}
+        AuthContext->>AuthAPI: POST /api/auth/login {email, password}
+        AuthAPI->>UserModel: User.query.filter_by(email=email).first()
+        UserModel->>TiDB: SELECT * FROM users WHERE email = ?
+        TiDB-->>UserModel: Return User record
+        AuthAPI->>UserModel: user.check_password(password)
+        note over UserModel: bcrypt.check_password_hash(hash, password)
+        alt Password Invalid
+            UserModel-->>AuthAPI: False
+            AuthAPI-->>AuthContext: 401 Unauthorized {"Invalid email or password"}
+            AuthContext-->>Student: Display error banner
+        else Password Valid
+            UserModel-->>AuthAPI: True
+            AuthAPI->>JWTService: create_access_token(identity=str(user.id))
+            JWTService-->>AuthAPI: Fresh JWT Bearer Token
+            AuthAPI-->>AuthContext: 200 OK {success: true, token, user}
+            AuthContext-->>Student: Store token, redirect to /dashboard
+        end
+    end
+
+    %% PROTECTED REQUEST FLOW
+    rect rgb(254, 243, 199)
+        note over Student, TiDB: Authenticated Session Verification
+        Student->>AuthContext: Access Protected Route (/api/auth/me)
+        AuthContext->>AuthAPI: GET /api/auth/me [Headers: Authorization: Bearer <jwt>]
+        AuthAPI->>JWTService: @jwt_required() validation
+        alt Missing or Tampered Token
+            JWTService-->>AuthAPI: Token Invalid / Expired
+            AuthAPI-->>AuthContext: 401 Unauthorized / 422 Unprocessable Entity
+            AuthContext-->>Student: Clear session & redirect to /login
+        else Token Valid
+            JWTService-->>AuthAPI: get_jwt_identity() -> "101"
+            AuthAPI->>UserModel: db.session.get(User, 101)
+            UserModel->>TiDB: SELECT * FROM users WHERE id = 101
+            TiDB-->>UserModel: User Record
+            AuthAPI-->>AuthContext: 200 OK {success: true, user: {...}}
+            AuthContext-->>Student: Render Authenticated Dashboard
+        end
+    end

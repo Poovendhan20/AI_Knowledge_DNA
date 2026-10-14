@@ -1,0 +1,57 @@
+%% AI Knowledge DNA - Knowledge DNA Processing Workflow Diagram
+%% Details the mathematical scoring, multi-factor weighting, weak-concept identification, and study plan synthesis.
+
+flowchart TD
+    classDef startNode fill:#10B981,stroke:#059669,color:#FFFFFF,stroke-width:2px;
+    classDef inputNode fill:#EFF6FF,stroke:#3B82F6,color:#1E3A8A,stroke-width:1px;
+    classDef calcNode fill:#FEF3C7,stroke:#D97706,color:#78350F,stroke-width:2px;
+    classDef outputNode fill:#F3E8FF,stroke:#9333EA,color:#581C87,stroke-width:1px;
+    classDef endNode fill:#1E293B,stroke:#0F172A,color:#FFFFFF,stroke-width:2px;
+
+    Start([Trigger: GET /api/dashboard/stats & /api/learning/insights]):::startNode --> CollectInputs[Collect Student Artifacts for Authenticated user_id]:::inputNode
+
+    subgraph InputSignals ["Multi-Dimensional Learning Signals"]
+        DocTopics["Signal 1: Discovered Topics<br/>(Extracted from user documents)"]:::inputNode
+        QuizAttempts["Signal 2: Quiz Accuracy<br/>(Total Correct / Total Attempted)"]:::inputNode
+        TopicMastery["Signal 3: Topic Mastery<br/>(learning_progress.mastery_score)"]:::inputNode
+        StudyTime["Signal 4: Study Time<br/>(learning_progress.study_minutes)"]:::inputNode
+        Timestamps["Signal 5: Recency Timestamps<br/>(learning_progress.last_studied)"]:::inputNode
+    end
+
+    CollectInputs --> DocTopics & QuizAttempts & TopicMastery & StudyTime & Timestamps
+
+    subgraph AnalyticalEngines ["Analytics & Synthesis Engines"]
+        CalcDNA{"Has Active Progress Records?"}:::calcNode
+        
+        FormulaActive["Standard Knowledge DNA Formula:<br/>DNA = round(0.6 * Average(Mastery) + 0.4 * QuizAccuracy, 1)"]:::calcNode
+        FormulaBoot["Bootstrap Topic DNA Formula:<br/>DNA = min(100, DiscoveredTopicCount * 5)"]:::calcNode
+
+        StreakEngine["Streak Algorithm:<br/>Group last_studied by unique date (YYYY-MM-DD).<br/>Check consecutive daily calendar steps from today."]:::calcNode
+        
+        HoursEngine["Study Hours Aggregator:<br/>Total Hours = round(sum(study_minutes) / 60, 1)"]:::calcNode
+
+        WeakConceptEngine["Weak Concept Detector:<br/>Filter topics where mastery < 70% or unattempted.<br/>Map each weak topic to source document & page."]:::calcNode
+    end
+
+    TopicMastery & QuizAttempts --> CalcDNA
+    CalcDNA -- Yes --> FormulaActive
+    CalcDNA -- No --> FormulaBoot
+
+    Timestamps --> StreakEngine
+    StudyTime --> HoursEngine
+    DocTopics & TopicMastery --> WeakConceptEngine
+
+    subgraph OutputRepresentations ["Personalized UI Artifacts"]
+        DNAScoreMetric["Knowledge DNA Index (0 - 100%)"]:::outputNode
+        StreakMetric["Learning Streak Counter (Days)"]:::outputNode
+        StudyHoursMetric["Total Study Hours Metric"]:::outputNode
+        StudyPlan["Personalized Study Plan Widget<br/>• Prioritized Weak Topics<br/>• Target Study Duration<br/>• Recommended Document Reference"]:::outputNode
+    end
+
+    FormulaActive & FormulaBoot --> DNAScoreMetric
+    StreakEngine --> StreakMetric
+    HoursEngine --> StudyHoursMetric
+    WeakConceptEngine --> StudyPlan
+
+    DNAScoreMetric & StreakMetric & StudyHoursMetric & StudyPlan --> RenderDashboard[Dashboard State Rendered in Academic Focus UI]:::outputNode
+    RenderDashboard --> End([Workflow Completed]):::endNode

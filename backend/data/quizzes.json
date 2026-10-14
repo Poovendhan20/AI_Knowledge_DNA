@@ -775,5 +775,254 @@
     "score": 2,
     "accuracy": 40.0,
     "completed_at": "2026-10-04 01:18:02"
+  },
+  {
+    "id": "35229a242d764a27b615892293ed93b2",
+    "user_id": 30001,
+    "subject_id": "fd2f044d7f36488692038c6e7956bfcb",
+    "subject_name": "CQC",
+    "document_ids": [
+      "5077c0ab7c254d1da174657e6843276f",
+      "90cc0ff5025444898efe1dad61066fba",
+      "db5aac9eea25455aab7294b09dbfb93e",
+      "57c89df65b944673992dada13e0987d9"
+    ],
+    "question_count": 10,
+    "difficulty": "hard",
+    "questions": [
+      {
+        "id": "84f8bb80455043008bb97c36544ee88e",
+        "question": "A company connects computers in different locations and organizations to share resources. The arrangement faces network problems as the distances between computers increase. Which conclusion best matches the material?",
+        "options": [
+          "It is cluster computing, and adding nodes will remove the geographical restrictions.",
+          "It is grid computing; it addresses geographical restrictions, but low availability of high-bandwidth connectivity remains a problem, and cloud computing is described as its successor.",
+          "It is utility computing, which places all participating computers under one organization.",
+          "It is mainframe computing, which relies on separate organizations sharing internet-connected nodes."
+        ],
+        "correct_answer": 1,
+        "explanation": "Grid computing connects systems across geographical locations and organizations, but increased distance can bring bandwidth and network problems. Cloud computing is described as the successor to grid computing.",
+        "page": 2,
+        "topic": "Evolution of Computing"
+      },
+      {
+        "id": "f21946a829114e96b3e92a6ca34299ea",
+        "question": "An online service has a sudden, temporary traffic surge during a holiday and expects demand to fall afterward. Which approach best fits this pattern?",
+        "options": [
+          "Use scalability to permanently increase the baseline capacity because any increase in workload is long-term growth.",
+          "Use elasticity to add instances during the surge and withdraw them when demand falls.",
+          "Use vertical scalability because elasticity is intended only for persistent workloads.",
+          "Use diagonal scalability because a temporary workload always requires both scale-up and scale-out."
+        ],
+        "correct_answer": 1,
+        "explanation": "Elasticity suits unpredictable, temporary fluctuations: resources can be added when demand spikes and reduced afterward.",
+        "page": 4,
+        "topic": "Cloud Elasticity and Scalability"
+      },
+      {
+        "id": "ab6e85d9e61848c0bf40bac6607ca2c2",
+        "question": "A development team wants to write and deploy an application without configuring servers or patching the operating system. They still need a managed environment with development tools. Which service model best fits?",
+        "options": [
+          "IaaS, because it gives the team control of the operating system while the provider manages the development tools.",
+          "PaaS, because the provider manages backend infrastructure while the team focuses on writing and deploying code.",
+          "SaaS, because it provides development infrastructure but leaves software updates to the customer.",
+          "A private cloud, because a deployment model replaces the need to select a service model."
+        ],
+        "correct_answer": 1,
+        "explanation": "PaaS provides a managed environment and tools for developing and deploying applications, while the provider handles the backend infrastructure.",
+        "page": 10,
+        "topic": "Cloud Service Models"
+      },
+      {
+        "id": "390550b461424ec68333c97bd1028b57",
+        "question": "An organization must keep sensitive data in a private environment but wants extra public-cloud capacity when traffic spikes beyond its private capacity. Which model and trade-off best match this need?",
+        "options": [
+          "Public cloud; its shared resources provide strict isolation while avoiding management complexity.",
+          "Private cloud; its dedicated hardware provides nearly limitless capacity during sudden spikes.",
+          "Hybrid cloud; it can use public capacity for spikes, but combining environments can make management difficult.",
+          "Community cloud; it is designed for one organization to shift workloads between public and private environments."
+        ],
+        "correct_answer": 2,
+        "explanation": "A hybrid cloud can keep sensitive data private and use public capacity during spikes, a practice called cloud bursting. Managing the combined environments can be difficult.",
+        "page": 14,
+        "topic": "Cloud Deployment Models"
+      },
+      {
+        "id": "b9ed82c7a0ce420baf6d00bc2fe18b6d",
+        "question": "A company wants an independent party to assess whether its cloud provider meets security and compliance obligations. Which NIST actor has this role?",
+        "options": [
+          "Cloud consumer, because consumers establish service-level agreements and pay for services.",
+          "Cloud broker, because brokers evaluate provider compliance on behalf of regulators.",
+          "Cloud carrier, because carriers audit the security of data during transmission.",
+          "Cloud auditor, because auditors independently evaluate compliance, security, and performance."
+        ],
+        "correct_answer": 3,
+        "explanation": "The cloud auditor is the independent actor that evaluates cloud services for compliance, security, and performance.",
+        "page": 17,
+        "topic": "NIST Cloud Reference Architecture"
+      },
+      {
+        "id": "e32a72b53f0d4527a98505c11d7dfd4d",
+        "question": "A team needs virtual machines for a demanding, fixed-use server workload and prioritizes performance. Another team wants an easy-to-install hypervisor for a desktop development machine. Which pairing best fits the material?",
+        "options": [
+          "Use a Type 2 hypervisor for the server because it accesses hardware directly; use Type 1 for the desktop because it runs as an application.",
+          "Use a Type 1 hypervisor for the server because it accesses hardware directly; use Type 2 for the desktop because it runs on a host OS and is easier to manage.",
+          "Use Type 2 for both because a host OS improves performance and isolation for demanding workloads.",
+          "Use Type 1 for both because it requires less technical knowledge and is intended mainly for desktop environments."
+        ],
+        "correct_answer": 1,
+        "explanation": "Type 1 hypervisors run directly on hardware and are used in data centers and other performance-focused environments. Type 2 hypervisors run on a host OS and are commonly used for desktop and development environments.",
+        "page": 20,
+        "topic": "Virtualization Technologies"
+      },
+      {
+        "id": "4322243d4b684b229387f7c95fa05154",
+        "question": "A VM is already running its application. The administrator first applies operating-system patches and monitors resource use, then later restores backed-up data after a failure. Which lifecycle stages correspond to these actions?",
+        "options": [
+          "Deployment, then configuration.",
+          "Operation, then installation.",
+          "Maintenance, then backup and recovery.",
+          "Configuration, then decommissioning."
+        ],
+        "correct_answer": 2,
+        "explanation": "Applying patches and monitoring performance are part of maintenance. Restoring data after a failure is part of backup and recovery.",
+        "page": 22,
+        "topic": "VM Lifecycle"
+      },
+      {
+        "id": "25710c02b27c40c0a446ce6d1a5ba5ba",
+        "question": "A container is removed after a database has written important data inside it. The team wants that data to remain available when a replacement container is created. Which change best addresses the problem?",
+        "options": [
+          "Keep the data in the container's writable layer, because that layer remains after the container is deleted.",
+          "Store the data in a Docker volume, which is managed separately from the container's lifecycle.",
+          "Put the data in the read-only image layer, which changes whenever the container writes to it.",
+          "Use a Docker registry, because registries preserve data generated by running containers."
+        ],
+        "correct_answer": 1,
+        "explanation": "A container's writable layer is temporary and is destroyed when the container is deleted. Docker volumes store persistent data independently of the container lifecycle.",
+        "page": 30,
+        "topic": "Docker Containers and Volumes"
+      },
+      {
+        "id": "2a99384a7846426cae69bb7fd05f75d9",
+        "question": "A high-traffic feature needs more capacity than the rest of an application. The team also wants to deploy changes to that feature without deploying the whole application. Which architectural approach best supports both goals, and what is a likely cost?",
+        "options": [
+          "Monolithic architecture, because each module can be scaled and deployed independently with no network overhead.",
+          "Microservices architecture, because individual services can be scaled and deployed independently, but it adds operational overhead.",
+          "Monolithic architecture, because scaling the whole application avoids extra runtime costs while isolating failures.",
+          "Microservices architecture, because separate services eliminate inter-service network delays and management complexity."
+        ],
+        "correct_answer": 1,
+        "explanation": "Microservices allow individual services to be scaled and deployed independently. However, managing many services adds operational overhead.",
+        "page": 38,
+        "topic": "Microservices and Monolithic Architecture"
+      },
+      {
+        "id": "b1056ef537f645bf8761794a244fe4e7",
+        "question": "In a multi-tenant application, one customer can access another customer's records because a shared authentication token is being reused. Which measure most directly addresses the underlying risk described in the material?",
+        "options": [
+          "Increase resource pooling so all tenants use the same resources without separate boundaries.",
+          "Use tenant isolation to ensure one tenant's data and authentication tokens cannot be accessed by another.",
+          "Improve interoperability by allowing tenants to share authentication configurations.",
+          "Move to a monolithic architecture, since a single application instance guarantees tenant privacy."
+        ],
+        "correct_answer": 1,
+        "explanation": "Tenant isolation enforces security boundaries so that one tenant's data, authentication flows, and tokens cannot be accessed by another.",
+        "page": 39,
+        "topic": "Multi-tenancy and Tenant Isolation"
+      }
+    ],
+    "created_at": "2026-10-14 22:31:10",
+    "attempted": true,
+    "score": 4,
+    "accuracy": 40.0,
+    "completed_at": "2026-10-14 22:31:37"
+  },
+  {
+    "id": "a51ff2a74e894ac3a8e734c4ba62db09",
+    "user_id": 30001,
+    "subject_id": "e3acfae9f5d4478d9162735ac5b49dc6",
+    "subject_name": "DCN",
+    "document_ids": [
+      "35d2c65ae2364848845e30ae84ff04c7",
+      "9ad1acd37fd6408a8e7594a6cce3c65e"
+    ],
+    "question_count": 5,
+    "difficulty": "medium",
+    "questions": [
+      {
+        "id": "4b1820fc0b464228954260d0107e240d",
+        "question": "A packet must travel from a host on one network to a host on another. Which address does a router use to route the packet?",
+        "options": [
+          "The destination IP address",
+          "The destination MAC address",
+          "The sender's port address",
+          "The frame's physical transmission rate"
+        ],
+        "correct_answer": 0,
+        "explanation": "The notes state that routers route data packets based on their IP addresses.",
+        "page": 29,
+        "topic": "IP Addressing"
+      },
+      {
+        "id": "74ec3b3726544be39ba4c875b828529c",
+        "question": "A network layer needs to identify a device uniquely across an internetwork. Which addressing approach does the material describe?",
+        "options": [
+          "Logical addressing",
+          "Physical addressing using MAC addresses",
+          "Service point addressing using port addresses",
+          "Addressing based on transmission mode"
+        ],
+        "correct_answer": 0,
+        "explanation": "The network layer defines a logical addressing scheme to identify devices on an internetwork.",
+        "page": 47,
+        "topic": "IP Addressing"
+      },
+      {
+        "id": "54ca08ef542b4557b07375bfded61105",
+        "question": "A switch forwards a frame using MAC addresses, while a router forwards a packet using IP addresses. What does this comparison show?",
+        "options": [
+          "MAC addresses are used for frame forwarding, while IP addresses are used for packet routing.",
+          "IP addresses are used only by switches, while MAC addresses are used only by routers.",
+          "Both devices use IP addresses to forward frames.",
+          "Both devices use MAC addresses to route packets between networks."
+        ],
+        "correct_answer": 0,
+        "explanation": "The notes associate MAC addresses with data-link forwarding and IP addresses with routing by routers.",
+        "page": 29,
+        "topic": "IP Addressing"
+      },
+      {
+        "id": "246da0169c5e4527b7a512011f545127",
+        "question": "In the TCP/IP model described in the notes, which layer includes IP and handles logical transmission of data over a network?",
+        "options": [
+          "Internet layer",
+          "Link layer",
+          "Transport layer",
+          "Application layer"
+        ],
+        "correct_answer": 0,
+        "explanation": "The Internet layer handles logical transmission and includes the Internet Protocol (IP).",
+        "page": 58,
+        "topic": "IP Addressing"
+      },
+      {
+        "id": "39793da238254843bb20a7e87f3dfd40",
+        "question": "A device must send data to a host located in a different network. Which network-layer function uses logical addressing to support this communication?",
+        "options": [
+          "Routing",
+          "Framing",
+          "Flow control",
+          "Bit synchronization"
+        ],
+        "correct_answer": 0,
+        "explanation": "The network layer uses logical addressing and routing to move data from a source to a destination in different networks.",
+        "page": 47,
+        "topic": "IP Addressing"
+      }
+    ],
+    "created_at": "2026-10-15 00:17:00",
+    "attempted": false,
+    "score": null,
+    "accuracy": null
   }
 ]

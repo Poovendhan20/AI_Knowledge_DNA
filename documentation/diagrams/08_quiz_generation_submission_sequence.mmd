@@ -1,0 +1,55 @@
+%% AI Knowledge DNA - Quiz Generation and Submission Sequence Diagram
+%% Illustrates anti-cheat answer sanitization, AI generation, submission scoring, and progress tracking.
+
+sequenceDiagram
+    autonumber
+    actor Student as Student (Quiz UI)
+    participant QuizGen as QuizGenerator Component
+    participant QuizPlay as QuizPlayer Component
+    participant QuizAPI as Backend (/api/quiz/*)
+    participant Store as quizzes.json & documents.json
+    participant AIRouter as AI Router / Gemini Client
+    participant ProgressDB as LearningProgress Table (TiDB)
+
+    %% QUIZ GENERATION
+    rect rgb(240, 249, 255)
+        note over Student, ProgressDB: Phase 1: Quiz Generation Workflow
+        Student->>QuizGen: Configure Quiz (Subject, Count: 5-20, Difficulty: Medium)
+        QuizGen->>QuizAPI: POST /api/quiz/generate {subject_id, question_count, difficulty}
+        QuizAPI->>Store: Validate Subject Ownership & Fetch Subject Documents
+        Store-->>QuizAPI: Documents Found (Extract text context)
+
+        QuizAPI->>AIRouter: Request Structured JSON Quiz (Strict 4-option schema)
+        AIRouter-->>QuizAPI: Raw AI JSON with questions, options, correct_answer, explanations
+        QuizAPI->>QuizAPI: Validate JSON & Enforce 4 options per question
+
+        QuizAPI->>Store: Save Full Quiz to backend/data/quizzes.json (with answers & attempted=false)
+        note over QuizAPI: Anti-Cheat Sanitization:<br/>Omit correct_answer and explanation<br/>from client-facing response payload.
+        QuizAPI-->>QuizGen: 200 OK {success: true, quiz: {id, questions: [id, question, options, page, topic]}}
+        QuizGen->>QuizPlay: Mount Quiz with Sanitized Questions
+    end
+
+    %% QUIZ SUBMISSION & SCORING
+    rect rgb(240, 253, 244)
+        note over Student, ProgressDB: Phase 2: Quiz Attempt & Submission Workflow
+        Student->>QuizPlay: Completes all questions, clicks "Submit Quiz"
+        QuizPlay->>QuizAPI: POST /api/quiz/<quiz_id>/submit {answers: {q1: 1, q2: 0}}
+        QuizAPI->>Store: Load Stored Quiz & Verify User Ownership
+
+        loop For Each Question in Quiz
+            QuizAPI->>QuizAPI: Compare student selection with question["correct_answer"]
+            note over QuizAPI: Track topic_totals[topic] += [attempted, correct]
+        end
+
+        QuizAPI->>QuizAPI: Compute score, total, accuracy = (score / total) * 100
+        QuizAPI->>Store: Update Quiz (attempted=true, score, accuracy, completed_at)
+
+        loop For Each Topic in topic_totals
+            QuizAPI->>ProgressDB: update_learning_progress(user_id, topic, attempted, correct)
+            note over ProgressDB: Calculate new mastery_score = (correct / attempted) * 100<br/>Update last_studied timestamp
+        end
+        QuizAPI->>ProgressDB: db.session.commit()
+
+        QuizAPI-->>QuizPlay: 200 OK {success: true, score, total, accuracy, results: [with explanations & pages]}
+        QuizPlay-->>Student: Displays Score Banner, Topic Breakdown, and Question Explanations
+    end

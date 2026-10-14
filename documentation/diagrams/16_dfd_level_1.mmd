@@ -1,0 +1,63 @@
+%% AI Knowledge DNA - Data-Flow Diagram Level 1 (Functional Decomposition)
+%% Decomposes the platform into core functional transformations and specific data stores.
+
+flowchart TB
+    classDef entityNode fill:#1E293B,stroke:#0F172A,color:#FFFFFF,stroke-width:2px;
+    classDef procNode fill:#2563EB,stroke:#1D4ED8,color:#FFFFFF,stroke-width:2px;
+    classDef storeNode fill:#F8FAFC,stroke:#64748B,color:#0F172A,stroke-width:2px;
+
+    Student["External Entity:<br/>Student / Client"]:::entityNode
+    AIProviders["External Entity:<br/>AI Model Providers"]:::entityNode
+
+    %% Processes
+    P1(("1.0<br/>Authentication<br/>& Access Control")):::procNode
+    P2(("2.0<br/>Subject<br/>Management")):::procNode
+    P3(("3.0<br/>Document Ingestion<br/>& Text Extraction")):::procNode
+    P4(("4.0<br/>RAG Context<br/>& Citation Chat")):::procNode
+    P5(("5.0<br/>Quiz Engine<br/>& Evaluation")):::procNode
+    P6(("6.0<br/>Knowledge DNA<br/>& Analytics Engine")):::procNode
+
+    %% Data Stores
+    D1[("D1: users Table (TiDB)")]:::storeNode
+    D2[("D2: subjects.json")]:::storeNode
+    D3[("D3: documents.json & uploads/")]:::storeNode
+    D4[("D4: quizzes.json")]:::storeNode
+    D5[("D5: learning_progress (TiDB)")]:::storeNode
+
+    %% Data Flows
+    Student -->|"Credentials"| P1
+    P1 -->|"Query/Insert User"| D1
+    D1 -->|"User Entity"| P1
+    P1 -->|"JWT Token"| Student
+
+    Student -->|"Subject CRUD (Name, Desc)"| P2
+    P2 -->|"Write Subject"| D2
+    D2 -->|"Subject Records"| P2
+    P2 -->|"User's Subjects"| Student
+
+    Student -->|"Upload File (.pdf/.docx/.pptx/img)"| P3
+    P3 -->|"Save Staged File & Metadata"| D3
+    P3 -->|"Extraction & Summary"| Student
+
+    Student -->|"Question & Chat History"| P4
+    D3 -->|"Read Pages Context"| P4
+    P4 -->|"Grounded Prompt"| AIProviders
+    AIProviders -->|"Raw Answer"| P4
+    P4 -->|"Grounded Answer with [Page X]"| Student
+
+    Student -->|"Request Quiz Config"| P5
+    D3 -->|"Fetch Document Text"| P5
+    P5 -->|"Quiz Prompt"| AIProviders
+    AIProviders -->|"Quiz JSON"| P5
+    P5 -->|"Persist Quiz"| D4
+    P5 -->|"Sanitized Questions"| Student
+    Student -->|"Submit Answer Choices"| P5
+    D4 -->|"Verify Correct Answers"| P5
+    P5 -->|"Scores, Accuracy & Explanations"| Student
+    P5 -->|"Topic Attempt & Correct Counts"| P6
+
+    Student -->|"Log Study Minutes"| P6
+    P6 -->|"Update Cumulative Mastery & Minutes"| D5
+    D5 -->|"Fetch User Progress Rows"| P6
+    D2 & D3 -->|"Topics & Document References"| P6
+    P6 -->|"Knowledge DNA, Streaks, Study Plan"| Student

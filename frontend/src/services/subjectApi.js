@@ -184,6 +184,14 @@ export const getQuizzes = async () => {
   return response.data;
 };
 
+export const getQuiz = async (quizId) => {
+  const response = await SUBJECT_API.get(
+    `/quiz/${quizId}`
+  );
+
+  return response.data;
+};
+
 export const getDashboardStats = async () => {
   const response = await SUBJECT_API.get(
     "/dashboard/stats"

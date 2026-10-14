@@ -1,0 +1,40 @@
+%% AI Knowledge DNA - Data-Flow Diagram Level 0 (Context DFD)
+%% Depicts boundary entities and primary data transformations across the whole system.
+
+flowchart LR
+    classDef entityNode fill:#1E293B,stroke:#0F172A,color:#FFFFFF,stroke-width:2px;
+    classDef processNode fill:#2563EB,stroke:#1D4ED8,color:#FFFFFF,stroke-width:2px;
+    classDef storeNode fill:#F8FAFC,stroke:#64748B,color:#0F172A,stroke-width:2px;
+
+    Student["External Entity:<br/>Student / Learner"]:::entityNode
+    AIProviders["External Entity:<br/>AI Providers (Gemini / Groq / OpenRouter)"]:::entityNode
+
+    Platform((Process 0.0:<br/>AI Knowledge DNA<br/>Platform)):::processNode
+
+    DBStore[("Data Store D1:<br/>TiDB Relational DB")]:::storeNode
+    FileStore[("Data Store D2:<br/>File System & JSON Stores")]:::storeNode
+
+    %% Student Flows
+    Student -->|"1. Credentials (Register / Login)"| Platform
+    Student -->|"2. Study Materials (PDF, DOCX, PPTX, Img)"| Platform
+    Student -->|"3. Natural Language & Voice Questions"| Platform
+    Student -->|"4. Quiz Selections & Completed Sessions"| Platform
+
+    Platform -->|"5. JWT Access Token & Authenticated Profile"| Student
+    Platform -->|"6. Parsed Text, Topics, & Extractive Summaries"| Student
+    Platform -->|"7. Grounded Answers with [Page X] Citations"| Student
+    Platform -->|"8. Real-time Audio Speech & Sanitized Answers"| Student
+    Platform -->|"9. Interactive Quizzes & Instant Evaluations"| Student
+    Platform -->|"10. Knowledge DNA Score, Streaks, Study Plan"| Student
+
+    %% AI Service Flows
+    Platform -->|"11. Grounded Context & System Prompt"| AIProviders
+    AIProviders -->|"12. Generated Content & Structured Quiz JSON"| Platform
+
+    %% Database Store Flows
+    Platform -->|"13. Insert/Update Users & LearningProgress"| DBStore
+    DBStore -->|"14. Return User Records & Historical Mastery"| Platform
+
+    %% File Store Flows
+    Platform -->|"15. Write Blobs to uploads/ & Write JSON"| FileStore
+    FileStore -->|"16. Read Raw Files & Load JSON Repositories"| Platform

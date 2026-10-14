@@ -1,0 +1,80 @@
+%% AI Knowledge DNA - Database Entity-Relationship Diagram (ERD)
+%% Accurately reflects SQLAlchemy models from models.py and relational constraints.
+
+erDiagram
+    USERS ||--o{ SUBJECTS : "owns"
+    USERS ||--o{ DOCUMENTS : "owns"
+    USERS ||--o{ QUIZZES : "creates"
+    USERS ||--o{ QUIZ_ATTEMPTS : "completes"
+    USERS ||--o{ LEARNING_PROGRESS : "tracks"
+
+    SUBJECTS ||--o{ DOCUMENTS : "contains"
+    SUBJECTS ||--o{ QUIZZES : "categorizes"
+    QUIZZES ||--o{ QUIZ_ATTEMPTS : "evaluates"
+
+    USERS {
+        int id PK "Primary Key, Auto-Increment"
+        string name "User full name (VARCHAR 120)"
+        string email UK "Unique index, lowercase (VARCHAR 255)"
+        string password_hash "bcrypt hashed password string (VARCHAR 255)"
+        datetime created_at "Registration UTC timestamp"
+        datetime updated_at "Profile modification timestamp"
+    }
+
+    SUBJECTS {
+        int id PK "Primary Key, Auto-Increment"
+        int user_id FK "Foreign Key -> users.id"
+        string name "Subject name (VARCHAR 150)"
+        text description "Subject description notes"
+        datetime created_at "Creation UTC timestamp"
+    }
+
+    DOCUMENTS {
+        int id PK "Primary Key, Auto-Increment"
+        int user_id FK "Foreign Key -> users.id"
+        int subject_id FK "Foreign Key -> subjects.id (Nullable)"
+        string filename "Sanitized stored name (VARCHAR 255)"
+        string original_filename "Original client filename (VARCHAR 255)"
+        string file_type "Extension: pdf, docx, pptx, img (VARCHAR 50)"
+        string file_path "Absolute disk location (VARCHAR 500)"
+        text extracted_text "Consolidated parsed textual contents"
+        text summary "Algorithmically scored extractive summary"
+        text topics "Serialized JSON keyword/topic array"
+        int page_count "Total count of pages / slides / OCR blocks"
+        datetime uploaded_at "Upload UTC timestamp"
+    }
+
+    QUIZZES {
+        int id PK "Primary Key, Auto-Increment"
+        int user_id FK "Foreign Key -> users.id"
+        int subject_id FK "Foreign Key -> subjects.id"
+        string title "Quiz title (VARCHAR 255)"
+        string topic "Focal topic name (VARCHAR 255)"
+        text questions "Serialized JSON questions with options & answers"
+        int question_count "Count of generated questions (5 - 20)"
+        string difficulty "Difficulty level: easy, medium, hard"
+        datetime created_at "Generation UTC timestamp"
+    }
+
+    QUIZ_ATTEMPTS {
+        int id PK "Primary Key, Auto-Increment"
+        int user_id FK "Foreign Key -> users.id"
+        int quiz_id FK "Foreign Key -> quizzes.id"
+        int score "Count of correct answers"
+        int total_questions "Total questions presented"
+        float percentage "Calculated accuracy percentage"
+        text answers "Serialized JSON user answer choices"
+        datetime completed_at "Submission UTC timestamp"
+    }
+
+    LEARNING_PROGRESS {
+        int id PK "Primary Key, Auto-Increment"
+        int user_id FK "Foreign Key -> users.id"
+        string topic "Subject topic string (VARCHAR 255)"
+        float mastery_score "Calculated mastery index: 0.00 to 100.00"
+        int questions_attempted "Cumulative questions attempted"
+        int questions_correct "Cumulative questions answered correctly"
+        int study_minutes "Accumulated active study time in minutes"
+        datetime last_studied "Timestamp of most recent activity"
+        datetime updated_at "Row update UTC timestamp"
+    }

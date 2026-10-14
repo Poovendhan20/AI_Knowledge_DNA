@@ -242,6 +242,129 @@ class TestQuizzesLearning(BaseTestCase):
         self.assertEqual(res_insights.status_code, 200)
         self.assertTrue(res_insights.get_json().get("success"))
 
+    def test_get_single_quiz_and_anti_cheat_masking(self):
+        """GET /api/quiz/<quiz_id> provides user isolation and anti-cheat masking"""
+        quiz_id = "test_quiz_masking_1"
+        stored_quiz = {
+            "id": quiz_id,
+            "user_id": self.user_a["id"],
+            "subject_id": self.subject_a["id"],
+            "subject_name": "Biochemistry",
+            "document_ids": [self.doc_a["id"]],
+            "question_count": 1,
+            "difficulty": "easy",
+            "questions": [
+                {
+                    "id": "qm1",
+                    "question": "What is an enzyme?",
+                    "options": ["Catalyst", "Inhibitor", "Lipid", "Sugar"],
+                    "correct_answer": 0,
+                    "explanation": "Enzymes catalyze reactions.",
+                    "page": 1,
+                    "topic": "Enzymes"
+                }
+            ],
+            "created_at": "2026-01-01 12:00:00",
+            "attempted": False,
+            "score": None,
+            "accuracy": None
+        }
+        all_quizzes = app_module.load_quizzes()
+        all_quizzes.append(stored_quiz)
+        app_module.save_quizzes(all_quizzes)
+
+        # Unauthenticated request -> 401
+        res_no_auth = self.client.get(f"/api/quiz/{quiz_id}")
+        self.assertEqual(res_no_auth.status_code, 401)
+
+        # Cross-user access denied -> 404
+        res_user_b = self.client.get(f"/api/quiz/{quiz_id}", headers=self.headers_b)
+        self.assertEqual(res_user_b.status_code, 404)
+
+        # Non-existent quiz -> 404
+        res_404 = self.client.get("/api/quiz/non_existent_id", headers=self.headers_a)
+        self.assertEqual(res_404.status_code, 404)
+
+        # Unattempted quiz -> 200, correct_answer & explanation masked
+        res_unattempted = self.client.get(f"/api/quiz/{quiz_id}", headers=self.headers_a)
+        self.assertEqual(res_unattempted.status_code, 200)
+        quiz_data = res_unattempted.get_json()["quiz"]
+        self.assertEqual(quiz_data["difficulty"], "easy")
+        self.assertFalse(quiz_data["attempted"])
+        for q in quiz_data["questions"]:
+            self.assertNotIn("correct_answer", q)
+            self.assertNotIn("explanation", q)
+            self.assertIn("options", q)
+            self.assertEqual(len(q["options"]), 4)
+
+        # Mark attempted and verify answers become visible for review
+        stored_quiz["attempted"] = True
+        stored_quiz["score"] = 1
+        stored_quiz["accuracy"] = 100.0
+        app_module.save_quizzes([stored_quiz])
+
+        res_attempted = self.client.get(f"/api/quiz/{quiz_id}", headers=self.headers_a)
+        self.assertEqual(res_attempted.status_code, 200)
+        attempted_quiz = res_attempted.get_json()["quiz"]
+        self.assertTrue(attempted_quiz["attempted"])
+        self.assertIn("correct_answer", attempted_quiz["questions"][0])
+        self.assertIn("explanation", attempted_quiz["questions"][0])
+
+    @patch("app.get_gemini_client")
+    def test_quiz_difficulty_easy_medium_hard(self, mock_client_getter):
+        """Quiz generation verifies easy, medium, and hard modes and validates prompt guidance"""
+        mock_client = MagicMock()
+        mock_response = MagicMock()
+        mock_response.text = json.dumps({
+            "questions": [
+                {
+                    "question": "What is an enzyme?",
+                    "options": ["Catalyst", "Inhibitor", "Lipid", "Sugar"],
+                    "correct_answer": 0,
+                    "explanation": "Enzymes catalyze reactions.",
+                    "page": 1,
+                    "topic": "Enzymes"
+                }
+            ]
+        })
+        mock_client.models.generate_content.return_value = mock_response
+        mock_client_getter.return_value = mock_client
+
+        # 1. Easy mode
+        res_easy = self.client.post(
+            "/api/quiz/generate",
+            headers=self.headers_a,
+            json={"subject_id": "subj_alice_1", "difficulty": "easy", "question_count": 5}
+        )
+        self.assertEqual(res_easy.status_code, 200)
+        quiz_easy = res_easy.get_json()["quiz"]
+        self.assertEqual(quiz_easy["difficulty"], "easy")
+        prompt_call = mock_client.models.generate_content.call_args[1]["contents"]
+        self.assertIn("DIFFICULTY LEVEL: EASY", prompt_call)
+
+        # 2. Hard mode
+        res_hard = self.client.post(
+            "/api/quiz/generate",
+            headers=self.headers_a,
+            json={"subject_id": "subj_alice_1", "difficulty": "hard", "question_count": 5}
+        )
+        self.assertEqual(res_hard.status_code, 200)
+        quiz_hard = res_hard.get_json()["quiz"]
+        self.assertEqual(quiz_hard["difficulty"], "hard")
+        prompt_call_hard = mock_client.models.generate_content.call_args[1]["contents"]
+        self.assertIn("DIFFICULTY LEVEL: HARD", prompt_call_hard)
+
+        # 3. Invalid mode defaults to medium
+        res_invalid = self.client.post(
+            "/api/quiz/generate",
+            headers=self.headers_a,
+            json={"subject_id": "subj_alice_1", "difficulty": "expert_extreme", "question_count": 5}
+        )
+        self.assertEqual(res_invalid.status_code, 200)
+        quiz_invalid = res_invalid.get_json()["quiz"]
+        self.assertEqual(quiz_invalid["difficulty"], "medium")
+
+
 
 if __name__ == "__main__":
     unittest.main()

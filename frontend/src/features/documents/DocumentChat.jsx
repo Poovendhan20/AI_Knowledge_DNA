@@ -8,6 +8,7 @@ import {
 } from "react-icons/fa";
 
 import { chatWithDocument } from "../../services/api";
+import "./DocumentChat.css";
 
 function DocumentChat({ documentId, documentName, onPageChange }) {
   const [messages, setMessages] = useState([
@@ -269,45 +270,59 @@ function DocumentChat({ documentId, documentName, onPageChange }) {
                   <div className="document-chat-sources">
 
                     <span className="sources-label">
-                      Sources
+                      Verified Sources
                     </span>
 
                     <div className="source-list">
-
-                      {message.sources.map(
-                        (source, index) => {
-
+                      {(() => {
+                        const uniqueSources = [];
+                        const seenPages = new Set();
+                        (message.sources || []).forEach((source, index) => {
                           const page =
                             source?.page ||
                             source?.page_number ||
                             source?.pageNumber;
+                          const key = page ? `p-${page}` : `s-${index}`;
+                          if (!seenPages.has(key)) {
+                            seenPages.add(key);
+                            uniqueSources.push(source);
+                          }
+                        });
 
-                          const label =
-                            source?.title ||
-                            source?.name ||
-                            `Page ${page || "?"}`;
+                        return uniqueSources.map(
+                          (source, index) => {
+                            const page =
+                              source?.page ||
+                              source?.page_number ||
+                              source?.pageNumber;
 
-                          return (
-                            <button
-                              key={`${page || "source"}-${index}`}
-                              type="button"
-                              className="source-chip"
-                              onClick={() =>
-                                handleSourceClick(source)
-                              }
-                            >
-                              📄 {label}
+                            const label =
+                              source?.title ||
+                              source?.name;
 
-                              {page && (
-                                <span>
-                                  Page {page}
-                                </span>
-                              )}
-                            </button>
-                          );
-                        }
-                      )}
+                            const displayText =
+                              label && page
+                                ? `${label} (Page ${page})`
+                                : page
+                                ? `Page ${page}`
+                                : label || "Source Reference";
 
+                            return (
+                              <button
+                                key={`${page || "source"}-${index}`}
+                                type="button"
+                                className="source-chip"
+                                onClick={() =>
+                                  handleSourceClick(source)
+                                }
+                                title={page ? `Jump to Page ${page} in PDF viewer` : "Source reference"}
+                              >
+                                <span>📄 {displayText}</span>
+                              </button>
+                            );
+                          }
+                        );
+                      })()}
                     </div>
 
                   </div>

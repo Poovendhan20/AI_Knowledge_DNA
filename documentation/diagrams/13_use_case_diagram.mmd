@@ -1,0 +1,55 @@
+%% AI Knowledge DNA - Use-Case Diagram
+%% Highlights functional use cases mapped to Student, Visitor, and External AI Services.
+
+flowchart LR
+    classDef actorNode fill:#1E293B,stroke:#0F172A,color:#FFFFFF,stroke-width:2px;
+    classDef ucNode fill:#EFF6FF,stroke:#2563EB,color:#1E3A8A,stroke-width:1px;
+    classDef sysBox fill:#F8FAFC,stroke:#64748B,color:#0F172A,stroke-width:2px,stroke-dasharray: 4 4;
+
+    Visitor["Unauthenticated Visitor"]:::actorNode
+    Student["Authenticated Student"]:::actorNode
+    AIService["External AI Providers<br/>(Gemini, Groq, OpenRouter)"]:::actorNode
+
+    subgraph SystemBoundary ["AI Knowledge DNA Platform"]
+        direction TB
+        UC_Reg["UC-01: Register New Account"]:::ucNode
+        UC_Login["UC-02: Sign In & Acquire JWT"]:::ucNode
+        UC_Theme["UC-03: Toggle Light/Dark Mode"]:::ucNode
+        UC_Subj["UC-04: Manage Subjects & Folders"]:::ucNode
+        UC_Upload["UC-05: Upload & Parse Study Materials"]:::ucNode
+        UC_ViewDoc["UC-06: View Document with Page Nav"]:::ucNode
+        UC_ChatRAG["UC-07: Query Document with Grounded Citations"]:::ucNode
+        UC_Voice["UC-08: Hands-Free Voice Assistant Q&A"]:::ucNode
+        UC_GenQuiz["UC-09: Generate Adaptive Topic Quiz"]:::ucNode
+        UC_TakeQuiz["UC-10: Take Quiz & Review Explanations"]:::ucNode
+        UC_Session["UC-11: Record Active Study Session"]:::ucNode
+        UC_Progress["UC-12: Track Knowledge DNA & Weak Topics"]:::ucNode
+        UC_Plan["UC-13: Access Personalized Study Plan"]:::ucNode
+
+        %% Include / Extend relationships
+        UC_ChatRAG -.->|"<<includes>>"| UC_ViewDoc
+        UC_TakeQuiz -.->|"<<updates>>"| UC_Progress
+        UC_Session -.->|"<<updates>>"| UC_Progress
+        UC_Progress -.->|"<<informs>>"| UC_Plan
+    end
+
+    Visitor --> UC_Reg
+    Visitor --> UC_Login
+    Visitor --> UC_Theme
+
+    Student --> UC_Theme
+    Student --> UC_Subj
+    Student --> UC_Upload
+    Student --> UC_ViewDoc
+    Student --> UC_ChatRAG
+    Student --> UC_Voice
+    Student --> UC_GenQuiz
+    Student --> UC_TakeQuiz
+    Student --> UC_Session
+    Student --> UC_Progress
+    Student --> UC_Plan
+
+    UC_Upload --> AIService
+    UC_ChatRAG --> AIService
+    UC_Voice --> AIService
+    UC_GenQuiz --> AIService

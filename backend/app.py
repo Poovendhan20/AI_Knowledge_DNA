@@ -3,7 +3,7 @@ import re
 import json
 import time
 import random
-from datetime import datetime
+from datetime import datetime, timezone
 from uuid import uuid4
 from collections import Counter
 from flask import (
@@ -36,7 +36,7 @@ BASE_DIR = os.path.dirname(
 )
 ENV_FILE = os.path.join(
     BASE_DIR,
-    ".env"
+    ".env" 
 )
 load_dotenv(
     ENV_FILE
@@ -246,9 +246,39 @@ STOP_WORDS = {
     "explanation",
     "give",
     "tell",
-    "please",
     "document",
     "topic",
+    "and",
+    "the",
+    "is",
+    "in",
+    "it",
+    "to",
+    "of",
+    "for",
+    "on",
+    "at",
+    "by",
+    "an",
+    "as",
+    "be",
+    "are",
+    "was",
+    "has",
+    "had",
+    "do",
+    "did",
+    "not",
+    "but",
+    "or",
+    "if",
+    "so",
+    "can",
+    "all",
+    "any",
+    "how",
+    "why",
+    "who",
 }
 def save_documents(
     documents
@@ -720,7 +750,7 @@ def find_relevant_pages(
     max_pages=12
 ):
     question_words = re.findall(
-        r"\b[a-zA-Z][a-zA-Z0-9-]{2,}\b",
+        r"\b[a-zA-Z][a-zA-Z0-9-]{1,}\b",
         question.lower()
     )
     question_words = [
@@ -729,7 +759,7 @@ def find_relevant_pages(
         if word not in STOP_WORDS
     ]
     if not question_words:
-        return pages[:max_pages]
+        return pages[:max_pages], False
     scored_pages = []
     for page in pages:
         page_text = normalize_text(
@@ -765,7 +795,7 @@ def find_relevant_pages(
         reverse=True
     )
     if not scored_pages:
-        return pages[:max_pages]
+        return pages[:max_pages], False
     return [
         {
             "page":
@@ -775,12 +805,12 @@ def find_relevant_pages(
         }
         for item
         in scored_pages[:max_pages]
-    ]
+    ], True
 def build_document_context(
     pages,
     question
 ):
-    relevant_pages = (
+    relevant_pages, has_matches = (
         find_relevant_pages(
             question,
             pages,
@@ -809,7 +839,8 @@ def build_document_context(
         "\n".join(
             context_parts
         ),
-        relevant_pages
+        relevant_pages,
+        has_matches
     )
 def build_chat_history(
     history
@@ -1023,11 +1054,11 @@ def generate_document_answer(
         "pages",
         []
     )
-    if not pages:
+    if not pages or not any(page.get("text", "").strip() for page in pages):
         raise RuntimeError(
             "This document has no extracted text."
         )
-    context, relevant_pages = (
+    context, relevant_pages, has_matches = (
         build_document_context(
             pages,
             question
@@ -1050,6 +1081,8 @@ def generate_document_answer(
 12. NEVER invent a page number.
 13. Only cite pages that exist in
     the supplied document context.
+14. If the concept is not found in the
+    document, DO NOT cite any page numbers.
 """
     if enable_web_grounding:
         source_instructions = """
@@ -1131,22 +1164,60 @@ Answer the student's question now.
             answer = clean_ai_answer(
                 answer
             )
-            sources = (
-                extract_page_references(
-                    answer,
-                    available_pages
+            lower_answer = answer.lower()
+            not_found_markers = [
+                "not found in the document",
+                "not mentioned in the document",
+                "not found in the provided",
+                "not mentioned in the provided",
+                "does not mention",
+                "does not contain",
+                "does not include",
+                "not available in the document",
+                "not present in the document",
+                "cannot find",
+                "could not find",
+                "no mention of",
+                "not covered in the document",
+                "not in the document",
+                "not in the uploaded",
+                "document does not have",
+                "document context does not",
+            ]
+            is_unfound = any(m in lower_answer for m in not_found_markers)
+
+            if is_unfound:
+                # Do NOT cite pages when the concept was not found in the document
+                sources = []
+            else:
+                sources = (
+                    extract_page_references(
+                        answer,
+                        available_pages
+                    )
                 )
-            )
-            # If the AI provider didn't provide
-            # references, provide relevant pages.
-            if not sources:
-                sources = [
-                    {
-                        "page": page["page"]
-                    }
-                    for page
-                    in relevant_pages[:3]
-                ]
+                # Only use fallback if keywords actually matched pages AND sources is empty
+                if not sources and has_matches:
+                    seen = set()
+                    fallback_sources = []
+                    for page in relevant_pages:
+                        p_num = page.get("page")
+                        if p_num and p_num not in seen:
+                            seen.add(p_num)
+                            fallback_sources.append({"page": p_num})
+                        if len(fallback_sources) >= 3:
+                            break
+                    sources = fallback_sources
+
+            # Guarantee strictly unique sources
+            unique_sources = []
+            seen_pages = set()
+            for s in sources:
+                p = s.get("page")
+                if p and p not in seen_pages:
+                    seen_pages.add(p)
+                    unique_sources.append({"page": p})
+            sources = sorted(unique_sources, key=lambda item: item["page"])
         return (
             answer,
             sources
@@ -1177,18 +1248,43 @@ def get_learning_progress_for_user(user_id):
     )
 
 def calculate_learning_streak(progress_rows):
-    from datetime import date, timedelta
-    studied_dates = {
-        row.last_studied.date()
-        for row in progress_rows
-        if row.last_studied
-    }
+    from datetime import date, datetime, timedelta, timezone
+    studied_dates = set()
+    for row in progress_rows:
+        if row.last_studied:
+            dt = row.last_studied
+            studied_dates.add(dt.date())
+            if hasattr(dt, "tzinfo") and dt.tzinfo:
+                try:
+                    studied_dates.add(dt.astimezone().date())
+                except Exception:
+                    pass
     if not studied_dates:
         return 0
-    current = date.today()
-    if current not in studied_dates:
+
+    today_utc = datetime.now(timezone.utc).date()
+    today_local = date.today()
+
+    start_date = None
+    for candidate in [today_local, today_utc]:
+        if candidate in studied_dates:
+            start_date = candidate
+            break
+
+    if not start_date:
+        for candidate in [
+            today_local - timedelta(days=1),
+            today_utc - timedelta(days=1),
+        ]:
+            if candidate in studied_dates:
+                start_date = candidate
+                break
+
+    if not start_date:
         return 0
+
     streak = 0
+    current = start_date
     while current in studied_dates:
         streak += 1
         current -= timedelta(days=1)
@@ -1257,7 +1353,7 @@ def update_learning_progress(
     else:
         progress.mastery_score = round(study_mastery, 1)
 
-    progress.last_studied = datetime.utcnow()
+    progress.last_studied = datetime.now(timezone.utc)
     return progress
 
 def serialize_learning_progress_row(row):
@@ -1675,7 +1771,7 @@ def upload_file():
         "status":
             "uploaded",
         "uploaded_at":
-            datetime.utcnow().isoformat() + "Z",
+            datetime.now(timezone.utc).isoformat(),
         "page_count":
             len(pages),
         "pages":
@@ -3185,6 +3281,8 @@ def generate_quiz():
             )
             .lower()
         )
+        if difficulty not in ("easy", "medium", "hard"):
+            difficulty = "medium"
         if not subject_id:
             return jsonify({
                 "success":
@@ -3324,6 +3422,27 @@ CONTENT:
         context = context[
             :60000
         ]
+        if difficulty == "easy":
+            difficulty_guidance = (
+                "DIFFICULTY LEVEL: EASY\n"
+                "- Focus on straightforward factual recall, direct definitions, basic terminology, and foundational understanding.\n"
+                "- Questions must be simple, direct, and unambiguous.\n"
+                "- Distractor options must be distinctly incorrect and clearly distinguishable for a student who read the material."
+            )
+        elif difficulty == "hard":
+            difficulty_guidance = (
+                "DIFFICULTY LEVEL: HARD\n"
+                "- Focus on multi-step reasoning, analytical depth, edge cases, and synthesis across multiple concepts.\n"
+                "- Include scenario-based or problem-solving questions requiring critical evaluation.\n"
+                "- Distractor options must be subtle, highly plausible, and represent common misconceptions to test true mastery."
+            )
+        else:
+            difficulty_guidance = (
+                "DIFFICULTY LEVEL: MEDIUM\n"
+                "- Focus on conceptual understanding, application of principles, and comparisons between related ideas.\n"
+                "- Include contextual questions requiring reasoning across 1-2 concepts.\n"
+                "- Distractor options must be plausible and require thoughtful analysis to eliminate."
+            )
         prompt = f"""
 You are an AI quiz generator
 for AI Knowledge DNA.
@@ -3333,7 +3452,10 @@ study material.
 Subject:
 {subject["name"]}
 Difficulty:
-{difficulty}
+{difficulty.upper()}
+
+{difficulty_guidance}
+
 Number of questions:
 {question_count}
 TARGET TOPIC:
@@ -3854,6 +3976,62 @@ def get_quizzes():
         "quizzes":
             result
     })
+@app.route(
+    "/api/quiz/<quiz_id>",
+    methods=["GET"]
+)
+@jwt_required()
+def get_quiz(quiz_id):
+    current_user_id = get_current_user_id()
+    quizzes = filter_quizzes_for_user(load_quizzes(), current_user_id)
+    quiz = next(
+        (
+            item
+            for item
+            in quizzes
+            if item.get("id") == quiz_id
+        ),
+        None
+    )
+    if not quiz:
+        return jsonify({
+            "success": False,
+            "message": "Quiz not found or access denied."
+        }), 404
+
+    is_attempted = bool(quiz.get("attempted", False))
+    client_questions = []
+    for q in quiz.get("questions", []):
+        question_item = {
+            "id": q.get("id"),
+            "question": q.get("question"),
+            "options": q.get("options", []),
+            "page": q.get("page"),
+            "topic": q.get("topic", "General"),
+        }
+        if is_attempted:
+            question_item["correct_answer"] = q.get("correct_answer")
+            question_item["explanation"] = q.get("explanation", "")
+        client_questions.append(question_item)
+
+    client_quiz = {
+        "id": quiz.get("id"),
+        "subject_id": quiz.get("subject_id"),
+        "subject_name": quiz.get("subject_name"),
+        "question_count": quiz.get("question_count"),
+        "difficulty": quiz.get("difficulty"),
+        "attempted": is_attempted,
+        "score": quiz.get("score"),
+        "accuracy": quiz.get("accuracy"),
+        "completed_at": quiz.get("completed_at"),
+        "created_at": quiz.get("created_at"),
+        "questions": client_questions,
+    }
+
+    return jsonify({
+        "success": True,
+        "quiz": client_quiz,
+    }), 200
 @app.route(
     "/api/dashboard/stats",
     methods=["GET"]
