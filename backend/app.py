@@ -95,8 +95,28 @@ DB_NAME = os.getenv("DB_NAME")
 DB_USER = os.getenv("DB_USER")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
 DB_SSL_CA = os.getenv("DB_SSL_CA")
-if DB_SSL_CA and not os.path.isabs(DB_SSL_CA):
-    DB_SSL_CA = os.path.join(BASE_DIR, DB_SSL_CA)
+if DB_SSL_CA:
+    if not os.path.isabs(DB_SSL_CA):
+        candidate_ca = os.path.join(BASE_DIR, DB_SSL_CA)
+        if os.path.exists(candidate_ca):
+            DB_SSL_CA = candidate_ca
+        else:
+            try:
+                import certifi
+                DB_SSL_CA = certifi.where()
+            except ImportError:
+                DB_SSL_CA = None
+else:
+    try:
+        import certifi
+        DB_SSL_CA = certifi.where()
+    except ImportError:
+        DB_SSL_CA = None
+
+connect_args = {}
+if DB_SSL_CA:
+    connect_args["ssl"] = {"ca": DB_SSL_CA}
+
 app.config["SQLALCHEMY_DATABASE_URI"] = (
     f"mysql+pymysql://"
     f"{DB_USER}:{DB_PASSWORD}@"
@@ -106,11 +126,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = (
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
     "pool_pre_ping": True,
-    "connect_args": {
-        "ssl": {
-            "ca": DB_SSL_CA
-        }
-    }
+    "connect_args": connect_args
 }
 db.init_app(app)
 app.config["JWT_SECRET_KEY"] = os.getenv(
@@ -132,26 +148,39 @@ def get_current_user_id():
 
 # All JSON-backed learning data must carry user_id and must be filtered
 # through the authenticated JWT identity before it is returned or changed.
-UPLOAD_FOLDER = os.path.join(
-    BASE_DIR,
-    "uploads"
+IS_SERVERLESS = bool(
+    os.getenv("VERCEL") or os.getenv("AWS_LAMBDA_FUNCTION_NAME")
 )
-DATA_FOLDER = os.path.join(
-    BASE_DIR,
-    "data"
-)
+
+if IS_SERVERLESS:
+    TEMP_ROOT = "/tmp"
+    UPLOAD_FOLDER = os.path.join(TEMP_ROOT, "uploads")
+    DATA_FOLDER = os.path.join(TEMP_ROOT, "data")
+else:
+    UPLOAD_FOLDER = os.path.join(BASE_DIR, "uploads")
+    DATA_FOLDER = os.path.join(BASE_DIR, "data")
+
 DOCUMENTS_FILE = os.path.join(
     DATA_FOLDER,
     "documents.json"
 )
-os.makedirs(
-    UPLOAD_FOLDER,
-    exist_ok=True
-)
-os.makedirs(
-    DATA_FOLDER,
-    exist_ok=True
-)
+
+try:
+    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+    os.makedirs(DATA_FOLDER, exist_ok=True)
+except Exception as folder_err:
+    print("WARNING: Could not create upload/data folder:", folder_err)
+
+if IS_SERVERLESS:
+    import shutil
+    for seed_name in ["documents.json", "subjects.json", "quizzes.json"]:
+        src_seed = os.path.join(BASE_DIR, "data", seed_name)
+        dst_seed = os.path.join(DATA_FOLDER, seed_name)
+        if not os.path.exists(dst_seed) and os.path.exists(src_seed):
+            try:
+                shutil.copyfile(src_seed, dst_seed)
+            except Exception as copy_err:
+                print(f"Warning: could not seed {seed_name}:", copy_err)
 MAX_FILE_SIZE = (
     25 * 1024 * 1024
 )

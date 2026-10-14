@@ -17,3 +17,4 @@ openai==3.24.0
 httpx==0.28.1
 PyMySQL
 python-dotenv
+certifi>=2024.0.0
